@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:receipts/config/receipts_app.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ReceiptsApp());
 }
 
+/*
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -123,3 +125,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
