@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Лосось в соусе терияки",
+    "cookingTimeMinutes": 45,
+    "imageLocation": "assets/images/receipt-1.png"
+  },
+  {
+    "title": "Поке боул с сыром тофу",
+    "cookingTimeMinutes": 30,
+    "imageLocation": "assets/images/receipt-2.png"
+  },
+  {
+    "title": "Стейк из говядины по-грузински с кукурузой",
+    "cookingTimeMinutes": 75,
+    "imageLocation": "assets/images/receipt-3.png"
+  },
+  {
+    "title": "Тосты с голубикой и бананом",
+    "cookingTimeMinutes": 45,
+    "imageLocation": "assets/images/receipt-4.png"
+  },
+  {
+    "title": "Паста с морепродуктами",
+    "cookingTimeMinutes": 25,
+    "imageLocation": "assets/images/receipt-5.png"
+  },
+  {
+    "title": "Бургер с двумя котлетами",
+    "cookingTimeMinutes": 60,
+    "imageLocation": "assets/images/receipt-6.png"
+  },
+  {
+    "title": "Пицца Маргарита домашняя",
+    "cookingTimeMinutes": 25,
+    "imageLocation": "assets/images/receipt-7.png"
+  }
+]
