@@ -7,6 +7,7 @@ class ReceiptListRepository {
   Future<List<ReceiptListItemModel>> getListItems() async {
     final String jsonData = await rootBundle.loadString('assets/receipts.json');
     final List<dynamic> parsedData = jsonDecode(jsonData);
+
     return parsedData.map((dynamic data) {
       final map = data as Map<String, dynamic>;
       return ReceiptListItemModel(

@@ -6,11 +6,9 @@ class ReceiptListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Receipts'),
-      ),
-      body: const SafeArea(
+    return const Scaffold(
+      backgroundColor: Color(0xFFECECEC),
+      body: SafeArea(
         child: SingleChildScrollView(
           child: ReceiptList(),
         ),

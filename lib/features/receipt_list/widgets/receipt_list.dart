@@ -17,11 +17,10 @@ class _ReceiptListState extends State<ReceiptList> {
       future: _getReceiptModels(),
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<dynamic>> snapshot,
+        AsyncSnapshot<List<ReceiptListItemModel>> snapshot,
       ) {
         if (snapshot.hasData) {
-          List<ReceiptListItemModel> models =
-              (snapshot.data ?? []) as List<ReceiptListItemModel>;
+          List<ReceiptListItemModel> models = snapshot.data ?? [];
           return Column(
             children: models
                 .map((ReceiptListItemModel model) =>
@@ -29,9 +28,9 @@ class _ReceiptListState extends State<ReceiptList> {
                 .toList(),
           );
         } else if (snapshot.hasError) {
-          return const Text('Ошибка.');
+          return const Text('Error.');
         }
-        return const Text('Загрузка данных.');
+        return const Text('...');
       },
     );
   }
