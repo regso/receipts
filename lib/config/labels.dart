@@ -1,4 +1,4 @@
-class Labels{
+class Labels {
   static String receipts = 'Рецепты';
   static String signIn = 'Вход';
   static String minutes = 'минут';
