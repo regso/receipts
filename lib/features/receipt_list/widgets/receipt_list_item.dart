@@ -57,7 +57,7 @@ class ReceiptListItem extends StatelessWidget {
                             const Icon(Icons.access_time, size: 16),
                             const SizedBox(width: 11),
                             Text(
-                              '${model.cookingTimeMinutes} минут',
+                              model.getCookingTime(),
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,

@@ -8,4 +8,14 @@ class ReceiptListItemModel {
     required this.cookingTimeMinutes,
     required this.imageLocation,
   });
+
+  String getCookingTime() {
+    int hours = cookingTimeMinutes ~/ 60;
+    int minutes = cookingTimeMinutes % 60;
+    return (cookingTimeMinutes > 120)
+        ? '$hours часа $minutes минут'
+        : (cookingTimeMinutes > 60)
+          ? '1 час $minutes минут'
+          : '$cookingTimeMinutes минут';
+  }
 }

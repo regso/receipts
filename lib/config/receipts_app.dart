@@ -9,7 +9,6 @@ class ReceiptsApp extends StatelessWidget {
     return MaterialApp(
       title: 'Receipts App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
       home: const ReceiptListPage(),

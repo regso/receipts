@@ -21,11 +21,14 @@ class _ReceiptListState extends State<ReceiptList> {
       ) {
         if (snapshot.hasData) {
           List<ReceiptListItemModel> models = snapshot.data ?? [];
-          return Column(
-            children: models
-                .map((ReceiptListItemModel model) =>
-                    ReceiptListItem(model: model))
-                .toList(),
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Column(
+              children: models
+                  .map((ReceiptListItemModel model) =>
+                      ReceiptListItem(model: model))
+                  .toList(),
+            ),
           );
         } else if (snapshot.hasError) {
           return const Text('Error.');
