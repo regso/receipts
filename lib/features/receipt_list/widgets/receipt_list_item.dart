@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../config/app_theme.dart';
 import '../models/receipt_list_item_model.dart';
 
 class ReceiptListItem extends StatelessWidget {
@@ -13,15 +14,15 @@ class ReceiptListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+          decoration: BoxDecoration(
+            color: AppTheme.cardBackgroundColor,
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
             boxShadow: [
               BoxShadow(
-                color: Color(0x19929292),
+                color: AppTheme.cardShadowColor,
                 spreadRadius: 2,
                 blurRadius: 4,
-                offset: Offset(0, 4),
+                offset: const Offset(0, 4),
               ),
             ],
           ),
@@ -58,10 +59,10 @@ class ReceiptListItem extends StatelessWidget {
                             const SizedBox(width: 11),
                             Text(
                               model.getCookingTime(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xFF2ECC71),
+                                color: AppTheme.cardSubTitleColor,
                               ),
                             ),
                           ],

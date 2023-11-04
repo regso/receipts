@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../config/app_theme.dart';
+import '../../../config/labels.dart';
 
 class ReceiptBottomNavigationBar extends StatefulWidget {
   const ReceiptBottomNavigationBar({
@@ -16,19 +18,19 @@ class _ReceiptBottomNavigationBarState
   int _currentIndex = 0;
 
   final List<BottomNavigationBarItem> _items = [
-    const BottomNavigationBarItem(
-      icon: FaIcon(
+    BottomNavigationBarItem(
+      icon: const FaIcon(
         FontAwesomeIcons.pizzaSlice,
         size: 20,
       ),
-      label: "Рецепты",
+      label: Labels.receipts,
     ),
-    const BottomNavigationBarItem(
-      icon: FaIcon(
+    BottomNavigationBarItem(
+      icon: const FaIcon(
         FontAwesomeIcons.solidUser,
         size: 20,
       ),
-      label: "Вход",
+      label: Labels.signIn,
     ),
   ];
 
@@ -37,10 +39,9 @@ class _ReceiptBottomNavigationBarState
     return Container(
       height: 60,
       decoration: BoxDecoration(
-        color: Colors.blue,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: AppTheme.navBarShadowColor,
             spreadRadius: 0,
             blurRadius: 8,
             offset: const Offset(0, 0),
@@ -53,8 +54,8 @@ class _ReceiptBottomNavigationBarState
         currentIndex: _currentIndex,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        selectedItemColor: const Color(0xFF2ECC71),
-        unselectedItemColor: const Color(0xFFC2C2C2),
+        selectedItemColor: AppTheme.navBarSelectedItemColor,
+        unselectedItemColor: AppTheme.navBarUnSelectedItemColor,
         selectedFontSize: 10,
         unselectedFontSize: 10,
         onTap: _onTap,
@@ -66,57 +67,5 @@ class _ReceiptBottomNavigationBarState
     setState(() {
       _currentIndex = index;
     });
-  }
-
-  Widget buildCustom(BuildContext context) {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset: const Offset(0, 0),
-          ),
-        ],
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: AssetImage('assets/images/pizza.svg'),
-              ),
-              Text(
-                'Рецепты',
-                style: TextStyle(
-                  color: Color(0xFF2ECC71),
-                  fontSize: 10,
-                ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: AssetImage('assets/images/user.png'),
-              ),
-              Text(
-                'Вход',
-                style: TextStyle(
-                  color: Color(0xFFC2C2C2),
-                  fontSize: 10,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 }
