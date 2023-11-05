@@ -49,8 +49,8 @@ class _ReceiptBottomNavigationBarState
         ],
       ),
       child: BottomNavigationBar(
+        elevation: 0,
         items: _items,
-        type: BottomNavigationBarType.shifting,
         currentIndex: _currentIndex,
         showSelectedLabels: true,
         showUnselectedLabels: true,
