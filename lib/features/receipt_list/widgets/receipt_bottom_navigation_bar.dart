@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../config/app_theme.dart';
 import '../../../config/labels.dart';
 
@@ -19,17 +18,13 @@ class _ReceiptBottomNavigationBarState
 
   final List<BottomNavigationBarItem> _items = [
     BottomNavigationBarItem(
-      icon: const FaIcon(
-        FontAwesomeIcons.pizzaSlice,
-        size: 20,
-      ),
+      icon: Image.asset('assets/images/pizza_gray.png'),
+      activeIcon: Image.asset('assets/images/pizza.png'),
       label: Labels.receipts,
     ),
     BottomNavigationBarItem(
-      icon: const FaIcon(
-        FontAwesomeIcons.solidUser,
-        size: 20,
-      ),
+      icon: Image.asset('assets/images/user_gray.png'),
+      activeIcon: Image.asset('assets/images/user.png'),
       label: Labels.signIn,
     ),
   ];
