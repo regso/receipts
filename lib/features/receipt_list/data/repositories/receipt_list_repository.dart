@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import '../models/receipt_list_item_model.dart';
+import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
 
 class ReceiptListRepository {
   Future<List<ReceiptListItemModel>> getListItems() async {
@@ -12,7 +12,6 @@ class ReceiptListRepository {
       final map = data as Map<String, dynamic>;
       return ReceiptListItemModel(
         title: map['title'],
-        cookingTimeMinutes: map['cookingTimeMinutes'],
         imageLocation: map['imageLocation'],
       );
     }).toList();

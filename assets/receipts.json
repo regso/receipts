@@ -1,37 +1,178 @@
 [
   {
     "title": "Лосось в соусе терияки",
-    "cookingTimeMinutes": 45,
-    "imageLocation": "assets/images/receipt-1.png"
+    "imageLocation": "assets/images/receipt-1.png",
+    "ingredients": [
+      {
+        "name": "Соевый соус",
+        "amount": "8 ст. ложек"
+      },
+      {
+        "name": "Вода",
+        "amount": "8 ст. ложек"
+      },
+      {
+        "name": "Мёд",
+        "amount": "3 ст. ложки"
+      },
+      {
+        "name": "Коричневый сахар",
+        "amount": "2 ст. ложки"
+      },
+      {
+        "name": "Чеснок",
+        "amount": "3 зубчика"
+      },
+      {
+        "name": "Тёртый свежий имбирь",
+        "amount": "1 ст. ложка"
+      },
+      {
+        "name": "Лимонный сок",
+        "amount": "1¹⁄₂ ст. ложки"
+      },
+      {
+        "name": "Кукурузный крахмал",
+        "amount": "1 ст. ложка"
+      },
+      {
+        "name": "Растительное масло",
+        "amount": "1 ч. ложка"
+      },
+      {
+        "name": "Филе лосося или сёмги",
+        "amount": "680 г"
+      },
+      {
+        "name": "Кунжут",
+        "amount": "по вкусу"
+      }
+    ],
+    "steps": [
+      {
+        "description": "В маленькой кастрюле соедините соевый соус, 6 столовых ложек воды, мёд, сахар, измельчённый чеснок, имбирь и лимонный сок.",
+        "cookingTimeMinutes": 2
+      },
+      {
+        "description": "Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.",
+        "cookingTimeMinutes": 7
+      },
+      {
+        "description": "Смешайте оставшуюся воду с крахмалом. Добавьте в кастрюлю и перемешайте.",
+        "cookingTimeMinutes": 7
+      },
+      {
+        "description": "Готовьте, непрерывно помешивая венчиком, 1 минуту. Снимите с огня и немного остудите.",
+        "cookingTimeMinutes": 1
+      },
+      {
+        "description": "Смажьте форму маслом и выложите туда рыбу. Полейте её соусом.",
+        "cookingTimeMinutes": 6
+      },
+      {
+        "description": "Поставьте в разогретую до 200 °C духовку примерно на 15 минут.",
+        "cookingTimeMinutes": 15
+      },
+      {
+        "description": "Перед подачей полейте соусом из формы и посыпьте кунжутом.",
+        "cookingTimeMinutes": 4
+      }
+    ]
   },
   {
     "title": "Поке боул с сыром тофу",
-    "cookingTimeMinutes": 30,
-    "imageLocation": "assets/images/receipt-2.png"
+    "imageLocation": "assets/images/receipt-2.png",
+    "ingredients": [
+      {
+        "name": "Вода",
+        "amount": "8 ст. ложек"
+      }
+    ],
+    "steps": [
+      {
+        "description": "Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.",
+        "cookingTimeMinutes": 7
+      }
+    ]
   },
   {
     "title": "Стейк из говядины по-грузински с кукурузой",
-    "cookingTimeMinutes": 75,
-    "imageLocation": "assets/images/receipt-3.png"
+    "imageLocation": "assets/images/receipt-3.png",
+    "ingredients": [
+      {
+        "name": "Вода",
+        "amount": "8 ст. ложек"
+      }
+    ],
+    "steps": [
+      {
+        "description": "Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.",
+        "cookingTimeMinutes": 7
+      }
+    ]
   },
   {
     "title": "Тосты с голубикой и бананом",
-    "cookingTimeMinutes": 45,
-    "imageLocation": "assets/images/receipt-4.png"
+    "imageLocation": "assets/images/receipt-4.png",
+    "ingredients": [
+      {
+        "name": "Вода",
+        "amount": "8 ст. ложек"
+      }
+    ],
+    "steps": [
+      {
+        "description": "Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.",
+        "cookingTimeMinutes": 7
+      }
+    ]
   },
   {
     "title": "Паста с морепродуктами",
-    "cookingTimeMinutes": 25,
-    "imageLocation": "assets/images/receipt-5.png"
+    "imageLocation": "assets/images/receipt-5.png",
+    "ingredients": [
+      {
+        "name": "Вода",
+        "amount": "8 ст. ложек"
+      }
+    ],
+    "steps": [
+      {
+        "description": "Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.",
+        "cookingTimeMinutes": 7
+      }
+    ]
   },
   {
     "title": "Бургер с двумя котлетами",
-    "cookingTimeMinutes": 60,
-    "imageLocation": "assets/images/receipt-6.png"
+    "imageLocation": "assets/images/receipt-6.png",
+    "ingredients": [
+      {
+        "name": "Вода",
+        "amount": "8 ст. ложек"
+      }
+    ],
+    "steps": [
+      {
+        "description": "Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.",
+        "cookingTimeMinutes": 7
+      }
+    ]
   },
   {
     "title": "Пицца Маргарита домашняя",
-    "cookingTimeMinutes": 25,
-    "imageLocation": "assets/images/receipt-7.png"
+    "imageLocation": "assets/images/receipt-7.png",
+    "ingredients": [
+      {
+        "name": "Вода",
+        "amount": "8 ст. ложек"
+      }
+    ],
+    "steps": [
+      {
+        "description": "Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.",
+        "cookingTimeMinutes": 7
+      }
+    ]
   }
 ]

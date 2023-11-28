@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/receipt_list_item_model.dart';
-import '../repositories/receipt_list_repository.dart';
-import '../widgets/receipt_list_item.dart';
+import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
+import 'package:receipts/features/receipt_list/data/repositories/receipt_list_repository.dart';
+import 'receipt_list_item.dart';
 
 class ReceiptList extends StatefulWidget {
   const ReceiptList({super.key});

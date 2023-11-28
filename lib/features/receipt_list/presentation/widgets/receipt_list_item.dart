@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../config/app_theme.dart';
-import '../models/receipt_list_item_model.dart';
+import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
 
 class ReceiptListItem extends StatelessWidget {
   final ReceiptListItemModel model;
