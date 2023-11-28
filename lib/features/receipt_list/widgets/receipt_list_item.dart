@@ -5,7 +5,7 @@ import '../models/receipt_list_item_model.dart';
 class ReceiptListItem extends StatelessWidget {
   final ReceiptListItemModel model;
 
-  const ReceiptListItem({Key? key, required this.model}) : super(key: key);
+  const ReceiptListItem({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {

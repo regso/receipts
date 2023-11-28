@@ -4,7 +4,7 @@ import '../repositories/receipt_list_repository.dart';
 import '../widgets/receipt_list_item.dart';
 
 class ReceiptList extends StatefulWidget {
-  const ReceiptList({Key? key}) : super(key: key);
+  const ReceiptList({super.key});
 
   @override
   State<ReceiptList> createState() => _ReceiptListState();

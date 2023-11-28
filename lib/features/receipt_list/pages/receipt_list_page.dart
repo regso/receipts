@@ -4,7 +4,7 @@ import '../widgets/receipt_bottom_navigation_bar.dart';
 import '../widgets/receipt_list.dart';
 
 class ReceiptListPage extends StatelessWidget {
-  const ReceiptListPage({Key? key}) : super(key: key);
+  const ReceiptListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
