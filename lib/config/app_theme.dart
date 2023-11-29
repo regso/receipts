@@ -10,4 +10,7 @@ class AppTheme {
   static Color navBarShadowColor = Colors.black.withOpacity(0.25);
   static Color navBarSelectedItemColor = const Color(0xFF2ECC71);
   static Color navBarUnSelectedItemColor = const Color(0xFFC2C2C2);
+
+  static Color receiptDetailsBackgroundColor = Colors.white;
+  static Color receiptDetailsAppBarShadowColor = Colors.black.withOpacity(0.25);
 }

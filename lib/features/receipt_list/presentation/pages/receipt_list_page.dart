@@ -8,14 +8,14 @@ class ReceiptListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppTheme.backgroundColor,
-        body: const SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: AppTheme.backgroundColor,
+      body: const SafeArea(
+        child: SingleChildScrollView(
           child: ReceiptList(),
         ),
-        bottomNavigationBar: const ReceiptBottomNavigationBar(),
       ),
+      bottomNavigationBar: const ReceiptBottomNavigationBar(),
     );
   }
 }
