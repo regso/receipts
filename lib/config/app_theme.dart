@@ -13,4 +13,8 @@ class AppTheme {
 
   static Color receiptDetailsBackgroundColor = Colors.white;
   static Color receiptDetailsAppBarShadowColor = Colors.black.withOpacity(0.25);
+  static Color receiptDetailsButtonBackgroundColor = const Color(0xFF165932);
+  static Color receiptDetailsButtonTextColor = const Color(0xFFFFFFFF);
+  static Color receiptDetailsBorderColor = const Color(0xFF797676);
+  static Color receiptDetailsIngredientsAmountColor = const Color(0xFF797676);
 }

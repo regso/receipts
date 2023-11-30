@@ -1,12 +1,15 @@
 import 'package:receipts/config/labels.dart';
+import 'package:receipts/features/receipt_details/data/models/receipt_ingredient_model.dart';
 
 class ReceiptListItemModel {
   final String title;
   final String imageLocation;
+  final List<ReceiptIngredientModel> receiptIngredientModelList;
 
   ReceiptListItemModel({
     required this.title,
     required this.imageLocation,
+    required this.receiptIngredientModelList,
   });
 
   String getCookingTime() {
