@@ -4,11 +4,15 @@ import 'package:receipts/features/receipt_details/data/models/cooking_step_model
 
 class CookingStepWidget extends StatelessWidget {
   final CookingStepModel cookingStepModel;
+  final int number;
 
-  const CookingStepWidget({super.key, required this.cookingStepModel});
+  const CookingStepWidget(
+      {super.key, required this.cookingStepModel, required this.number});
 
   @override
   Widget build(BuildContext context) {
+    String timeMinutes =
+        cookingStepModel.cookingTimeMinutes.toString().padLeft(2, '0');
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -19,7 +23,7 @@ class CookingStepWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              '1',
+              number.toString(),
               style: TextStyle(
                 fontSize: 40,
                 color: AppTheme.receiptDetailsCookingStepLeadingColor,
@@ -28,15 +32,15 @@ class CookingStepWidget extends StatelessWidget {
           ),
           Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 17),
-                child: Text(
-                  cookingStepModel.title,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppTheme.receiptDetailsCookingStepTitleColor,
-                  ),
-                ),
-              )),
+            padding: const EdgeInsets.symmetric(vertical: 17),
+            child: Text(
+              cookingStepModel.title,
+              style: TextStyle(
+                fontSize: 12,
+                color: AppTheme.receiptDetailsCookingStepTitleColor,
+              ),
+            ),
+          )),
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -44,13 +48,11 @@ class CookingStepWidget extends StatelessWidget {
                 Checkbox(
                   value: false,
                   onChanged: (value) {},
-                  checkColor:
-                  AppTheme.receiptDetailsCookingStepCheckboxColor,
+                  checkColor: AppTheme.receiptDetailsCookingStepCheckboxColor,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 Text(
-                  // TODO: '00:06',
-                  cookingStepModel.cookingTimeMinutes.toString(),
+                  '$timeMinutes:00',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,

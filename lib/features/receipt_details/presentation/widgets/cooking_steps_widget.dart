@@ -9,9 +9,15 @@ class CookingStepsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int i = 1;
     return Column(
       children: cookingStepModelList.map((CookingStepModel model) {
-        return CookingStepWidget(cookingStepModel: model);
+        return Column(
+          children: [
+            CookingStepWidget(cookingStepModel: model, number: i++),
+            const SizedBox(height: 16),
+          ],
+        );
       }).toList(),
     );
   }
