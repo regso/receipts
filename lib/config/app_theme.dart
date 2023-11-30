@@ -17,4 +17,9 @@ class AppTheme {
   static Color receiptDetailsButtonTextColor = const Color(0xFFFFFFFF);
   static Color receiptDetailsBorderColor = const Color(0xFF797676);
   static Color receiptDetailsIngredientsAmountColor = const Color(0xFF797676);
+  static Color receiptDetailsCookingStepBackground = const Color(0xFFECECEC);
+  static Color receiptDetailsCookingStepLeadingColor = const Color(0xFFC2C2C2);
+  static Color receiptDetailsCookingStepTitleColor = const Color(0xFFC2C2C2);
+  static Color receiptDetailsCookingStepCheckboxColor = const Color(0xFF797676);
+
 }

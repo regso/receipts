@@ -33,7 +33,7 @@ class _ReceiptListState extends State<ReceiptList> {
         } else if (snapshot.hasError) {
           return const Text('Error.');
         }
-        return const Text('...');
+        return const CircularProgressIndicator();
       },
     );
   }

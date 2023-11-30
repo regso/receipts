@@ -55,7 +55,7 @@ class ReceiptDetailsWidget extends StatelessWidget {
           const SizedBox(height: 20),
           Text(Labels.cookingSteps, style: const TextStyle(fontSize: 16)),
           const SizedBox(height: 20),
-          const CookingStepsWidget(),
+          CookingStepsWidget(cookingStepModelList: receiptListItemModel.cookingStepModelList),
           const SizedBox(height: 27),
           Align(
             alignment: Alignment.center,
