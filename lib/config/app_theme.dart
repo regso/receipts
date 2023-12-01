@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static Color backgroundColor = const Color(0xFFECECEC);
+  static Color subTextColor = const Color(0xFF797676);
 
   static Color cardBackgroundColor = Colors.white;
   static Color cardShadowColor = const Color(0x19929292);
@@ -19,7 +20,12 @@ class AppTheme {
   static Color receiptDetailsIngredientsAmountColor = const Color(0xFF797676);
   static Color receiptDetailsCookingStepBackground = const Color(0xFFECECEC);
   static Color receiptDetailsCookingStepLeadingColor = const Color(0xFFC2C2C2);
-  static Color receiptDetailsCookingStepTitleColor = const Color(0xFFC2C2C2);
-  static Color receiptDetailsCookingStepCheckboxColor = const Color(0xFF797676);
+  static Color receiptDetailsCookingStepTitleColor = const Color(0xFF797676);
 
+  static Color receiptDetailsCookingStepCheckboxColor = const Color(0xFF797676);
+  static Color receiptDetailsCookingStepCheckboxActiveColor =
+      const Color(0xFF165932);
+
+  static Color receiptCommentUserNameColor = const Color(0xFF2ECC71);
+  static Color receiptCommentDateColor = const Color(0xFFC2C2C2);
 }

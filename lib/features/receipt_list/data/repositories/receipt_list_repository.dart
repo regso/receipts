@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:receipts/features/receipt_details/data/models/comment_model.dart';
 import 'package:receipts/features/receipt_details/data/models/cooking_step_model.dart';
 import 'package:receipts/features/receipt_details/data/models/receipt_ingredient_model.dart';
 import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
@@ -31,11 +32,21 @@ class ReceiptListRepository {
             ),
       )
           .toList();
+      final comments = map['comments'] as List<dynamic>;
+      final commentList = comments
+          .map(
+            (dynamic item) =>
+            CommentModel(
+              text: item['text']!,
+            ),
+      )
+          .toList();
       return ReceiptListItemModel(
         title: map['title'],
         imageLocation: map['imageLocation'],
         receiptIngredientModelList: ingredientList,
         cookingStepModelList: cookingStepList,
+        commentModelList: commentList,
       );
     }).toList();
   }

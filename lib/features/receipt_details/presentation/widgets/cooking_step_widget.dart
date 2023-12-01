@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/features/receipt_details/data/models/cooking_step_model.dart';
 
-class CookingStepWidget extends StatelessWidget {
+class CookingStepWidget extends StatefulWidget {
   final CookingStepModel cookingStepModel;
   final int number;
 
@@ -10,9 +10,16 @@ class CookingStepWidget extends StatelessWidget {
       {super.key, required this.cookingStepModel, required this.number});
 
   @override
+  State<CookingStepWidget> createState() => _CookingStepWidgetState();
+}
+
+class _CookingStepWidgetState extends State<CookingStepWidget> {
+  bool _checked = false;
+
+  @override
   Widget build(BuildContext context) {
     String timeMinutes =
-        cookingStepModel.cookingTimeMinutes.toString().padLeft(2, '0');
+        widget.cookingStepModel.cookingTimeMinutes.toString().padLeft(2, '0');
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -23,7 +30,7 @@ class CookingStepWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              number.toString(),
+              widget.number.toString(),
               style: TextStyle(
                 fontSize: 40,
                 color: AppTheme.receiptDetailsCookingStepLeadingColor,
@@ -34,7 +41,7 @@ class CookingStepWidget extends StatelessWidget {
               child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 17),
             child: Text(
-              cookingStepModel.title,
+              widget.cookingStepModel.title,
               style: TextStyle(
                 fontSize: 12,
                 color: AppTheme.receiptDetailsCookingStepTitleColor,
@@ -46,9 +53,13 @@ class CookingStepWidget extends StatelessWidget {
             child: Column(
               children: [
                 Checkbox(
-                  value: false,
-                  onChanged: (value) {},
-                  checkColor: AppTheme.receiptDetailsCookingStepCheckboxColor,
+                  value: _checked,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      _checked = value as bool;
+                    });
+                  },
+                  activeColor: AppTheme.receiptDetailsCookingStepCheckboxColor,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 Text(
