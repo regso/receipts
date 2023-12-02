@@ -11,4 +11,6 @@ class Labels {
   static String ingredients = 'Ингредиенты';
   static String cookingSteps = 'Шаги приготовления';
   static String startCooking = 'Начать готовить';
+  static String sendCommentHint = 'оставить комментарий';
+  static String sendCommentButton = 'Отправить';
 }
