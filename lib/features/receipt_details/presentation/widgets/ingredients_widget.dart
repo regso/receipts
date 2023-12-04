@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
+import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/ingredients_widget_item.dart';
 
 class IngredientsWidget extends StatelessWidget {
-  final List<ReceiptIngredientModel> receiptIngredientModelList;
+  final List<IngredientModel> receiptIngredientModelList;
 
   const IngredientsWidget({
     super.key,
@@ -33,7 +33,7 @@ class IngredientsWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: receiptIngredientModelList
                   .map(
-                    (ReceiptIngredientModel model) =>
+                    (IngredientModel model) =>
                         IngredientsWidgetItem(receiptIngredientModel: model),
                   )
                   .toList(),

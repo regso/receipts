@@ -25,7 +25,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
           Row(
             children: [
               Expanded(
-                child: Text(widget.receiptListItemModel.title,
+                child: Text(widget.receiptListItemModel.name,
                     style: const TextStyle(fontSize: 24)),
               ),
               IconButton(
@@ -63,7 +63,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Image.network(
-                widget.receiptListItemModel.imageLocation,
+                widget.receiptListItemModel.photo,
                 fit: BoxFit.cover,
               ),
             ),

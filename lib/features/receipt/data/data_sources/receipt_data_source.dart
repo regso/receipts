@@ -14,12 +14,13 @@ class ReceiptRemoteDataSource {
     return receiptsDecodedJson
         .map(
           (data) => ReceiptModel(
-            title: data['name'],
-            imageLocation: data['photo'],
-            cookingTimeMinutes: data['duration'],
-            receiptIngredientModelList: [],
-            cookingStepModelList: [],
-            commentModelList: [],
+            id: data['id'],
+            name: data['name'],
+            photo: data['photo'],
+            duration: data['duration'],
+            // ingredientModelList: [],
+            // cookingStepModelList: [],
+            // commentModelList: [],
           ),
         )
         .toList();

@@ -46,7 +46,7 @@ class ReceiptListItem extends StatelessWidget {
                     bottomLeft: Radius.circular(5),
                   ),
                   child: Image.network(
-                    model.imageLocation,
+                    model.photo,
                     height: 136,
                     width: 149,
                     fit: BoxFit.cover,
@@ -61,7 +61,7 @@ class ReceiptListItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            model.title,
+                            model.name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,

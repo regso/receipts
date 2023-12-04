@@ -16,16 +16,19 @@ class ReceiptDetailsWidget extends StatelessWidget {
       children: [
         ReceiptHeaderWidget(receiptListItemModel: receiptListItemModel),
         const SizedBox(height: 20),
-        IngredientsWidget(
-          receiptIngredientModelList:
-              receiptListItemModel.receiptIngredientModelList,
+        const IngredientsWidget(
+          receiptIngredientModelList: [],
+              // receiptListItemModel.receiptIngredientModelList,
         ),
         const SizedBox(height: 20),
-        CookingStepsWidget(
-            cookingStepModelList: receiptListItemModel.cookingStepModelList),
+        const CookingStepsWidget(
+            cookingStepModelList: [],
+            // receiptListItemModel.cookingStepModelList
+        ),
         const SizedBox(height: 27),
-        CommentListWidget(
-          commentModelList: receiptListItemModel.commentModelList,
+        const CommentListWidget(
+          commentModelList: [],
+          // receiptListItemModel.commentModelList,
         ),
       ],
     );

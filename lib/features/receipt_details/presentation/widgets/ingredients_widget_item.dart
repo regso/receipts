@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
+import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 
 class IngredientsWidgetItem extends StatelessWidget {
-  final ReceiptIngredientModel receiptIngredientModel;
+  final IngredientModel receiptIngredientModel;
 
   const IngredientsWidgetItem({
     super.key,
@@ -24,7 +24,7 @@ class IngredientsWidgetItem extends StatelessWidget {
           fit: FlexFit.tight,
           flex: 5,
           child: Text(
-            receiptIngredientModel.title,
+            receiptIngredientModel.name,
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
