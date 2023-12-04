@@ -2,11 +2,15 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:receipts/features/receipt_details/data/models/comment_model.dart';
 import 'package:receipts/features/receipt_details/data/models/cooking_step_model.dart';
-import 'package:receipts/features/receipt_details/data/models/receipt_ingredient_model.dart';
-import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptListRepository {
-  Future<List<ReceiptListItemModel>> getListItems() async {
+  Future<List<ReceiptModel>> getListItems() async {
+    return [];
+  }
+
+  Future<List<ReceiptModel>> getListItems2() async {
     final String jsonData = await rootBundle.loadString('assets/receipts.json');
     final List<dynamic> parsedData = jsonDecode(jsonData);
 
@@ -41,9 +45,10 @@ class ReceiptListRepository {
             ),
       )
           .toList();
-      return ReceiptListItemModel(
+      return ReceiptModel(
         title: map['title'],
         imageLocation: map['imageLocation'],
+        cookingTimeMinutes: 0,
         receiptIngredientModelList: ingredientList,
         cookingStepModelList: cookingStepList,
         commentModelList: commentList,

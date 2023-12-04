@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/receipt_details_widget.dart';
-import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptDetailsPage extends StatelessWidget {
-  final ReceiptListItemModel receiptListItemModel;
+  final ReceiptModel receiptListItemModel;
 
   const ReceiptDetailsPage({super.key, required this.receiptListItemModel});
 

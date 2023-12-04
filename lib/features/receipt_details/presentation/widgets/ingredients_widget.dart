@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt_details/data/models/receipt_ingredient_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/ingredients_widget_item.dart';
 
 class IngredientsWidget extends StatelessWidget {

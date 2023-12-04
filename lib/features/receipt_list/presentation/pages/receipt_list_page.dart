@@ -11,9 +11,7 @@ class ReceiptListPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
       body: const SafeArea(
-        child: SingleChildScrollView(
-          child: ReceiptList(),
-        ),
+        child: ReceiptList(),
       ),
       bottomNavigationBar: const ReceiptBottomNavigationBar(),
     );

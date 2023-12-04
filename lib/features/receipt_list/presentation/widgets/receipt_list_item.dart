@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/features/receipt_details/presentation/pages/receipt_details_page.dart';
-import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptListItem extends StatelessWidget {
-  final ReceiptListItemModel model;
+  final ReceiptModel model;
 
   const ReceiptListItem({super.key, required this.model});
 
@@ -40,10 +40,17 @@ class ReceiptListItem extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Image(
-                  image: AssetImage(model.imageLocation),
-                  height: 136,
-                  width: 149,
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    bottomLeft: Radius.circular(5),
+                  ),
+                  child: Image.network(
+                    model.imageLocation,
+                    height: 136,
+                    width: 149,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Expanded(
                   child: Padding(

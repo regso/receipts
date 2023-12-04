@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptHeaderWidget extends StatefulWidget {
-  final ReceiptListItemModel receiptListItemModel;
+  final ReceiptModel receiptListItemModel;
 
   const ReceiptHeaderWidget({super.key, required this.receiptListItemModel});
 
@@ -62,8 +62,10 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
             height: 220.0,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: Image.asset(widget.receiptListItemModel.imageLocation,
-                  fit: BoxFit.fitWidth),
+              child: Image.network(
+                widget.receiptListItemModel.imageLocation,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ],

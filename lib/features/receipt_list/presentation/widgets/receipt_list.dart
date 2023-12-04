@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:receipts/features/receipt_list/data/models/receipt_list_item_model.dart';
-import 'package:receipts/features/receipt_list/data/repositories/receipt_list_repository.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'receipt_list_item.dart';
 
 class ReceiptList extends StatefulWidget {
@@ -17,29 +17,31 @@ class _ReceiptListState extends State<ReceiptList> {
       future: _getReceiptModels(),
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<ReceiptListItemModel>> snapshot,
+        AsyncSnapshot<List<ReceiptModel>> snapshot,
       ) {
+        if (snapshot.hasError) {
+          throw Exception('Error.');
+        }
         if (snapshot.hasData) {
-          List<ReceiptListItemModel> models = snapshot.data ?? [];
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Column(
-              children: models
-                  .map((ReceiptListItemModel model) =>
-                      ReceiptListItem(model: model))
-                  .toList(),
+          List<ReceiptModel> models = snapshot.data ?? [];
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Column(
+                children: models
+                    .map((ReceiptModel model) => ReceiptListItem(model: model))
+                    .toList(),
+              ),
             ),
           );
-        } else if (snapshot.hasError) {
-          return const Text('Error.');
         }
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
 
-  Future<List<ReceiptListItemModel>> _getReceiptModels() async {
-    ReceiptListRepository receiptListRepository = ReceiptListRepository();
-    return await receiptListRepository.getListItems();
+  Future<List<ReceiptModel>> _getReceiptModels() async {
+    ReceiptRepository receiptRepository = ReceiptRepository();
+    return receiptRepository.getList();
   }
 }
