@@ -10,7 +10,7 @@ class ReceiptListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
-      body: const SafeArea(
+      body: SafeArea(
         child: ReceiptList(),
       ),
       bottomNavigationBar: const ReceiptBottomNavigationBar(),

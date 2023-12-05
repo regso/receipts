@@ -43,7 +43,7 @@ class ReceiptDetailsPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: ReceiptDetailsWidget(
-            receiptListItemModel: receiptListItemModel,
+            receipt: receiptListItemModel,
           ),
         ),
       ),

@@ -1,6 +1,8 @@
 class Constants {
   static String apiBaseUrl = 'https://foodapi.dzolotov.tech';
   static String apiGetReceiptUrl = '/recipe';
+  static String apiGetReceiptIngredientUrl = '/recipe_ingredient';
+  static String apiGetIngredientUrl = '/ingredient';
 
   static String acceptLanguageHeader = 'en-US,en;q=0.9,ru;q=0.8';
   static String userAgentHeader =

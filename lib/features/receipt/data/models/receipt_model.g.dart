@@ -20,3 +20,13 @@ Map<String, dynamic> _$ReceiptModelToJson(ReceiptModel instance) =>
       'duration': instance.duration,
       'photo': instance.photo,
     };
+
+ReceiptIdModel _$ReceiptIdModelFromJson(Map<String, dynamic> json) =>
+    ReceiptIdModel(
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$ReceiptIdModelToJson(ReceiptIdModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };

@@ -35,7 +35,7 @@ class IngredientsWidgetItem extends StatelessWidget {
         Flexible(
           fit: FlexFit.tight,
           flex: 2,
-          child: Text(receiptIngredientModel.amount,
+          child: Text(receiptIngredientModel.name,
               style: TextStyle(
                 fontSize: 13,
                 color: AppTheme.receiptDetailsIngredientsAmountColor,

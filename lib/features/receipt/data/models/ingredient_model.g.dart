@@ -10,17 +10,25 @@ IngredientModel _$IngredientModelFromJson(Map<String, dynamic> json) =>
     IngredientModel(
       id: json['id'] as int,
       name: json['name'] as String,
-      amount: json['amount'] as String,
-      caloriesForUnit: json['caloriesForUnit'] as int,
-      measureUnit:
-          MeasureUnit.fromJson(json['measureUnit'] as Map<String, dynamic>),
+      caloriesForUnit: (json['caloriesForUnit'] as num).toDouble(),
+      measureUnitIdModel: MeasureUnitIdModel.fromJson(
+          json['measureUnit'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$IngredientModelToJson(IngredientModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'amount': instance.amount,
       'caloriesForUnit': instance.caloriesForUnit,
-      'measureUnit': instance.measureUnit,
+      'measureUnit': instance.measureUnitIdModel,
+    };
+
+IngredientIdModel _$IngredientIdModelFromJson(Map<String, dynamic> json) =>
+    IngredientIdModel(
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$IngredientIdModelToJson(IngredientIdModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
     };

@@ -4,7 +4,9 @@ import 'package:receipts/features/receipt/data/repositories/receipt_repository.d
 import 'receipt_list_item.dart';
 
 class ReceiptList extends StatefulWidget {
-  const ReceiptList({super.key});
+  final ReceiptRepository receiptRepository = ReceiptRepository();
+  
+  ReceiptList({super.key});
 
   @override
   State<ReceiptList> createState() => _ReceiptListState();
@@ -14,7 +16,7 @@ class _ReceiptListState extends State<ReceiptList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _getReceiptModels(),
+      future: widget.receiptRepository.findReceipts(),
       builder: (
         BuildContext context,
         AsyncSnapshot<List<ReceiptModel>> snapshot,
@@ -38,10 +40,5 @@ class _ReceiptListState extends State<ReceiptList> {
         return const Center(child: CircularProgressIndicator());
       },
     );
-  }
-
-  Future<List<ReceiptModel>> _getReceiptModels() async {
-    ReceiptRepository receiptRepository = ReceiptRepository();
-    return receiptRepository.getList();
   }
 }

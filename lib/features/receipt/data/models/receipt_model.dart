@@ -62,3 +62,17 @@ class ReceiptModel {
         (n % 100 > 4 && n % 100 < 20) ? 2 : cases[min(n % 10, 5)]];
   }
 }
+
+@JsonSerializable()
+class ReceiptIdModel {
+  final int id;
+
+  ReceiptIdModel({
+    required this.id,
+  });
+
+  factory ReceiptIdModel.fromJson(Map<String, dynamic> json) =>
+      _$ReceiptIdModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReceiptIdModelToJson(this);
+}

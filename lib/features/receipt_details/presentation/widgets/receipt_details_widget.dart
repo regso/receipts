@@ -6,29 +6,24 @@ import 'package:receipts/features/receipt_details/presentation/widgets/receipt_h
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptDetailsWidget extends StatelessWidget {
-  final ReceiptModel receiptListItemModel;
+  final ReceiptModel receipt;
 
-  const ReceiptDetailsWidget({super.key, required this.receiptListItemModel});
+  const ReceiptDetailsWidget({super.key, required this.receipt});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ReceiptHeaderWidget(receiptListItemModel: receiptListItemModel),
+        ReceiptHeaderWidget(receiptListItemModel: receipt),
         const SizedBox(height: 20),
-        const IngredientsWidget(
-          receiptIngredientModelList: [],
-              // receiptListItemModel.receiptIngredientModelList,
-        ),
+        IngredientsWidget(receipt: receipt),
         const SizedBox(height: 20),
         const CookingStepsWidget(
-            cookingStepModelList: [],
-            // receiptListItemModel.cookingStepModelList
+          cookingStepModelList: [],
         ),
         const SizedBox(height: 27),
         const CommentListWidget(
           commentModelList: [],
-          // receiptListItemModel.commentModelList,
         ),
       ],
     );
