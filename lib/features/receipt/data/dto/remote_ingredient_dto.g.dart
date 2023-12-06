@@ -1,21 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ingredient_model.dart';
+part of 'remote_ingredient_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-IngredientModel _$IngredientModelFromJson(Map<String, dynamic> json) =>
-    IngredientModel(
+RemoteIngredientDto _$RemoteIngredientDtoFromJson(Map<String, dynamic> json) =>
+    RemoteIngredientDto(
       id: json['id'] as int,
       name: json['name'] as String,
       caloriesForUnit: (json['caloriesForUnit'] as num).toDouble(),
-      measureUnitIdModel: MeasureUnitIdModel.fromJson(
+      measureUnitIdModel: RemoteMeasureUnitIdDto.fromJson(
           json['measureUnit'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$IngredientModelToJson(IngredientModel instance) =>
+Map<String, dynamic> _$RemoteIngredientDtoToJson(
+        RemoteIngredientDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -23,12 +24,14 @@ Map<String, dynamic> _$IngredientModelToJson(IngredientModel instance) =>
       'measureUnit': instance.measureUnitIdModel,
     };
 
-IngredientIdModel _$IngredientIdModelFromJson(Map<String, dynamic> json) =>
-    IngredientIdModel(
+RemoteIngredientIdDto _$RemoteIngredientIdDtoFromJson(
+        Map<String, dynamic> json) =>
+    RemoteIngredientIdDto(
       id: json['id'] as int,
     );
 
-Map<String, dynamic> _$IngredientIdModelToJson(IngredientIdModel instance) =>
+Map<String, dynamic> _$RemoteIngredientIdDtoToJson(
+        RemoteIngredientIdDto instance) =>
     <String, dynamic>{
       'id': instance.id,
     };

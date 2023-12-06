@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'receipt_ingredient_model.dart';
+part of 'remote_receipt_ingredient_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ReceiptIngredientModel _$ReceiptIngredientModelFromJson(
+RemoteReceiptIngredientDto _$RemoteReceiptIngredientDtoFromJson(
         Map<String, dynamic> json) =>
-    ReceiptIngredientModel(
+    RemoteReceiptIngredientDto(
       id: json['id'] as int,
       count: json['count'] as int,
-      ingredientIdModel: IngredientIdModel.fromJson(
+      ingredientIdModel: RemoteIngredientIdDto.fromJson(
           json['ingredient'] as Map<String, dynamic>),
       receiptIdModel: RemoteReceiptDtoIdModel.fromJson(
           json['recipe'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ReceiptIngredientModelToJson(
-        ReceiptIngredientModel instance) =>
+Map<String, dynamic> _$RemoteReceiptIngredientDtoToJson(
+        RemoteReceiptIngredientDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'count': instance.count,

@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:receipts/config/constants.dart';
-import 'package:receipts/features/receipt/data/dto/ingredient_model.dart';
-import 'package:receipts/features/receipt/data/dto/receipt_ingredient_model.dart';
+import 'package:receipts/features/receipt/data/dto/remote_ingredient_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
+import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptRemoteDataSource {
@@ -34,7 +35,9 @@ class ReceiptRemoteDataSource {
     final List<dynamic> ingredientsDecodedJson = response.data as List<dynamic>;
     return ingredientsDecodedJson
         .map((data) {
-          return IngredientModel.fromJson(data);
+          return IngredientModel.fromRemoteReceiptDto(
+            RemoteIngredientDto.fromJson(data),
+          );
         })
         .where((model) => ingredientsIds.contains(model.id))
         .toList();
@@ -50,7 +53,7 @@ class ReceiptRemoteDataSource {
         response.data as List<dynamic>;
     final receiptIngredientModelList = receiptIngredientDecodedJson
         .map((data) {
-          return ReceiptIngredientModel.fromJson(data);
+          return RemoteReceiptIngredientDto.fromJson(data);
         })
         .where((model) => model.receiptIdModel.id == receiptId)
         .toList();
