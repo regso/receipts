@@ -13,8 +13,8 @@ ReceiptIngredientModel _$ReceiptIngredientModelFromJson(
       count: json['count'] as int,
       ingredientIdModel: IngredientIdModel.fromJson(
           json['ingredient'] as Map<String, dynamic>),
-      receiptIdModel:
-          ReceiptIdModel.fromJson(json['recipe'] as Map<String, dynamic>),
+      receiptIdModel: RemoteReceiptDtoIdModel.fromJson(
+          json['recipe'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ReceiptIngredientModelToJson(

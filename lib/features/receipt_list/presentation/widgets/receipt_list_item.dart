@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt_details/presentation/pages/receipt_details_page.dart';
-import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
 
 class ReceiptListItem extends StatelessWidget {
-  final ReceiptModel model;
+  final ReceiptModel receipt;
 
-  const ReceiptListItem({super.key, required this.model});
+  const ReceiptListItem({super.key, required this.receipt});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class ReceiptListItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ReceiptDetailsPage(
-              receiptListItemModel: model,
+              receiptListItemModel: receipt,
             ),
           ),
         );
@@ -46,7 +46,7 @@ class ReceiptListItem extends StatelessWidget {
                     bottomLeft: Radius.circular(5),
                   ),
                   child: Image.network(
-                    model.photo,
+                    receipt.photoUrl,
                     height: 136,
                     width: 149,
                     fit: BoxFit.cover,
@@ -61,7 +61,7 @@ class ReceiptListItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            model.name,
+                            receipt.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
@@ -77,7 +77,7 @@ class ReceiptListItem extends StatelessWidget {
                               const Icon(Icons.access_time, size: 16),
                               const SizedBox(width: 11),
                               Text(
-                                model.getCookingTime(),
+                                receipt.getCookingTime(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,

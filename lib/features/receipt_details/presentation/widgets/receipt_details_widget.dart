@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/comment_list_widget.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/cooking_steps_widget.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/ingredients_widget.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/receipt_header_widget.dart';
-import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
 
 class ReceiptDetailsWidget extends StatelessWidget {
   final ReceiptModel receipt;
@@ -14,7 +14,7 @@ class ReceiptDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ReceiptHeaderWidget(receiptListItemModel: receipt),
+        ReceiptHeaderWidget(receipt: receipt),
         const SizedBox(height: 20),
         IngredientsWidget(receipt: receipt),
         const SizedBox(height: 20),

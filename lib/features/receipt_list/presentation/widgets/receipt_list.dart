@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'receipt_list_item.dart';
 
@@ -25,13 +25,13 @@ class _ReceiptListState extends State<ReceiptList> {
           throw Exception('Error.');
         }
         if (snapshot.hasData) {
-          List<ReceiptModel> models = snapshot.data ?? [];
+          List<ReceiptModel> receipts = snapshot.data ?? [];
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Column(
-                children: models
-                    .map((ReceiptModel model) => ReceiptListItem(model: model))
+                children: receipts
+                    .map((ReceiptModel model) => ReceiptListItem(receipt: model))
                     .toList(),
               ),
             ),

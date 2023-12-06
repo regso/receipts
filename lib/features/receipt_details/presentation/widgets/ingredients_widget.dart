@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/dto/ingredient_model.dart';
-import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/ingredients_widget_item.dart';
 

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:receipts/features/receipt/data/dto/ingredient_model.dart';
-import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
+import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
 
 part 'receipt_ingredient_model.g.dart';
 
@@ -11,7 +11,7 @@ class ReceiptIngredientModel {
   @JsonKey(name: 'ingredient')
   final IngredientIdModel ingredientIdModel;
   @JsonKey(name: 'recipe')
-  final ReceiptIdModel receiptIdModel;
+  final RemoteReceiptDtoIdModel receiptIdModel;
 
   ReceiptIngredientModel({
     required this.id,

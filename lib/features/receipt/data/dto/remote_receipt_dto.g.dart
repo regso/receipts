@@ -1,19 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'receipt_model.dart';
+part of 'remote_receipt_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ReceiptModel _$ReceiptModelFromJson(Map<String, dynamic> json) => ReceiptModel(
+RemoteReceiptDto _$RemoteReceiptDtoFromJson(Map<String, dynamic> json) =>
+    RemoteReceiptDto(
       id: json['id'] as int,
       name: json['name'] as String,
       duration: json['duration'] as int,
       photo: json['photo'] as String,
     );
 
-Map<String, dynamic> _$ReceiptModelToJson(ReceiptModel instance) =>
+Map<String, dynamic> _$RemoteReceiptDtoToJson(RemoteReceiptDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -21,12 +22,14 @@ Map<String, dynamic> _$ReceiptModelToJson(ReceiptModel instance) =>
       'photo': instance.photo,
     };
 
-ReceiptIdModel _$ReceiptIdModelFromJson(Map<String, dynamic> json) =>
-    ReceiptIdModel(
+RemoteReceiptDtoIdModel _$RemoteReceiptDtoIdModelFromJson(
+        Map<String, dynamic> json) =>
+    RemoteReceiptDtoIdModel(
       id: json['id'] as int,
     );
 
-Map<String, dynamic> _$ReceiptIdModelToJson(ReceiptIdModel instance) =>
+Map<String, dynamic> _$RemoteReceiptDtoIdModelToJson(
+        RemoteReceiptDtoIdModel instance) =>
     <String, dynamic>{
       'id': instance.id,
     };

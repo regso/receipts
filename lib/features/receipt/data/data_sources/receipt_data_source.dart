@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/data/dto/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/dto/receipt_ingredient_model.dart';
-import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
+import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptRemoteDataSource {
   final Dio dio;
@@ -14,7 +15,11 @@ class ReceiptRemoteDataSource {
     final List<dynamic> receiptsDecodedJson = response.data as List<dynamic>;
 
     return receiptsDecodedJson
-        .map((data) => ReceiptModel.fromJson(data))
+        .map(
+          (data) => ReceiptModel.fromRemoteReceiptDto(
+            RemoteReceiptDto.fromJson(data),
+          ),
+        )
         .toList();
   }
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptHeaderWidget extends StatefulWidget {
-  final ReceiptModel receiptListItemModel;
+  final ReceiptModel receipt;
 
-  const ReceiptHeaderWidget({super.key, required this.receiptListItemModel});
+  const ReceiptHeaderWidget({super.key, required this.receipt});
 
   @override
   State<ReceiptHeaderWidget> createState() => _ReceiptHeaderWidgetState();
@@ -25,7 +25,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
           Row(
             children: [
               Expanded(
-                child: Text(widget.receiptListItemModel.name,
+                child: Text(widget.receipt.title,
                     style: const TextStyle(fontSize: 24)),
               ),
               IconButton(
@@ -47,7 +47,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
               const Icon(Icons.access_time, size: 16),
               const SizedBox(width: 11),
               Text(
-                widget.receiptListItemModel.getCookingTime(),
+                widget.receipt.getCookingTime(),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -63,7 +63,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Image.network(
-                widget.receiptListItemModel.photo,
+                widget.receipt.photoUrl,
                 fit: BoxFit.cover,
               ),
             ),
