@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:receipts/features/receipt/data/models/measure_unit_model.dart';
+import 'package:receipts/features/receipt/data/dto/measure_unit_model.dart';
 
 part 'ingredient_model.g.dart';
 

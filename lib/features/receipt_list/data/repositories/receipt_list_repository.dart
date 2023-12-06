@@ -2,8 +2,8 @@
 // import 'package:flutter/services.dart';
 // import 'package:receipts/features/receipt_details/data/models/comment_model.dart';
 // import 'package:receipts/features/receipt_details/data/models/cooking_step_model.dart';
-// import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+// import 'package:receipts/features/receipt/data/dto/ingredient_model.dart';
+import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
 
 class ReceiptListRepository {
   Future<List<ReceiptModel>> getListItems() async {

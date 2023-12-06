@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:receipts/config/constants.dart';
-import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
-import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/data/dto/ingredient_model.dart';
+import 'package:receipts/features/receipt/data/dto/receipt_ingredient_model.dart';
+import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
 
 class ReceiptRemoteDataSource {
   final Dio dio;

@@ -3,7 +3,7 @@ import 'package:receipts/features/receipt_details/presentation/widgets/comment_l
 import 'package:receipts/features/receipt_details/presentation/widgets/cooking_steps_widget.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/ingredients_widget.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/receipt_header_widget.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/data/dto/receipt_model.dart';
 
 class ReceiptDetailsWidget extends StatelessWidget {
   final ReceiptModel receipt;
