@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/comment_list_widget.dart';
 import 'package:receipts/features/receipt_details/presentation/widgets/cooking_steps_widget.dart';
-import 'package:receipts/features/receipt_details/presentation/widgets/ingredients_widget.dart';
-import 'package:receipts/features/receipt_details/presentation/widgets/receipt_header_widget.dart';
+import 'package:receipts/features/receipt/presentation/widgets/ingredients_widget.dart';
+import 'package:receipts/features/receipt/presentation/widgets/receipt_header_widget.dart';
 
-class ReceiptDetailsWidget extends StatelessWidget {
+class ReceiptWidget extends StatelessWidget {
   final ReceiptModel receipt;
 
-  const ReceiptDetailsWidget({super.key, required this.receipt});
+  const ReceiptWidget({super.key, required this.receipt});
 
   @override
   Widget build(BuildContext context) {

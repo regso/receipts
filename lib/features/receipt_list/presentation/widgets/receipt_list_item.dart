@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
-import 'package:receipts/features/receipt_details/presentation/pages/receipt_details_page.dart';
+import 'package:receipts/features/receipt/presentation/pages/receipt_page.dart';
 
 class ReceiptListItem extends StatelessWidget {
   final ReceiptModel receipt;
@@ -15,8 +15,8 @@ class ReceiptListItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ReceiptDetailsPage(
-              receiptListItemModel: receipt,
+            builder: (context) => ReceiptPage(
+              receipt: receipt,
             ),
           ),
         );

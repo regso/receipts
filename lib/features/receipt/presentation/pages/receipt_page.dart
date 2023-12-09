@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
-import 'package:receipts/features/receipt_details/presentation/widgets/receipt_details_widget.dart';
+import 'package:receipts/features/receipt/presentation/widgets/receipt_widget.dart';
 
-class ReceiptDetailsPage extends StatelessWidget {
-  final ReceiptModel receiptListItemModel;
+class ReceiptPage extends StatelessWidget {
+  final ReceiptModel receipt;
 
-  const ReceiptDetailsPage({super.key, required this.receiptListItemModel});
+  const ReceiptPage({super.key, required this.receipt});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class ReceiptDetailsPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: ReceiptDetailsWidget(
-            receipt: receiptListItemModel,
+          child: ReceiptWidget(
+            receipt: receipt,
           ),
         ),
       ),
