@@ -22,14 +22,14 @@ Map<String, dynamic> _$RemoteReceiptDtoToJson(RemoteReceiptDto instance) =>
       'photo': instance.photo,
     };
 
-RemoteReceiptDtoIdModel _$RemoteReceiptDtoIdModelFromJson(
+RemoteReceiptIdDto _$RemoteReceiptDtoIdModelFromJson(
         Map<String, dynamic> json) =>
-    RemoteReceiptDtoIdModel(
+    RemoteReceiptIdDto(
       id: json['id'] as int,
     );
 
 Map<String, dynamic> _$RemoteReceiptDtoIdModelToJson(
-        RemoteReceiptDtoIdModel instance) =>
+        RemoteReceiptIdDto instance) =>
     <String, dynamic>{
       'id': instance.id,
     };

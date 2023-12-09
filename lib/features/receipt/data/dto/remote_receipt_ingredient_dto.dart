@@ -9,15 +9,15 @@ class RemoteReceiptIngredientDto {
   final int id;
   final int count;
   @JsonKey(name: 'ingredient')
-  final RemoteIngredientIdDto ingredientIdModel;
+  final RemoteIngredientIdDto ingredientIdDto;
   @JsonKey(name: 'recipe')
-  final RemoteReceiptDtoIdModel receiptIdModel;
+  final RemoteReceiptIdDto receiptIdDto;
 
   RemoteReceiptIngredientDto({
     required this.id,
     required this.count,
-    required this.ingredientIdModel,
-    required this.receiptIdModel,
+    required this.ingredientIdDto,
+    required this.receiptIdDto,
   });
 
   factory RemoteReceiptIngredientDto.fromJson(Map<String, dynamic> json) =>

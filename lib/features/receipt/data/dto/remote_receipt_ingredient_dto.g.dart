@@ -11,9 +11,9 @@ RemoteReceiptIngredientDto _$RemoteReceiptIngredientDtoFromJson(
     RemoteReceiptIngredientDto(
       id: json['id'] as int,
       count: json['count'] as int,
-      ingredientIdModel: RemoteIngredientIdDto.fromJson(
+      ingredientIdDto: RemoteIngredientIdDto.fromJson(
           json['ingredient'] as Map<String, dynamic>),
-      receiptIdModel: RemoteReceiptDtoIdModel.fromJson(
+      receiptIdDto: RemoteReceiptIdDto.fromJson(
           json['recipe'] as Map<String, dynamic>),
     );
 
@@ -22,6 +22,6 @@ Map<String, dynamic> _$RemoteReceiptIngredientDtoToJson(
     <String, dynamic>{
       'id': instance.id,
       'count': instance.count,
-      'ingredient': instance.ingredientIdModel,
-      'recipe': instance.receiptIdModel,
+      'ingredient': instance.ingredientIdDto,
+      'recipe': instance.receiptIdDto,
     };

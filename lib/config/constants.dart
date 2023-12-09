@@ -3,6 +3,7 @@ class Constants {
   static String apiGetReceiptUrl = '/recipe';
   static String apiGetReceiptIngredientUrl = '/recipe_ingredient';
   static String apiGetIngredientUrl = '/ingredient';
+  static String apiGetMeasureUnitUrl = '/measure_unit';
 
   static String acceptLanguageHeader = 'en-US,en;q=0.9,ru;q=0.8';
   static String userAgentHeader =

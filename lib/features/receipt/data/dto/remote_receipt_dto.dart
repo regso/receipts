@@ -23,14 +23,14 @@ class RemoteReceiptDto {
 }
 
 @JsonSerializable()
-class RemoteReceiptDtoIdModel {
+class RemoteReceiptIdDto {
   final int id;
 
-  RemoteReceiptDtoIdModel({
+  RemoteReceiptIdDto({
     required this.id,
   });
 
-  factory RemoteReceiptDtoIdModel.fromJson(Map<String, dynamic> json) =>
+  factory RemoteReceiptIdDto.fromJson(Map<String, dynamic> json) =>
       _$RemoteReceiptDtoIdModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$RemoteReceiptDtoIdModelToJson(this);

@@ -35,11 +35,14 @@ class IngredientsWidgetItem extends StatelessWidget {
         Flexible(
           fit: FlexFit.tight,
           flex: 2,
-          child: Text(ingredient.amount,
-              style: TextStyle(
-                fontSize: 13,
-                color: AppTheme.receiptDetailsIngredientsAmountColor,
-              )),
+          child: Text(
+            (ingredient.amount > 0 ? '${ingredient.amount} ' : '') +
+                ingredient.measure,
+            style: TextStyle(
+              fontSize: 13,
+              color: AppTheme.receiptDetailsIngredientsAmountColor,
+            ),
+          ),
         ),
       ],
     );
