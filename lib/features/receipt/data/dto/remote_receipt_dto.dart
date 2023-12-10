@@ -31,7 +31,7 @@ class RemoteReceiptIdDto {
   });
 
   factory RemoteReceiptIdDto.fromJson(Map<String, dynamic> json) =>
-      _$RemoteReceiptDtoIdModelFromJson(json);
+      _$RemoteReceiptIdDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RemoteReceiptDtoIdModelToJson(this);
+  Map<String, dynamic> toJson() => _$RemoteReceiptIdDtoToJson(this);
 }

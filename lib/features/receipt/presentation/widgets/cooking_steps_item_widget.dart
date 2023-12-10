@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/features/receipt_details/data/models/cooking_step_model.dart';
+import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
 
-class CookingStepWidget extends StatefulWidget {
-  final CookingStepModel cookingStepModel;
-  final int number;
+class CookingStepsItemWidget extends StatefulWidget {
+  final CookingStepModel cookingStep;
 
-  const CookingStepWidget(
-      {super.key, required this.cookingStepModel, required this.number});
+  const CookingStepsItemWidget({super.key, required this.cookingStep});
 
   @override
-  State<CookingStepWidget> createState() => _CookingStepWidgetState();
+  State<CookingStepsItemWidget> createState() => _CookingStepsItemWidgetState();
 }
 
-class _CookingStepWidgetState extends State<CookingStepWidget> {
+class _CookingStepsItemWidgetState extends State<CookingStepsItemWidget> {
   bool _checked = false;
 
   @override
   Widget build(BuildContext context) {
     String timeMinutes =
-        widget.cookingStepModel.cookingTimeMinutes.toString().padLeft(2, '0');
+        widget.cookingStep.cookingTimeMinutes.toString().padLeft(2, '0');
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -30,7 +28,7 @@ class _CookingStepWidgetState extends State<CookingStepWidget> {
           Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              widget.number.toString(),
+              widget.cookingStep.number.toString(),
               style: TextStyle(
                 fontSize: 40,
                 color: AppTheme.receiptDetailsCookingStepLeadingColor,
@@ -41,7 +39,7 @@ class _CookingStepWidgetState extends State<CookingStepWidget> {
               child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 17),
             child: Text(
-              widget.cookingStepModel.title,
+              widget.cookingStep.title,
               style: TextStyle(
                 fontSize: 12,
                 color: AppTheme.receiptDetailsCookingStepTitleColor,

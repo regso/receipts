@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'remote_receipt_ingredient_dto.dart';
+part of 'remote_cooking_step_link_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RemoteReceiptIngredientDto _$RemoteReceiptIngredientDtoFromJson(
+RemoteCookingStepLinkDto _$RemoteCookingStepLinkDtoFromJson(
         Map<String, dynamic> json) =>
-    RemoteReceiptIngredientDto(
+    RemoteCookingStepLinkDto(
       id: json['id'] as int,
-      count: json['count'] as int,
-      ingredientIdDto: RemoteIngredientIdDto.fromJson(
-          json['ingredient'] as Map<String, dynamic>),
+      number: json['number'] as int,
       receiptIdDto:
           RemoteReceiptIdDto.fromJson(json['recipe'] as Map<String, dynamic>),
+      cookingStepIdDto:
+          RemoteCookingStepIdDto.fromJson(json['step'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$RemoteReceiptIngredientDtoToJson(
-        RemoteReceiptIngredientDto instance) =>
+Map<String, dynamic> _$RemoteCookingStepLinkDtoToJson(
+        RemoteCookingStepLinkDto instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'count': instance.count,
-      'ingredient': instance.ingredientIdDto,
+      'number': instance.number,
       'recipe': instance.receiptIdDto,
+      'step': instance.cookingStepIdDto,
     };
