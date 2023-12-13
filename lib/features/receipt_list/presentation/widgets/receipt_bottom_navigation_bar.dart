@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:receipts/config/constants.dart';
 import '../../../../config/app_theme.dart';
 import '../../../../config/labels.dart';
 
@@ -18,13 +19,13 @@ class _ReceiptBottomNavigationBarState
 
   final List<BottomNavigationBarItem> _items = [
     BottomNavigationBarItem(
-      icon: Image.asset('assets/images/pizza_gray.png'),
-      activeIcon: Image.asset('assets/images/pizza.png'),
+      icon: Image.asset(Constants.appIconPizzaPath),
+      activeIcon: Image.asset(Constants.appIconPizzaActivePath),
       label: Labels.receipts,
     ),
     BottomNavigationBarItem(
-      icon: Image.asset('assets/images/user_gray.png'),
-      activeIcon: Image.asset('assets/images/user.png'),
+      icon: Image.asset(Constants.appIconUserPath),
+      activeIcon: Image.asset(Constants.appIconUserActivePath),
       label: Labels.signIn,
     ),
   ];

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/config/constants.dart';
 
-class CommentWidget extends StatelessWidget {
+class CommentsItemWidget extends StatelessWidget {
   final String text;
 
-  const CommentWidget({super.key, required this.text});
+  const CommentsItemWidget({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class CommentWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 10, right: 18),
           child: CircleAvatar(
-            child: Image.asset('assets/images/user_avatar_example.png'),
+            child: Image.asset(Constants.appIconAvatarPath),
           ),
         ),
         Expanded(

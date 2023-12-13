@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class ReceiptHeaderWidget extends StatefulWidget {
@@ -30,8 +31,8 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
               ),
               IconButton(
                 icon: _liked
-                    ? Image.asset('assets/images/liked.png')
-                    : Image.asset('assets/images/unliked.png'),
+                    ? Image.asset(Constants.appIconLikedPath)
+                    : Image.asset(Constants.appIconUnLikedPath),
                 iconSize: 30,
                 onPressed: () {
                   setState(() {
