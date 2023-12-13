@@ -1,12 +1,17 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/localization.dart';
+import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_link_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
+import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
 import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
@@ -121,5 +126,45 @@ class RemoteReceiptDataSource {
         .map((data) => RemoteReceiptIngredientDto.fromJson(data))
         .where((dto) => dto.receiptIdDto.id == receiptId)
         .toList();
+  }
+
+  Future<List<CommentModel>> findCommentsByReceiptId(int receiptId) async {
+    return (await _findComments())
+        .where((CommentModel model) => model.receiptId == receiptId)
+        .toList();
+  }
+
+  Future<List<CommentModel>> _findComments() async {
+    final response = await dio.get(Constants.apiGetCommentUrl);
+    final commentDecodedJson = response.data as List<dynamic>;
+    return commentDecodedJson
+        .map(
+          (data) => CommentModel.fromRemoteCommentDto(
+            RemoteCommentDto.fromJson(data),
+          ),
+        )
+        .toList();
+  }
+
+  Future<void> saveComment(CommentModel comment) async {
+    final commentDto = RemoteCommentDto.fromModel(comment);
+    final jsonData = commentDto.toJson();
+    if (jsonData['id'] == 0) {
+      jsonData['id'] = await _getCommentNextId();
+    }
+
+    final response = await dio.post(
+      Constants.apiPostCommentUrl,
+      data: jsonData,
+    );
+
+    debugPrint(response.statusCode.toString());
+    debugPrint(response.data.toString());
+    debugPrint(response.headers.toString());
+  }
+
+  Future<int> _getCommentNextId() async {
+    final comments = await _findComments();
+    return comments.fold<int>(1, (prev, model) => max(prev, model.id)) + 1;
   }
 }

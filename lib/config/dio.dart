@@ -9,9 +9,9 @@ final Dio dio = Dio(
     baseUrl: Constants.apiBaseUrl,
     headers: {
       HttpHeaders.acceptHeader: '*/*',
-      HttpHeaders.acceptLanguageHeader: Constants.acceptLanguageHeader,
-      HttpHeaders.userAgentHeader: Constants.userAgentHeader,
-      HttpHeaders.refererHeader: Constants.refererHeader,
+      HttpHeaders.acceptLanguageHeader: Constants.httpAcceptLanguageHeader,
+      HttpHeaders.userAgentHeader: Constants.httpUserAgentHeader,
+      HttpHeaders.refererHeader: Constants.httpRefererHeader,
     },
     connectTimeout: const Duration(seconds: 10),
     receiveTimeout: const Duration(seconds: 60),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
-import 'package:receipts/features/receipt_details/presentation/widgets/comment_list_widget.dart';
+import 'package:receipts/features/receipt/presentation/widgets/comment_list_widget.dart';
 import 'package:receipts/features/receipt/presentation/widgets/cooking_steps_widget.dart';
 import 'package:receipts/features/receipt/presentation/widgets/ingredients_widget.dart';
 import 'package:receipts/features/receipt/presentation/widgets/receipt_header_widget.dart';
@@ -20,9 +20,7 @@ class ReceiptWidget extends StatelessWidget {
         const SizedBox(height: 20),
         CookingStepsWidget(receiptId: receipt.id),
         const SizedBox(height: 27),
-        const CommentListWidget(
-          commentModelList: [],
-        ),
+        CommentListWidget(receiptId: receipt.id),
       ],
     );
   }
