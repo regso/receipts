@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 
-class IngredientsWidgetItem extends StatelessWidget {
+class IngredientsItemWidget extends StatelessWidget {
   final IngredientModel ingredient;
 
-  const IngredientsWidgetItem({
+  const IngredientsItemWidget({
     super.key,
     required this.ingredient,
   });

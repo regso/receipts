@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/localization.dart';
 import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
@@ -152,15 +151,7 @@ class RemoteReceiptDataSource {
     if (jsonData['id'] == 0) {
       jsonData['id'] = await _getCommentNextId();
     }
-
-    final response = await dio.post(
-      Constants.apiPostCommentUrl,
-      data: jsonData,
-    );
-
-    debugPrint(response.statusCode.toString());
-    debugPrint(response.data.toString());
-    debugPrint(response.headers.toString());
+    await dio.post(Constants.apiPostCommentUrl, data: jsonData);
   }
 
   Future<int> _getCommentNextId() async {

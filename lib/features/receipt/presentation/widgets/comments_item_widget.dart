@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/config/constants.dart';
+import 'package:receipts/features/receipt/data/models/comment_model.dart';
 
-class CommentWidget extends StatelessWidget {
-  final String text;
+class CommentsItemWidget extends StatelessWidget {
+  final CommentModel comment;
 
-  const CommentWidget({super.key, required this.text});
+  const CommentsItemWidget({super.key, required this.comment});
 
   @override
   Widget build(BuildContext context) {
+    final datetime = DateTime.parse(comment.createdAt);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 10, right: 18),
           child: CircleAvatar(
-            child: Image.asset('assets/images/user_avatar_example.png'),
+            child: Image.asset(Constants.appIconAvatarPath),
           ),
         ),
         Expanded(
@@ -33,7 +37,7 @@ class CommentWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '25.05.2022',
+                    DateFormat('dd.MM.yyyy').format(datetime),
                     style: TextStyle(
                       fontSize: 14,
                       color: AppTheme.receiptCommentDateColor,
@@ -42,7 +46,7 @@ class CommentWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 4),
-              Text(text, style: const TextStyle(fontSize: 16)),
+              Text(comment.text, style: const TextStyle(fontSize: 16)),
             ],
           ),
         )

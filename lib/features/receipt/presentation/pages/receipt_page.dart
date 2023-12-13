@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt/presentation/widgets/receipt_widget.dart';
@@ -34,7 +35,7 @@ class ReceiptPage extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: Image.asset('assets/images/horn.png'),
+                icon: Image.asset(Constants.appIconHornPath),
               ),
             ],
           ),

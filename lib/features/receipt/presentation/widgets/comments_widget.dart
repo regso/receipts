@@ -3,18 +3,18 @@ import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
-import 'package:receipts/features/receipt/presentation/widgets/comment_widget.dart';
+import 'package:receipts/features/receipt/presentation/widgets/comments_item_widget.dart';
 
-class CommentListWidget extends StatefulWidget {
+class CommentsWidget extends StatefulWidget {
   final int receiptId;
 
-  const CommentListWidget({super.key, required this.receiptId});
+  const CommentsWidget({super.key, required this.receiptId});
 
   @override
-  State<CommentListWidget> createState() => _CommentListWidgetState();
+  State<CommentsWidget> createState() => _CommentsWidgetState();
 }
 
-class _CommentListWidgetState extends State<CommentListWidget> {
+class _CommentsWidgetState extends State<CommentsWidget> {
   final ReceiptRepository receiptRepository = ReceiptRepository();
   final TextEditingController _textController = TextEditingController();
 
@@ -35,7 +35,7 @@ class _CommentListWidgetState extends State<CommentListWidget> {
         final commentWidgets = comments.map((CommentModel model) {
           return Column(
             children: [
-              CommentWidget(text: model.text),
+              CommentsItemWidget(comment: model),
               const SizedBox(height: 25),
             ],
           );

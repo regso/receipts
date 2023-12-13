@@ -4,7 +4,7 @@ import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
-import 'package:receipts/features/receipt/presentation/widgets/ingredients_widget_item.dart';
+import 'package:receipts/features/receipt/presentation/widgets/ingredients_item_widget.dart';
 
 class IngredientsWidget extends StatefulWidget {
   final ReceiptModel receipt;
@@ -53,7 +53,7 @@ class _IngredientsWidgetState extends State<IngredientsWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: ingredients
                       .map(
-                        (IngredientModel model) => IngredientsWidgetItem(
+                        (IngredientModel model) => IngredientsItemWidget(
                           ingredient: model,
                         ),
                       )
