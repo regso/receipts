@@ -10,8 +10,10 @@ class Constants {
   static String appIconUserPath = 'assets/images/user_gray.png';
   static String appIconUserActivePath = 'assets/images/user.png';
 
-  static String hiveReceiptsBoxName = 'receipts_box';
-  static String hiveCommentsBoxName = 'comments_box';
+  static String hiveReceiptsBoxName = 'receipts_box_0';
+  static String hiveIngredientsBoxName = 'ingredients_box_1';
+  static String hiveCookingStepBoxName = 'cooking_steps_box_2';
+  static String hiveCommentsBoxName = 'comments_box_3';
 
   static String apiBaseUrl = 'https://foodapi.dzolotov.tech';
   static String apiGetReceiptUrl = '/recipe';

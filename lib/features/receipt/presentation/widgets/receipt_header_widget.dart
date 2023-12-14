@@ -63,10 +63,12 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
             height: 220.0,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: Image.network(
-                widget.receipt.photoUrl,
-                fit: BoxFit.cover,
-              ),
+              child: widget.receipt.isOnline
+                  ? Image.network(
+                      widget.receipt.photoUrl,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(color: AppTheme.cardImageBackgroundColor),
             ),
           ),
         ],
