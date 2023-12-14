@@ -23,7 +23,7 @@ class RemoteMeasureUnitDto {
 }
 
 @JsonSerializable()
-class RemoteMeasureUnitIdDto{
+class RemoteMeasureUnitIdDto {
   final int id;
 
   RemoteMeasureUnitIdDto({required this.id});

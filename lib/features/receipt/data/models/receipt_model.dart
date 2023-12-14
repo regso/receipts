@@ -7,7 +7,7 @@ import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
 part 'receipt_model.g.dart';
 
 @HiveType(typeId: 0)
-class ReceiptModel{
+class ReceiptModel {
   @HiveField(0)
   int id;
   @HiveField(1)

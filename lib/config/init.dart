@@ -6,7 +6,7 @@ import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 late Box<ReceiptModel> receiptsBox;
 late Box<CommentModel> commentsBox;
 
-Future<void> initApp () async {
+Future<void> initApp() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ReceiptModelAdapter());
   Hive.registerAdapter(CommentModelAdapter());

@@ -5,7 +5,7 @@ import 'receipt_list_item.dart';
 
 class ReceiptList extends StatefulWidget {
   final ReceiptRepository receiptRepository = ReceiptRepository();
-  
+
   ReceiptList({super.key});
 
   @override
@@ -31,7 +31,8 @@ class _ReceiptListState extends State<ReceiptList> {
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Column(
                 children: receipts
-                    .map((ReceiptModel model) => ReceiptListItem(receipt: model))
+                    .map(
+                        (ReceiptModel model) => ReceiptListItem(receipt: model))
                     .toList(),
               ),
             ),
