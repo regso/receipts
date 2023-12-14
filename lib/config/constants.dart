@@ -1,5 +1,6 @@
 class Constants {
   static int appUserId = 1;
+
   static String appIconAvatarPath = 'assets/images/user_avatar_example.png';
   static String appIconHornPath = 'assets/images/horn.png';
   static String appIconLikedPath = 'assets/images/liked.png';
@@ -8,6 +9,9 @@ class Constants {
   static String appIconPizzaActivePath = 'assets/images/pizza.png';
   static String appIconUserPath = 'assets/images/user_gray.png';
   static String appIconUserActivePath = 'assets/images/user.png';
+
+  static String hiveReceiptsBoxName = 'receipts_box';
+  static String hiveCommentsBoxName = 'comments_box';
 
   static String apiBaseUrl = 'https://foodapi.dzolotov.tech';
   static String apiGetReceiptUrl = '/recipe';

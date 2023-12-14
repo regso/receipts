@@ -45,12 +45,18 @@ class ReceiptListItem extends StatelessWidget {
                     topLeft: Radius.circular(5),
                     bottomLeft: Radius.circular(5),
                   ),
-                  child: Image.network(
-                    receipt.photoUrl,
-                    height: 136,
-                    width: 149,
-                    fit: BoxFit.cover,
-                  ),
+                  child: receipt.isOnline
+                      ? Image.network(
+                          receipt.photoUrl,
+                          height: 136,
+                          width: 149,
+                          fit: BoxFit.cover,
+                        )
+                      : Container(
+                          height: 136,
+                          width: 149,
+                          color: AppTheme.cardImageBackgroundColor,
+                        ),
                 ),
                 Expanded(
                   child: Padding(

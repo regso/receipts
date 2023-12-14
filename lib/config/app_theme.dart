@@ -7,6 +7,7 @@ class AppTheme {
   static Color cardBackgroundColor = Colors.white;
   static Color cardShadowColor = const Color(0x19929292);
   static Color cardSubTitleColor = const Color(0xFF2ECC71);
+  static Color cardImageBackgroundColor = Colors.grey.withOpacity(0.5);
 
   static Color navBarShadowColor = Colors.black.withOpacity(0.25);
   static Color navBarSelectedItemColor = const Color(0xFF2ECC71);
