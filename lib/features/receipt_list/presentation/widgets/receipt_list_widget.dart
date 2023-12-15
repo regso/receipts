@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
-import 'receipt_list_item.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'receipt_list_item_widget.dart';
 
-class ReceiptList extends StatefulWidget {
+class ReceiptListWidget extends StatefulWidget {
   final ReceiptRepository receiptRepository = ReceiptRepository();
 
-  ReceiptList({super.key});
+  ReceiptListWidget({super.key});
 
   @override
-  State<ReceiptList> createState() => _ReceiptListState();
+  State<ReceiptListWidget> createState() => _ReceiptListWidgetState();
 }
 
-class _ReceiptListState extends State<ReceiptList> {
+class _ReceiptListWidgetState extends State<ReceiptListWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: widget.receiptRepository.findReceipts(),
       builder: (
         BuildContext context,
-        AsyncSnapshot<List<ReceiptModel>> snapshot,
+        AsyncSnapshot<List<ReceiptEntity>> snapshot,
       ) {
         if (snapshot.hasError) {
           throw Exception('Error.');
         }
         if (snapshot.hasData) {
-          List<ReceiptModel> receipts = snapshot.data ?? [];
+          List<ReceiptEntity> receipts = snapshot.data ?? [];
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Column(
                 children: receipts
-                    .map(
-                        (ReceiptModel model) => ReceiptListItem(receipt: model))
+                    .map((ReceiptEntity model) =>
+                        ReceiptListItemWidget(receipt: model))
                     .toList(),
               ),
             ),

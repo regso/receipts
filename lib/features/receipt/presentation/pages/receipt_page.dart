@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/receipt_widget.dart';
 
 class ReceiptPage extends StatelessWidget {
-  final ReceiptModel receipt;
+  final ReceiptEntity receipt;
 
   const ReceiptPage({super.key, required this.receipt});
 

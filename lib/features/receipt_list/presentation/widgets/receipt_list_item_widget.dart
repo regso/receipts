@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/pages/receipt_page.dart';
 
-class ReceiptListItem extends StatelessWidget {
-  final ReceiptModel receipt;
+class ReceiptListItemWidget extends StatelessWidget {
+  final ReceiptEntity receipt;
 
-  const ReceiptListItem({super.key, required this.receipt});
+  const ReceiptListItemWidget({super.key, required this.receipt});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class ReceiptListItem extends StatelessWidget {
                     topLeft: Radius.circular(5),
                     bottomLeft: Radius.circular(5),
                   ),
-                  child: receipt.isOnline
+                  child: receipt.photoUrl != ''
                       ? Image.network(
                           receipt.photoUrl,
                           height: 136,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class ReceiptHeaderWidget extends StatefulWidget {
-  final ReceiptModel receipt;
+  final ReceiptEntity receipt;
 
   const ReceiptHeaderWidget({super.key, required this.receipt});
 
@@ -63,7 +63,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
             height: 220.0,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: widget.receipt.isOnline
+              child: widget.receipt.photoUrl != ''
                   ? Image.network(
                       widget.receipt.photoUrl,
                       fit: BoxFit.cover,

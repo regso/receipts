@@ -12,7 +12,7 @@ class Constants {
 
   static String hiveReceiptsBoxName = 'receipts_box_0';
   static String hiveIngredientsBoxName = 'ingredients_box_1';
-  static String hiveCookingStepBoxName = 'cooking_steps_box_2';
+  static String hiveCookingStepsBoxName = 'cooking_steps_box_2';
   static String hiveCommentsBoxName = 'comments_box_3';
 
   static String apiBaseUrl = 'https://foodapi.dzolotov.tech';

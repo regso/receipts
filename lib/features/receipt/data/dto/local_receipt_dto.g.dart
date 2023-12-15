@@ -1,34 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'receipt_model.dart';
+part of 'local_receipt_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ReceiptModelAdapter extends TypeAdapter<ReceiptModel> {
+class LocalReceiptDtoAdapter extends TypeAdapter<LocalReceiptDto> {
   @override
   final int typeId = 0;
 
   @override
-  ReceiptModel read(BinaryReader reader) {
+  LocalReceiptDto read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ReceiptModel(
+    return LocalReceiptDto(
       id: fields[0] as int,
       title: fields[1] as String,
       cookingTimeMinutes: fields[2] as int,
       photoUrl: fields[3] as String,
-      isOnline: fields[4] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ReceiptModel obj) {
+  void write(BinaryWriter writer, LocalReceiptDto obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -36,9 +35,7 @@ class ReceiptModelAdapter extends TypeAdapter<ReceiptModel> {
       ..writeByte(2)
       ..write(obj.cookingTimeMinutes)
       ..writeByte(3)
-      ..write(obj.photoUrl)
-      ..writeByte(4)
-      ..write(obj.isOnline);
+      ..write(obj.photoUrl);
   }
 
   @override
@@ -47,7 +44,7 @@ class ReceiptModelAdapter extends TypeAdapter<ReceiptModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ReceiptModelAdapter &&
+      other is LocalReceiptDtoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

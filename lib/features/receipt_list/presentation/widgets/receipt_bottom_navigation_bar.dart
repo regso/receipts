@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
-import '../../../../config/app_theme.dart';
-import '../../../../config/labels.dart';
+import 'package:receipts/config/labels.dart';
 
 class ReceiptBottomNavigationBar extends StatefulWidget {
   const ReceiptBottomNavigationBar({

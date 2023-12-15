@@ -41,12 +41,14 @@ class RemoteReceiptDataSource {
     );
     final cookingStepDtoMap = await _getCookingStepDtoMap();
 
-    return cookingStepLinkDtoList.map((dto) {
-      return CookingStepModel.fromRemoteCookingStepDtoAndNumber(
-        cookingStepDtoMap[dto.cookingStepIdDto.id]!,
-        dto.number,
-      );
-    }).toList();
+    return cookingStepLinkDtoList
+        .map(
+          (dto) => CookingStepModel.fromRemoteCookingStepDtoAndNumber(
+            cookingStepDtoMap[dto.cookingStepIdDto.id]!,
+            dto.number,
+          ),
+        )
+        .toList();
   }
 
   Future<List<RemoteCookingStepLinkDto>> _findCookingStepLinkDtoListByReceiptId(

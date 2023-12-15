@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/ingredients_item_widget.dart';
 
 class IngredientsWidget extends StatefulWidget {
-  final ReceiptModel receipt;
+  final ReceiptEntity receipt;
   final ReceiptRepository receiptRepository = ReceiptRepository();
 
   IngredientsWidget({super.key, required this.receipt});

@@ -6,6 +6,7 @@ import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
 import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class ReceiptRepository {
   RemoteReceiptDataSource remoteReceiptDataSource = RemoteReceiptDataSource(
@@ -15,22 +16,15 @@ class ReceiptRepository {
     receiptsBox: receiptsBox,
   );
 
-  Future<List<ReceiptModel>> findReceipts() async {
+  Future<List<ReceiptEntity>> findReceipts() async {
     late List<ReceiptModel> receipts;
     try {
       receipts = await remoteReceiptDataSource.findReceipts();
+      await localReceiptDataSource.saveReceipts(receipts);
     } on Exception {
-      return receiptsBox.values.map((model) {
-        model.isOnline = false;
-        return model;
-      }).toList();
+      receipts = await localReceiptDataSource.findReceipts();
     }
 
-    final receiptsMap = <int, ReceiptModel>{
-      for (ReceiptModel model in receipts) model.id: model
-    };
-    await receiptsBox.clear();
-    await receiptsBox.putAll(receiptsMap);
     return receipts;
   }
 
