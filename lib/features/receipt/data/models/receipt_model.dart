@@ -3,7 +3,7 @@ import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class ReceiptModel extends ReceiptEntity {
-  ReceiptModel({
+  ReceiptModel._({
     required super.id,
     required super.title,
     required super.cookingTimeMinutes,
@@ -11,7 +11,7 @@ class ReceiptModel extends ReceiptEntity {
   });
 
   factory ReceiptModel.fromRemoteReceiptDto(RemoteReceiptDto dto) {
-    return ReceiptModel(
+    return ReceiptModel._(
       id: dto.id,
       title: dto.name,
       cookingTimeMinutes: dto.duration,
@@ -20,7 +20,7 @@ class ReceiptModel extends ReceiptEntity {
   }
 
   factory ReceiptModel.fromLocalReceiptDto(LocalReceiptDto dto) {
-    return ReceiptModel(
+    return ReceiptModel._(
       id: dto.id,
       title: dto.title,
       cookingTimeMinutes: dto.cookingTimeMinutes,

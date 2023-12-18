@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
+import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/ingredients_item_widget.dart';
 
 class IngredientsWidget extends StatefulWidget {
@@ -19,9 +20,9 @@ class IngredientsWidget extends StatefulWidget {
 class _IngredientsWidgetState extends State<IngredientsWidget> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<IngredientModel>>(
-      future: widget.receiptRepository.findIngredientsByReceiptId(
-        widget.receipt.id,
+    return FutureBuilder<List<ReceiptIngredientEntity>>(
+      future: widget.receiptRepository.findReceiptIngredientsByReceipt(
+        widget.receipt,
       ),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
@@ -32,7 +33,7 @@ class _IngredientsWidgetState extends State<IngredientsWidget> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        List<IngredientModel> ingredients = snapshot.data;
+        List<ReceiptIngredientModel> receiptIngredients = snapshot.data;
         return Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -51,10 +52,10 @@ class _IngredientsWidgetState extends State<IngredientsWidget> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: ingredients
+                  children: receiptIngredients
                       .map(
-                        (IngredientModel model) => IngredientsItemWidget(
-                          ingredient: model,
+                        (ReceiptIngredientModel model) => IngredientsItemWidget(
+                          receiptIngredient: model,
                         ),
                       )
                       .toList(),

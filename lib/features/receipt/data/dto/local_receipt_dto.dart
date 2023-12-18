@@ -21,12 +21,15 @@ class LocalReceiptDto {
     required this.photoUrl,
   });
 
-  factory LocalReceiptDto.fromModel(ReceiptModel model) {
+  factory LocalReceiptDto.fromModelAndPhotoUrl(
+    ReceiptModel model, [
+    String? photoUrl,
+  ]) {
     return LocalReceiptDto(
       id: model.id,
       title: model.title,
       cookingTimeMinutes: model.cookingTimeMinutes,
-      photoUrl: model.photoUrl,
+      photoUrl: photoUrl ?? model.photoUrl,
     );
   }
 }

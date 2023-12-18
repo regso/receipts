@@ -1,41 +1,42 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ingredient_model.dart';
+part of 'local_receipt_ingredient_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class IngredientModelAdapter extends TypeAdapter<IngredientModel> {
+class LocalReceiptIngredientDtoAdapter
+    extends TypeAdapter<LocalReceiptIngredientDto> {
   @override
-  final int typeId = 1;
+  final int typeId = 5;
 
   @override
-  IngredientModel read(BinaryReader reader) {
+  LocalReceiptIngredientDto read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return IngredientModel(
+    return LocalReceiptIngredientDto(
       id: fields[0] as int,
-      title: fields[1] as String,
-      amount: fields[2] as int,
-      measure: fields[3] as String,
+      count: fields[1] as int,
+      ingredientId: fields[2] as int,
+      receiptId: fields[3] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, IngredientModel obj) {
+  void write(BinaryWriter writer, LocalReceiptIngredientDto obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj.count)
       ..writeByte(2)
-      ..write(obj.amount)
+      ..write(obj.ingredientId)
       ..writeByte(3)
-      ..write(obj.measure);
+      ..write(obj.receiptId);
   }
 
   @override
@@ -44,7 +45,7 @@ class IngredientModelAdapter extends TypeAdapter<IngredientModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is IngredientModelAdapter &&
+      other is LocalReceiptIngredientDtoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

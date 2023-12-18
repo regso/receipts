@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:receipts/config/constants.dart';
-import 'package:receipts/config/localization.dart';
 import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_link_dto.dart';
@@ -12,7 +11,6 @@ import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto
 import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
-import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class RemoteReceiptDataSource {
@@ -22,14 +20,37 @@ class RemoteReceiptDataSource {
 
   Future<List<ReceiptModel>> findReceipts() async {
     final response = await dio.get(Constants.apiGetReceiptUrl);
-    final receiptsDecodedJson = response.data as List<dynamic>;
-
-    return receiptsDecodedJson
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
         .map(
           (data) => ReceiptModel.fromRemoteReceiptDto(
             RemoteReceiptDto.fromJson(data),
           ),
         )
+        .toList();
+  }
+
+  Future<List<RemoteReceiptIngredientDto>> findReceiptIngredients() async {
+    final response = await dio.get(Constants.apiGetReceiptIngredientUrl);
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
+        .map((data) => RemoteReceiptIngredientDto.fromJson(data))
+        .toList();
+  }
+
+  Future<List<RemoteIngredientDto>> findIngredients() async {
+    final response = await dio.get(Constants.apiGetIngredientUrl);
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
+        .map((data) => RemoteIngredientDto.fromJson(data))
+        .toList();
+  }
+
+  Future<List<RemoteMeasureUnitDto>> findMeasureUnits() async {
+    final response = await dio.get(Constants.apiGetMeasureUnitUrl);
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
+        .map((data) => RemoteMeasureUnitDto.fromJson(data))
         .toList();
   }
 
@@ -71,13 +92,8 @@ class RemoteReceiptDataSource {
     return {for (RemoteCookingStepDto dto in stepsDto) dto.id: dto};
   }
 
-  Future<List<IngredientModel>> findIngredientsByReceiptId(
-    int receiptId,
-  ) async {
-    final receiptIngredientDtoList =
-        await _findReceiptIngredientDtoListByReceiptId(
-      receiptId,
-    );
+  /*Future<List<IngredientModel>> findIngredients() async {
+    final receiptIngredientDtoList = await _findReceiptIngredientDtoList();
     final ingredientDtoMap = await _getRemoteIngredientDtoMap();
     final measureUnitDtoMap = await _getMeasureUnitDtoMap();
 
@@ -86,11 +102,10 @@ class RemoteReceiptDataSource {
         final ingredientDto = ingredientDtoMap[dto.ingredientIdDto.id]!;
         final measureUnitDto =
             measureUnitDtoMap[ingredientDto.measureUnitIdModel.id]!;
-        return IngredientModel(
-          id: ingredientDto.id,
-          title: ingredientDto.name,
-          amount: dto.count,
-          measure: Localization.getMorph(
+        return IngredientModel.fromRemoteIngredientDtoAmountAndMeasure(
+          ingredientDto,
+          dto.count,
+          Localization.getMorph(
             dto.count,
             [measureUnitDto.one, measureUnitDto.few, measureUnitDto.many],
           ),
@@ -118,16 +133,13 @@ class RemoteReceiptDataSource {
   }
 
   Future<List<RemoteReceiptIngredientDto>>
-      _findReceiptIngredientDtoListByReceiptId(
-    int receiptId,
-  ) async {
+      _findReceiptIngredientDtoList() async {
     final response = await dio.get(Constants.apiGetReceiptIngredientUrl);
     final receiptIngredientDecodedJson = response.data as List<dynamic>;
     return receiptIngredientDecodedJson
         .map((data) => RemoteReceiptIngredientDto.fromJson(data))
-        .where((dto) => dto.receiptIdDto.id == receiptId)
         .toList();
-  }
+  }*/
 
   Future<List<CommentModel>> findCommentsByReceiptId(int receiptId) async {
     return (await _findComments())
