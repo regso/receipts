@@ -3,11 +3,13 @@ import 'package:receipts/config/init.dart';
 import 'package:receipts/features/receipt/data/data_sources/local_receipt_data_source.dart';
 import 'package:receipts/features/receipt/data/data_sources/remote_receipt_data_source.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
+import 'package:receipts/features/receipt/data/models/cooking_step_link_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
 import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/measure_unit_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
 
@@ -17,9 +19,11 @@ class ReceiptRepository {
   );
   LocalReceiptDataSource localReceiptDataSource = LocalReceiptDataSource(
     receiptsBox: receiptsBox,
-    receiptIngredientsBox: receiptIngredientBox,
+    receiptIngredientsBox: receiptIngredientsBox,
     ingredientsBox: ingredientsBox,
-    measureUnitsBox: measureUnitBox,
+    measureUnitsBox: measureUnitsBox,
+    cookingStepsBox: cookingStepsBox,
+    cookingStepLinksBox: cookingStepLinksBox,
   );
 
   Future<List<ReceiptEntity>> findReceipts() async {
@@ -126,10 +130,58 @@ class ReceiptRepository {
     }).toList();
   }
 
-  Future<List<CookingStepModel>> findCookingStepsByReceiptId(
-    int receiptId,
+  Future<List<CookingStepLinkEntity>> findCookingStepLinksByReceipt(
+    ReceiptEntity receipt,
   ) async {
-    return await remoteReceiptDataSource.findCookingStepsByReceiptId(receiptId);
+    try {
+      return await _findRemoteCookingStepLinksByReceipt(receipt);
+    } on Exception {
+      return await _findLocalCookingStepLinksByReceipt(receipt);
+    }
+  }
+
+  Future<List<CookingStepLinkModel>> _findRemoteCookingStepLinksByReceipt(
+    ReceiptEntity receipt,
+  ) async {
+    final remoteCookingStepDtoList =
+        await remoteReceiptDataSource.findCookingSteps();
+    final remoteCookingStepsMap = {
+      for (final dto in remoteCookingStepDtoList) dto.id: dto
+    };
+    await localReceiptDataSource.saveRemoteCookingSteps(
+      remoteCookingStepDtoList,
+    );
+
+    final remoteCookingStepLinkDtoList =
+        await remoteReceiptDataSource.findCookingStepLinkDtoList();
+    await localReceiptDataSource.saveRemoteCookingStepLinks(
+      remoteCookingStepLinkDtoList,
+    );
+
+    return remoteCookingStepLinkDtoList
+        .where((dto) => dto.receiptIdDto.id == receipt.id)
+        .map((dto) {
+      final remoteCookingStepDto =
+          remoteCookingStepsMap[dto.cookingStepIdDto.id]!;
+      final cookingStep = CookingStepModel.fromRemoteCookingStepDto(
+        remoteCookingStepDto,
+      );
+      return CookingStepLinkModel(
+        id: 0,
+        number: 0,
+        receipt: receipt,
+        cookingStep: cookingStep,
+      );
+    }).toList();
+  }
+
+  Future<List<CookingStepLinkModel>> _findLocalCookingStepLinksByReceipt(
+    ReceiptEntity receipt,
+  ) async {
+    (await localReceiptDataSource.findReceipts())
+        .map((dto) => ReceiptModel.fromLocalReceiptDto(dto))
+        .toList();
+    return [];
   }
 
   Future<List<CommentModel>> findCommentsByReceiptId(int receiptId) async {

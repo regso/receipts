@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
+import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
 
 class CookingStepsItemWidget extends StatefulWidget {
-  final CookingStepModel cookingStep;
+  final CookingStepLinkEntity cookingStepLink;
 
-  const CookingStepsItemWidget({super.key, required this.cookingStep});
+  const CookingStepsItemWidget({super.key, required this.cookingStepLink});
 
   @override
   State<CookingStepsItemWidget> createState() => _CookingStepsItemWidgetState();
@@ -16,8 +16,9 @@ class _CookingStepsItemWidgetState extends State<CookingStepsItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    String timeMinutes =
-        widget.cookingStep.cookingTimeMinutes.toString().padLeft(2, '0');
+    String timeMinutes = widget.cookingStepLink.cookingStep.cookingTimeMinutes
+        .toString()
+        .padLeft(2, '0');
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -28,7 +29,7 @@ class _CookingStepsItemWidgetState extends State<CookingStepsItemWidget> {
           Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              widget.cookingStep.number.toString(),
+              widget.cookingStepLink.number.toString(),
               style: TextStyle(
                 fontSize: 40,
                 color: AppTheme.receiptDetailsCookingStepLeadingColor,
@@ -39,7 +40,7 @@ class _CookingStepsItemWidgetState extends State<CookingStepsItemWidget> {
               child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 17),
             child: Text(
-              widget.cookingStep.title,
+              widget.cookingStepLink.cookingStep.title,
               style: TextStyle(
                 fontSize: 12,
                 color: AppTheme.receiptDetailsCookingStepTitleColor,

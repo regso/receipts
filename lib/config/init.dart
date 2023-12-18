@@ -1,17 +1,19 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:receipts/config/constants.dart';
+import 'package:receipts/features/receipt/data/dto/local_cooking_step_dto.dart';
+import 'package:receipts/features/receipt/data/dto/local_cooking_step_link_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_receipt_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
-import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
 
 late Box<LocalReceiptDto> receiptsBox;
 late Box<LocalIngredientDto> ingredientsBox;
-late Box<LocalMeasureUnitDto> measureUnitBox;
-late Box<LocalReceiptIngredientDto> receiptIngredientBox;
-late Box<CookingStepModel> cookingStepsBox;
+late Box<LocalMeasureUnitDto> measureUnitsBox;
+late Box<LocalReceiptIngredientDto> receiptIngredientsBox;
+late Box<LocalCookingStepDto> cookingStepsBox;
+late Box<LocalCookingStepLinkDto> cookingStepLinksBox;
 late Box<CommentModel> commentsBox;
 
 Future<void> initApp() async {
@@ -20,14 +22,18 @@ Future<void> initApp() async {
   Hive.registerAdapter(LocalIngredientDtoAdapter());
   Hive.registerAdapter(LocalMeasureUnitDtoAdapter());
   Hive.registerAdapter(LocalReceiptIngredientDtoAdapter());
-  Hive.registerAdapter(CookingStepModelAdapter());
+  Hive.registerAdapter(LocalCookingStepDtoAdapter());
+  Hive.registerAdapter(LocalCookingStepLinkDtoAdapter());
   Hive.registerAdapter(CommentModelAdapter());
   receiptsBox = await Hive.openBox(Constants.hiveReceiptsBoxName);
   ingredientsBox = await Hive.openBox(Constants.hiveIngredientsBoxName);
-  measureUnitBox = await Hive.openBox(Constants.hiveMeasureUnitBoxName);
-  receiptIngredientBox = await Hive.openBox(
-    Constants.hiveReceiptIngredientBoxName,
+  measureUnitsBox = await Hive.openBox(Constants.hiveMeasureUnitsBoxName);
+  receiptIngredientsBox = await Hive.openBox(
+    Constants.hiveReceiptIngredientsBoxName,
   );
   cookingStepsBox = await Hive.openBox(Constants.hiveCookingStepsBoxName);
+  cookingStepLinksBox = await Hive.openBox(
+    Constants.hiveCookingStepLinksBoxName,
+  );
   commentsBox = await Hive.openBox(Constants.hiveCommentsBoxName);
 }

@@ -1,31 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cooking_step_model.dart';
+part of 'local_cooking_step_link_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CookingStepModelAdapter extends TypeAdapter<CookingStepModel> {
+class LocalCookingStepLinkDtoAdapter
+    extends TypeAdapter<LocalCookingStepLinkDto> {
   @override
-  final int typeId = 2;
+  final int typeId = 6;
 
   @override
-  CookingStepModel read(BinaryReader reader) {
+  LocalCookingStepLinkDto read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CookingStepModel(
+    return LocalCookingStepLinkDto(
       id: fields[0] as int,
       number: fields[1] as int,
-      title: fields[2] as String,
-      cookingTimeMinutes: fields[3] as int,
+      receiptId: fields[2] as int,
+      cookingStepId: fields[3] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, CookingStepModel obj) {
+  void write(BinaryWriter writer, LocalCookingStepLinkDto obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -33,9 +34,9 @@ class CookingStepModelAdapter extends TypeAdapter<CookingStepModel> {
       ..writeByte(1)
       ..write(obj.number)
       ..writeByte(2)
-      ..write(obj.title)
+      ..write(obj.receiptId)
       ..writeByte(3)
-      ..write(obj.cookingTimeMinutes);
+      ..write(obj.cookingStepId);
   }
 
   @override
@@ -44,7 +45,7 @@ class CookingStepModelAdapter extends TypeAdapter<CookingStepModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CookingStepModelAdapter &&
+      other is LocalCookingStepLinkDtoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

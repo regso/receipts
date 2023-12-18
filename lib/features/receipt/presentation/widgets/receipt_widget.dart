@@ -18,7 +18,7 @@ class ReceiptWidget extends StatelessWidget {
         const SizedBox(height: 20),
         IngredientsWidget(receipt: receipt),
         const SizedBox(height: 20),
-        CookingStepsWidget(receiptId: receipt.id),
+        CookingStepsWidget(receipt: receipt),
         const SizedBox(height: 27),
         CommentsWidget(receiptId: receipt.id),
       ],

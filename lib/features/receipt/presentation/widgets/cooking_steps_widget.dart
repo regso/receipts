@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
+import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/cooking_steps_item_widget.dart';
 
 class CookingStepsWidget extends StatefulWidget {
-  final int receiptId;
+  final ReceiptEntity receipt;
   final ReceiptRepository receiptRepository = ReceiptRepository();
 
-  CookingStepsWidget({super.key, required this.receiptId});
+  CookingStepsWidget({super.key, required this.receipt});
 
   @override
   State<CookingStepsWidget> createState() => _CookingStepsWidgetState();
@@ -18,9 +19,9 @@ class CookingStepsWidget extends StatefulWidget {
 class _CookingStepsWidgetState extends State<CookingStepsWidget> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CookingStepModel>>(
-      future: widget.receiptRepository.findCookingStepsByReceiptId(
-        widget.receiptId,
+    return FutureBuilder<List<CookingStepLinkEntity>>(
+      future: widget.receiptRepository.findCookingStepLinksByReceipt(
+        widget.receipt,
       ),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -31,7 +32,7 @@ class _CookingStepsWidgetState extends State<CookingStepsWidget> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        List<CookingStepModel> cookingSteps = snapshot.data!;
+        List<CookingStepLinkEntity> cookingStepLinks = snapshot.data!;
         return Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -40,10 +41,10 @@ class _CookingStepsWidgetState extends State<CookingStepsWidget> {
               Text(Labels.cookingSteps, style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 20),
               Column(
-                children: cookingSteps.map((CookingStepModel model) {
+                children: cookingStepLinks.map((final cookingStepLink) {
                   return Column(
                     children: [
-                      CookingStepsItemWidget(cookingStep: model),
+                      CookingStepsItemWidget(cookingStepLink: cookingStepLink),
                       const SizedBox(height: 16),
                     ],
                   );

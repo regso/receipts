@@ -10,7 +10,6 @@ import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart'
 import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
-import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
 
 class RemoteReceiptDataSource {
   final Dio dio;
@@ -49,42 +48,20 @@ class RemoteReceiptDataSource {
         .toList();
   }
 
-  Future<List<CookingStepModel>> findCookingStepsByReceiptId(
-    int receiptId,
-  ) async {
-    final cookingStepLinkDtoList = await _findCookingStepLinkDtoListByReceiptId(
-      receiptId,
-    );
-    final cookingStepDtoMap = await _getCookingStepDtoMap();
-
-    return cookingStepLinkDtoList
-        .map(
-          (dto) => CookingStepModel.fromRemoteCookingStepDtoAndNumber(
-            cookingStepDtoMap[dto.cookingStepIdDto.id]!,
-            dto.number,
-          ),
-        )
-        .toList();
-  }
-
-  Future<List<RemoteCookingStepLinkDto>> _findCookingStepLinkDtoListByReceiptId(
-    int receiptId,
-  ) async {
-    final response = await dio.get(Constants.apiGetCookingStepLinkUrl);
-    final stepLinksDecodedJson = response.data as List<dynamic>;
-    return stepLinksDecodedJson
-        .map((data) => RemoteCookingStepLinkDto.fromJson(data))
-        .where((dto) => dto.receiptIdDto.id == receiptId)
-        .toList();
-  }
-
-  Future<Map<int, RemoteCookingStepDto>> _getCookingStepDtoMap() async {
+  Future<List<RemoteCookingStepDto>> findCookingSteps() async {
     final response = await dio.get(Constants.apiGetCookingStepUrl);
-    final unitsDecodedJson = response.data as List<dynamic>;
-    final Iterable<RemoteCookingStepDto> stepsDto = unitsDecodedJson.map(
-      (data) => RemoteCookingStepDto.fromJson(data),
-    );
-    return {for (RemoteCookingStepDto dto in stepsDto) dto.id: dto};
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
+        .map((data) => RemoteCookingStepDto.fromJson(data))
+        .toList();
+  }
+
+  Future<List<RemoteCookingStepLinkDto>> findCookingStepLinkDtoList() async {
+    final response = await dio.get(Constants.apiGetCookingStepLinkUrl);
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
+        .map((data) => RemoteCookingStepLinkDto.fromJson(data))
+        .toList();
   }
 
   Future<List<CommentModel>> findCommentsByReceiptId(int receiptId) async {
