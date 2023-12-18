@@ -5,8 +5,8 @@ import 'package:receipts/features/receipt/data/dto/local_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_receipt_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class LocalReceiptDataSource {
   final Box<LocalReceiptDto> receiptsBox;
@@ -21,17 +21,19 @@ class LocalReceiptDataSource {
     required this.measureUnitsBox,
   });
 
-  Future<List<ReceiptModel>> findReceipts() async {
-    final localReceiptDtoList = receiptsBox.values.toList();
-    return localReceiptDtoList
-        .map((dto) => ReceiptModel.fromLocalReceiptDto(dto))
-        .toList();
+  Future<List<LocalReceiptDto>> findReceipts() async {
+    return receiptsBox.values.toList();
   }
 
-  Future<void> saveReceipts(List<ReceiptModel> receipts) async {
+  Future<void> saveRemoteReceipts(List<RemoteReceiptDto> receipts) async {
     final Map<int, LocalReceiptDto> receiptsMap = {};
-    for (ReceiptModel model in receipts) {
-      receiptsMap[model.id] = LocalReceiptDto.fromModelAndPhotoUrl(model, '');
+    for (final dto in receipts) {
+      receiptsMap[dto.id] = LocalReceiptDto(
+        id: dto.id,
+        title: dto.name,
+        cookingTimeMinutes: dto.duration,
+        photoUrl: '',
+      );
     }
     await receiptsBox.clear();
     await receiptsBox.putAll(receiptsMap);

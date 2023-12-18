@@ -11,22 +11,17 @@ import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto
 import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
-import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 
 class RemoteReceiptDataSource {
   final Dio dio;
 
   RemoteReceiptDataSource({required this.dio});
 
-  Future<List<ReceiptModel>> findReceipts() async {
+  Future<List<RemoteReceiptDto>> findReceipts() async {
     final response = await dio.get(Constants.apiGetReceiptUrl);
     final decodedJsonList = response.data as List<dynamic>;
     return decodedJsonList
-        .map(
-          (data) => ReceiptModel.fromRemoteReceiptDto(
-            RemoteReceiptDto.fromJson(data),
-          ),
-        )
+        .map((data) => RemoteReceiptDto.fromJson(data))
         .toList();
   }
 
@@ -91,55 +86,6 @@ class RemoteReceiptDataSource {
     );
     return {for (RemoteCookingStepDto dto in stepsDto) dto.id: dto};
   }
-
-  /*Future<List<IngredientModel>> findIngredients() async {
-    final receiptIngredientDtoList = await _findReceiptIngredientDtoList();
-    final ingredientDtoMap = await _getRemoteIngredientDtoMap();
-    final measureUnitDtoMap = await _getMeasureUnitDtoMap();
-
-    return receiptIngredientDtoList.map(
-      (RemoteReceiptIngredientDto dto) {
-        final ingredientDto = ingredientDtoMap[dto.ingredientIdDto.id]!;
-        final measureUnitDto =
-            measureUnitDtoMap[ingredientDto.measureUnitIdModel.id]!;
-        return IngredientModel.fromRemoteIngredientDtoAmountAndMeasure(
-          ingredientDto,
-          dto.count,
-          Localization.getMorph(
-            dto.count,
-            [measureUnitDto.one, measureUnitDto.few, measureUnitDto.many],
-          ),
-        );
-      },
-    ).toList();
-  }
-
-  Future<Map<int, RemoteIngredientDto>> _getRemoteIngredientDtoMap() async {
-    final response = await dio.get(Constants.apiGetIngredientUrl);
-    final decodedJsonList = response.data as List<dynamic>;
-    final ingredientDtoItr =
-        decodedJsonList.map((data) => RemoteIngredientDto.fromJson(data));
-    return {for (RemoteIngredientDto dto in ingredientDtoItr) dto.id: dto};
-  }
-
-  Future<Map<int, RemoteMeasureUnitDto>> _getMeasureUnitDtoMap() async {
-    final response = await dio.get(Constants.apiGetMeasureUnitUrl);
-    final unitsDecodedJson = response.data as List<dynamic>;
-    final Iterable<RemoteMeasureUnitDto> unitsDto =
-        unitsDecodedJson.map((data) {
-      return RemoteMeasureUnitDto.fromJson(data);
-    });
-    return {for (RemoteMeasureUnitDto dto in unitsDto) dto.id: dto};
-  }
-
-  Future<List<RemoteReceiptIngredientDto>>
-      _findReceiptIngredientDtoList() async {
-    final response = await dio.get(Constants.apiGetReceiptIngredientUrl);
-    final receiptIngredientDecodedJson = response.data as List<dynamic>;
-    return receiptIngredientDecodedJson
-        .map((data) => RemoteReceiptIngredientDto.fromJson(data))
-        .toList();
-  }*/
 
   Future<List<CommentModel>> findCommentsByReceiptId(int receiptId) async {
     return (await _findComments())

@@ -1,10 +1,10 @@
-import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
+import 'package:receipts/features/receipt/domain/entities/ingredient_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class ReceiptIngredientEntity {
   final int id;
   final int count;
-  final IngredientModel ingredient;
+  final IngredientEntity ingredient;
   final ReceiptEntity receipt;
 
   ReceiptIngredientEntity({

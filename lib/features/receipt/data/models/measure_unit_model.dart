@@ -1,17 +1,13 @@
 import 'package:receipts/features/receipt/data/dto/local_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart';
+import 'package:receipts/features/receipt/domain/entities/measure_unit_entity.dart';
 
-class MeasureUnitModel {
-  final int id;
-  final String one;
-  final String few;
-  final String many;
-
+class MeasureUnitModel extends MeasureUnitEntity {
   MeasureUnitModel._({
-    required this.id,
-    required this.one,
-    required this.few,
-    required this.many,
+    required super.id,
+    required super.one,
+    required super.few,
+    required super.many,
   });
 
   factory MeasureUnitModel.fromRemoteMeasureUnitDto(RemoteMeasureUnitDto dto) {

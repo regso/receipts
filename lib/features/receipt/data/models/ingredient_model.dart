@@ -1,13 +1,9 @@
-import 'package:receipts/features/receipt/data/models/measure_unit_model.dart';
+import 'package:receipts/features/receipt/domain/entities/ingredient_entity.dart';
 
-class IngredientModel {
-  final int id;
-  final String title;
-  final MeasureUnitModel measureUnit;
-
+class IngredientModel extends IngredientEntity {
   IngredientModel({
-    required this.id,
-    required this.title,
-    required this.measureUnit,
+    required super.id,
+    required super.title,
+    required super.measureUnit,
   });
 }

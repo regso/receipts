@@ -23,14 +23,25 @@ class ReceiptRepository {
   );
 
   Future<List<ReceiptEntity>> findReceipts() async {
-    late List<ReceiptModel> receipts;
     try {
-      receipts = await remoteReceiptDataSource.findReceipts();
-      await localReceiptDataSource.saveReceipts(receipts);
+      return _findRemoteReceipt();
     } on Exception {
-      receipts = await localReceiptDataSource.findReceipts();
+      return _findLocalReceipt();
     }
-    return receipts;
+  }
+
+  Future<List<ReceiptModel>> _findRemoteReceipt() async {
+    final remoteReceiptDtoList = await remoteReceiptDataSource.findReceipts();
+    await localReceiptDataSource.saveRemoteReceipts(remoteReceiptDtoList);
+    return remoteReceiptDtoList
+        .map((dto) => ReceiptModel.fromRemoteReceiptDto(dto))
+        .toList();
+  }
+
+  Future<List<ReceiptModel>> _findLocalReceipt() async {
+    return (await localReceiptDataSource.findReceipts())
+        .map((dto) => ReceiptModel.fromLocalReceiptDto(dto))
+        .toList();
   }
 
   Future<List<ReceiptIngredientEntity>> findReceiptIngredientsByReceipt(
@@ -114,83 +125,6 @@ class ReceiptRepository {
       );
     }).toList();
   }
-
-  /* Future<List<ReceiptIngredientModel>> findReceiptIngredientsByReceiptId(
-    ReceiptModel receipt,
-  ) async {
-    late List<ReceiptIngredientModel> receiptIngredients;
-    try {
-      final remoteReceiptIngredientDtoList =
-          await remoteReceiptDataSource.findReceiptIngredients();
-      await localReceiptDataSource.saveReceiptIngredients(
-        remoteReceiptIngredientDtoList,
-      );
-      receiptIngredients = remoteReceiptIngredientDtoList
-          .map((dto) => ReceiptIngredientModel(
-                id: dto.id,
-                count: dto.count,
-                ingredient: dto.ingredientIdDto.id,
-                receipt: dto.receiptIdDto.id,
-              ))
-          .toList();
-    } on Exception {
-      receiptIngredients =
-          (await localReceiptDataSource.findReceiptIngredients())
-              .map((dto) => ReceiptIngredientModel(
-                    id: dto.id,
-                    count: dto.count,
-                    ingredient: dto.ingredientId,
-                    receipt: dto.receiptId,
-                  ))
-              .toList();
-    }
-
-    final ingredientDtoList = await remoteReceiptDataSource.findIngredients();
-    final ingredientDtoMap = {for (final dto in ingredientDtoList) dto.id: dto};
-    final measureUnitDtoList = await remoteReceiptDataSource.findMeasureUnits();
-    final measureUnitDtoMap = {
-      for (final dto in measureUnitDtoList) dto.id: dto
-    };
-    return remoteReceiptIngredientDtoList.map((dto) {
-      final ingredientDto = ingredientDtoMap[dto.ingredientIdDto.id]!;
-      final measureUnit = MeasureUnitModel.fromRemoteMeasureUnitDto(
-        measureUnitDtoMap[ingredientDto.measureUnitIdModel.id]!,
-      );
-      final ingredient = IngredientModel(
-        id: ingredientDto.id,
-        title: ingredientDto.name,
-        measureUnit: measureUnit,
-      );
-      return ReceiptIngredientModel(
-        id: dto.id,
-        count: dto.count,
-        ingredient: ingredient,
-        receipt: receipt,
-      );
-    }).toList();
-
-    /* late List<ReceiptIngredientModel> receiptIngredients;
-    try {
-      receiptIngredients = await remoteReceiptDataSource.findR();
-      await localReceiptDataSource.saveIngredients(ingredients);
-    } on Exception {
-      ingredients = await localReceiptDataSource.findIngredients();
-    }
-    return ingredients.where((model) => model.amount > 0).toList();*/
-  }*/
-
-  /* Future<List<IngredientModel>> findIngredientsByReceiptId(
-    int receiptId,
-  ) async {
-    late List<IngredientModel> ingredients;
-    try {
-      ingredients = await remoteReceiptDataSource.findIngredients();
-      await localReceiptDataSource.saveIngredients(ingredients);
-    } on Exception {
-      ingredients = await localReceiptDataSource.findIngredients();
-    }
-    return ingredients.where((model) => model.amount > 0).toList();
-  }*/
 
   Future<List<CookingStepModel>> findCookingStepsByReceiptId(
     int receiptId,
