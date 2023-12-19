@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
+import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/comments_item_widget.dart';
 
 class CommentsWidget extends StatefulWidget {
-  final int receiptId;
+  final ReceiptEntity receipt;
 
-  const CommentsWidget({super.key, required this.receiptId});
+  const CommentsWidget({super.key, required this.receipt});
 
   @override
   State<CommentsWidget> createState() => _CommentsWidgetState();
@@ -20,8 +23,8 @@ class _CommentsWidgetState extends State<CommentsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CommentModel>>(
-      future: receiptRepository.findCommentsByReceiptId(widget.receiptId),
+    return FutureBuilder<List<CommentEntity>>(
+      future: receiptRepository.findCommentsByReceipt(widget.receipt),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
           throw Exception('Error');
@@ -84,10 +87,15 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                   ),
                 ),
                 onPressed: () async {
-                  final comment = CommentModel.fromProperties(
+                  final user =
+                      await receiptRepository.getUserById(Constants.appUserId);
+                  final comment = CommentModel(
+                    id: 0,
                     text: _textController.text,
                     photo: '',
-                    receiptId: widget.receiptId,
+                    createdAt: '',
+                    user: user,
+                    receipt: widget.receipt,
                   );
                   await receiptRepository.saveComment(comment);
                   _textController.clear();

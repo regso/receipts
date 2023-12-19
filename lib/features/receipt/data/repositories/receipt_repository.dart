@@ -2,6 +2,8 @@ import 'package:receipts/config/dio.dart';
 import 'package:receipts/config/init.dart';
 import 'package:receipts/features/receipt/data/data_sources/local_receipt_data_source.dart';
 import 'package:receipts/features/receipt/data/data_sources/remote_receipt_data_source.dart';
+import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_user_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_link_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
@@ -9,9 +11,12 @@ import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/measure_unit_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_model.dart';
+import 'package:receipts/features/receipt/data/models/user_model.dart';
+import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
+import 'package:receipts/features/receipt/domain/entities/user_entity.dart';
 
 class ReceiptRepository {
   RemoteReceiptDataSource remoteReceiptDataSource = RemoteReceiptDataSource(
@@ -24,13 +29,15 @@ class ReceiptRepository {
     measureUnitsBox: measureUnitsBox,
     cookingStepsBox: cookingStepsBox,
     cookingStepLinksBox: cookingStepLinksBox,
+    commentsBox: commentsBox,
+    usersBox: usersBox,
   );
 
   Future<List<ReceiptEntity>> findReceipts() async {
     try {
-      return _findRemoteReceipt();
-    } on Exception {
-      return _findLocalReceipt();
+      return await _findRemoteReceipt();
+    } catch (_) {
+      return await _findLocalReceipt();
     }
   }
 
@@ -52,9 +59,9 @@ class ReceiptRepository {
     ReceiptEntity receipt,
   ) async {
     try {
-      return _findRemoteReceiptIngredientsByReceipt(receipt);
+      return await _findRemoteReceiptIngredientsByReceipt(receipt);
     } on Exception {
-      return _findLocalReceiptIngredientsByReceipt(receipt);
+      return await _findLocalReceiptIngredientsByReceipt(receipt);
     }
   }
 
@@ -178,17 +185,99 @@ class ReceiptRepository {
   Future<List<CookingStepLinkModel>> _findLocalCookingStepLinksByReceipt(
     ReceiptEntity receipt,
   ) async {
-    (await localReceiptDataSource.findReceipts())
-        .map((dto) => ReceiptModel.fromLocalReceiptDto(dto))
+    final cookingSteps = await localReceiptDataSource.findCookingSteps();
+    final cookingStepsMap = {for (final dto in cookingSteps) dto.id: dto};
+    return (await localReceiptDataSource.findCookingStepLinks())
+        .where((dto) => dto.receiptId == receipt.id)
+        .map((dto) {
+      return CookingStepLinkModel(
+        id: dto.id,
+        number: dto.number,
+        receipt: receipt,
+        cookingStep: CookingStepModel.fromLocalCookingStepDto(
+          cookingStepsMap[dto.cookingStepId]!,
+        ),
+      );
+    }).toList();
+  }
+
+  Future<void> saveComment(CommentModel comment) async {
+    remoteReceiptDataSource.saveComment(comment);
+  }
+
+  Future<List<CommentEntity>> findCommentsByReceipt(
+    ReceiptEntity receipt,
+  ) async {
+    try {
+      return await _findRemoteCommentsByReceipt(receipt);
+    } on Exception {
+      return await _findLocalCommentsByReceipt(receipt);
+    }
+  }
+
+  Future<List<CommentModel>> _findRemoteCommentsByReceipt(
+    ReceiptEntity receipt,
+  ) async {
+    final remoteCommentDtoList = await remoteReceiptDataSource.findComments();
+    await localReceiptDataSource.saveRemoteComments(remoteCommentDtoList);
+    final remoteUsersDtoMap = await _getRemoteUsersDtoMapByCommentDtoList(
+      remoteCommentDtoList,
+    );
+    return remoteCommentDtoList
+        .where((dto) => dto.receiptIdDto.id == receipt.id)
+        .map((dto) {
+      return CommentModel(
+        id: dto.id,
+        text: dto.text,
+        photo: '',
+        createdAt: dto.datetime,
+        user: UserModel.fromRemoteUserDto(
+          remoteUsersDtoMap[dto.userIdDto.id]!,
+        ),
+        receipt: receipt,
+      );
+    }).toList();
+  }
+
+  Future<Map<int, RemoteUserDto>> _getRemoteUsersDtoMapByCommentDtoList(
+    List<RemoteCommentDto> remoteCommentDtoList,
+  ) async {
+    Map<int, RemoteUserDto> remoteUsersDtoMap = {};
+    for (final dto in remoteCommentDtoList) {
+      if (!remoteUsersDtoMap.containsKey(dto.userIdDto.id)) {
+        final remoteUserDto = await remoteReceiptDataSource.getUserById(
+          dto.userIdDto.id,
+        );
+        remoteUsersDtoMap[dto.userIdDto.id] = remoteUserDto;
+      }
+    }
+    return remoteUsersDtoMap;
+  }
+
+  Future<List<CommentModel>> _findLocalCommentsByReceipt(
+    ReceiptEntity receipt,
+  ) async {
+    final localUserDtoList = await localReceiptDataSource.findUsers();
+    final localUsersDtoMap = {for (final dto in localUserDtoList) dto.id: dto};
+    (await localReceiptDataSource.findComments())
+        .where((final dto) => dto.receiptId == receipt.id)
+        .map((dto) => CommentModel(
+              id: dto.id,
+              text: dto.text,
+              photo: '',
+              createdAt: dto.createdAt,
+              user: UserModel.fromLocalReceiptDto(
+                localUsersDtoMap[dto.userId]!,
+              ),
+              receipt: receipt,
+            ))
         .toList();
     return [];
   }
 
-  Future<List<CommentModel>> findCommentsByReceiptId(int receiptId) async {
-    return await remoteReceiptDataSource.findCommentsByReceiptId(receiptId);
-  }
-
-  Future<void> saveComment(CommentModel comment) async {
-    return await remoteReceiptDataSource.saveComment(comment);
+  Future<UserEntity> getUserById(int id) async {
+    return UserModel.fromRemoteUserDto(
+      await remoteReceiptDataSource.getUserById(id),
+    );
   }
 }

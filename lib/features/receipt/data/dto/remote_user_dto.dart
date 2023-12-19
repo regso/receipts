@@ -7,8 +7,8 @@ class RemoteUserDto {
   final int id;
   final String login;
   final String password;
-  final String token;
-  final String avatar;
+  final String? token;
+  final String? avatar;
 
   RemoteUserDto({
     required this.id,

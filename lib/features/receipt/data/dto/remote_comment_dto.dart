@@ -31,8 +31,8 @@ class RemoteCommentDto {
       text: model.text,
       photo: model.photo,
       datetime: model.createdAt,
-      userIdDto: RemoteUserIdDto(id: model.userId),
-      receiptIdDto: RemoteReceiptIdDto(id: model.receiptId),
+      userIdDto: RemoteUserIdDto(id: model.user.id),
+      receiptIdDto: RemoteReceiptIdDto(id: model.receipt.id),
     );
   }
 

@@ -1,12 +1,13 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:receipts/config/constants.dart';
+import 'package:receipts/features/receipt/data/dto/local_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_link_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_receipt_ingredient_dto.dart';
-import 'package:receipts/features/receipt/data/models/comment_model.dart';
+import 'package:receipts/features/receipt/data/dto/local_user_dto.dart';
 
 late Box<LocalReceiptDto> receiptsBox;
 late Box<LocalIngredientDto> ingredientsBox;
@@ -14,7 +15,8 @@ late Box<LocalMeasureUnitDto> measureUnitsBox;
 late Box<LocalReceiptIngredientDto> receiptIngredientsBox;
 late Box<LocalCookingStepDto> cookingStepsBox;
 late Box<LocalCookingStepLinkDto> cookingStepLinksBox;
-late Box<CommentModel> commentsBox;
+late Box<LocalCommentDto> commentsBox;
+late Box<LocalUserDto> usersBox;
 
 Future<void> initApp() async {
   await Hive.initFlutter();
@@ -24,7 +26,8 @@ Future<void> initApp() async {
   Hive.registerAdapter(LocalReceiptIngredientDtoAdapter());
   Hive.registerAdapter(LocalCookingStepDtoAdapter());
   Hive.registerAdapter(LocalCookingStepLinkDtoAdapter());
-  Hive.registerAdapter(CommentModelAdapter());
+  Hive.registerAdapter(LocalCommentDtoAdapter());
+  Hive.registerAdapter(LocalUserDtoAdapter());
   receiptsBox = await Hive.openBox(Constants.hiveReceiptsBoxName);
   ingredientsBox = await Hive.openBox(Constants.hiveIngredientsBoxName);
   measureUnitsBox = await Hive.openBox(Constants.hiveMeasureUnitsBoxName);
@@ -36,4 +39,5 @@ Future<void> initApp() async {
     Constants.hiveCookingStepLinksBoxName,
   );
   commentsBox = await Hive.openBox(Constants.hiveCommentsBoxName);
+  usersBox = await Hive.openBox(Constants.hiveUsersBoxName);
 }

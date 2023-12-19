@@ -1,16 +1,21 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:receipts/features/receipt/data/dto/local_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_link_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_receipt_ingredient_dto.dart';
+import 'package:receipts/features/receipt/data/dto/local_user_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_link_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_user_dto.dart';
 
 class LocalReceiptDataSource {
   final Box<LocalReceiptDto> receiptsBox;
@@ -19,6 +24,8 @@ class LocalReceiptDataSource {
   final Box<LocalMeasureUnitDto> measureUnitsBox;
   final Box<LocalCookingStepDto> cookingStepsBox;
   final Box<LocalCookingStepLinkDto> cookingStepLinksBox;
+  final Box<LocalCommentDto> commentsBox;
+  final Box<LocalUserDto> usersBox;
 
   LocalReceiptDataSource({
     required this.receiptsBox,
@@ -27,6 +34,8 @@ class LocalReceiptDataSource {
     required this.measureUnitsBox,
     required this.cookingStepsBox,
     required this.cookingStepLinksBox,
+    required this.commentsBox,
+    required this.usersBox,
   });
 
   Future<List<LocalReceiptDto>> findReceipts() async {
@@ -143,5 +152,45 @@ class LocalReceiptDataSource {
     }
     await cookingStepLinksBox.clear();
     await cookingStepLinksBox.putAll(localCookingStepLinksMap);
+  }
+
+  Future<List<LocalCommentDto>> findComments() async {
+    return commentsBox.values.toList();
+  }
+
+  Future<void> saveRemoteComments(
+    List<RemoteCommentDto> comments,
+  ) async {
+    final Map<int, LocalCommentDto> localCommentsMap = {};
+    for (final dto in comments) {
+      localCommentsMap[dto.id] = LocalCommentDto(
+        id: dto.id,
+        text: dto.text,
+        photo: '',
+        createdAt: DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'")
+            .format(DateTime.now().toUtc()),
+        userId: dto.userIdDto.id,
+        receiptId: dto.receiptIdDto.id,
+      );
+    }
+    await commentsBox.clear();
+    await commentsBox.putAll(localCommentsMap);
+  }
+
+  Future<List<LocalUserDto>> findUsers() async {
+    return usersBox.values.toList();
+  }
+
+  Future<void> saveRemoteUser(
+    RemoteUserDto remoteUserDto,
+  ) async {
+    final localUserDto = LocalUserDto(
+      id: remoteUserDto.id,
+      login: remoteUserDto.login,
+      password: remoteUserDto.password,
+      token: remoteUserDto.token ?? '',
+      avatar: remoteUserDto.avatar ?? '',
+    );
+    await usersBox.put(localUserDto.id, localUserDto);
   }
 }

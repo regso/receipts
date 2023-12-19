@@ -9,6 +9,7 @@ import 'package:receipts/features/receipt/data/dto/remote_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_user_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
 
 class RemoteReceiptDataSource {
@@ -64,21 +65,11 @@ class RemoteReceiptDataSource {
         .toList();
   }
 
-  Future<List<CommentModel>> findCommentsByReceiptId(int receiptId) async {
-    return (await _findComments())
-        .where((CommentModel model) => model.receiptId == receiptId)
-        .toList();
-  }
-
-  Future<List<CommentModel>> _findComments() async {
+  Future<List<RemoteCommentDto>> findComments() async {
     final response = await dio.get(Constants.apiGetCommentUrl);
-    final commentDecodedJson = response.data as List<dynamic>;
-    return commentDecodedJson
-        .map(
-          (data) => CommentModel.fromRemoteCommentDto(
-            RemoteCommentDto.fromJson(data),
-          ),
-        )
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
+        .map((data) => RemoteCommentDto.fromJson(data))
         .toList();
   }
 
@@ -92,7 +83,13 @@ class RemoteReceiptDataSource {
   }
 
   Future<int> _getCommentNextId() async {
-    final comments = await _findComments();
+    final comments = await findComments();
     return comments.fold<int>(1, (prev, model) => max(prev, model.id)) + 1;
+  }
+
+  Future<RemoteUserDto> getUserById(int id) async {
+    final response = await dio.get('${Constants.apiGetUserUrl}$id');
+    final decodedJson = response.data as Map<String, dynamic>;
+    return RemoteUserDto.fromJson(decodedJson);
   }
 }

@@ -11,8 +11,8 @@ RemoteUserDto _$RemoteUserDtoFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       login: json['login'] as String,
       password: json['password'] as String,
-      token: json['token'] as String,
-      avatar: json['avatar'] as String,
+      token: json['token'] as String?,
+      avatar: json['avatar'] as String?,
     );
 
 Map<String, dynamic> _$RemoteUserDtoToJson(RemoteUserDto instance) =>
