@@ -18,7 +18,10 @@ class CommentsItemWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 10, right: 18),
           child: CircleAvatar(
-            child: Image.asset(Constants.appIconAvatarPath),
+            backgroundColor: AppTheme.cardImageBackgroundColor,
+            child: comment.user.avatar != ''
+                ? Image.asset(Constants.appIconAvatarPath)
+                : Container(),
           ),
         ),
         Expanded(
@@ -29,7 +32,7 @@ class CommentsItemWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'anna_obraztsova',
+                      comment.user.login,
                       style: TextStyle(
                         fontSize: 16,
                         color: AppTheme.receiptCommentUserNameColor,

@@ -181,16 +181,17 @@ class LocalReceiptDataSource {
     return usersBox.values.toList();
   }
 
-  Future<void> saveRemoteUser(
-    RemoteUserDto remoteUserDto,
-  ) async {
-    final localUserDto = LocalUserDto(
-      id: remoteUserDto.id,
-      login: remoteUserDto.login,
-      password: remoteUserDto.password,
-      token: remoteUserDto.token ?? '',
-      avatar: remoteUserDto.avatar ?? '',
-    );
-    await usersBox.put(localUserDto.id, localUserDto);
+  Future<void> saveRemoteUsers(List<RemoteUserDto> remoteUserDtoList) async {
+    final Map<int, LocalUserDto> localUsersDtoMap = {};
+    for (final dto in remoteUserDtoList) {
+      localUsersDtoMap[dto.id] = LocalUserDto(
+        id: dto.id,
+        login: dto.login,
+        password: dto.password,
+        token: dto.token ?? '',
+        avatar: dto.avatar ?? '',
+      );
+    }
+    await usersBox.putAll(localUsersDtoMap);
   }
 }

@@ -60,7 +60,7 @@ class ReceiptRepository {
   ) async {
     try {
       return await _findRemoteReceiptIngredientsByReceipt(receipt);
-    } on Exception {
+    } catch (_) {
       return await _findLocalReceiptIngredientsByReceipt(receipt);
     }
   }
@@ -142,7 +142,7 @@ class ReceiptRepository {
   ) async {
     try {
       return await _findRemoteCookingStepLinksByReceipt(receipt);
-    } on Exception {
+    } catch (_) {
       return await _findLocalCookingStepLinksByReceipt(receipt);
     }
   }
@@ -175,7 +175,7 @@ class ReceiptRepository {
       );
       return CookingStepLinkModel(
         id: 0,
-        number: 0,
+        number: dto.number,
         receipt: receipt,
         cookingStep: cookingStep,
       );
@@ -210,7 +210,7 @@ class ReceiptRepository {
   ) async {
     try {
       return await _findRemoteCommentsByReceipt(receipt);
-    } on Exception {
+    } catch (_) {
       return await _findLocalCommentsByReceipt(receipt);
     }
   }
@@ -223,6 +223,9 @@ class ReceiptRepository {
     final remoteUsersDtoMap = await _getRemoteUsersDtoMapByCommentDtoList(
       remoteCommentDtoList,
     );
+    final remoteUserDtoList =
+        remoteUsersDtoMap.entries.map((entry) => entry.value).toList();
+    await localReceiptDataSource.saveRemoteUsers(remoteUserDtoList);
     return remoteCommentDtoList
         .where((dto) => dto.receiptIdDto.id == receipt.id)
         .map((dto) {
@@ -259,7 +262,8 @@ class ReceiptRepository {
   ) async {
     final localUserDtoList = await localReceiptDataSource.findUsers();
     final localUsersDtoMap = {for (final dto in localUserDtoList) dto.id: dto};
-    (await localReceiptDataSource.findComments())
+    final localCommentDtoList = await localReceiptDataSource.findComments();
+    return localCommentDtoList
         .where((final dto) => dto.receiptId == receipt.id)
         .map((dto) => CommentModel(
               id: dto.id,
@@ -272,7 +276,6 @@ class ReceiptRepository {
               receipt: receipt,
             ))
         .toList();
-    return [];
   }
 
   Future<UserEntity> getUserById(int id) async {
