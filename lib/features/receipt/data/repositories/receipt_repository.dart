@@ -201,8 +201,8 @@ class ReceiptRepository {
       id: 0,
       text: text,
       photo: '',
-      createdAt:  DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'")
-          .format(DateTime.now().toUtc()),
+      createdAt:
+          DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'").format(DateTime.now().toUtc()),
       user: user,
       receipt: receipt,
     );

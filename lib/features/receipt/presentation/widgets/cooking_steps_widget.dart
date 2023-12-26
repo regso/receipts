@@ -25,8 +25,8 @@ class _CookingStepsWidgetState extends State<CookingStepsWidget> {
     super.initState();
     _futureCookingStepLinks =
         widget._receiptRepository.findCookingStepLinksByReceipt(
-          widget._receipt,
-        );
+      widget._receipt,
+    );
   }
 
   @override
@@ -71,7 +71,7 @@ class _CookingStepsWidgetState extends State<CookingStepsWidget> {
                     ),
                     minimumSize: const Size(232, 48),
                     backgroundColor:
-                    AppTheme.receiptDetailsButtonBackgroundColor,
+                        AppTheme.receiptDetailsButtonBackgroundColor,
                   ),
                   child: Text(
                     Labels.startCooking,
