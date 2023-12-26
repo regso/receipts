@@ -1,48 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipt/domain/usecases/save_comment_use_case.dart';
 import 'package:receipts/features/receipt/presentation/widgets/comments_item_widget.dart';
 
 class CommentsWidget extends StatefulWidget {
-  final ReceiptEntity receipt;
+  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final TextEditingController _textController = TextEditingController();
+  final SaveCommentUseCase _saveCommentUseCase = SaveCommentUseCase();
+  final ReceiptEntity _receipt;
 
-  const CommentsWidget({super.key, required this.receipt});
+  CommentsWidget({super.key, required receipt}) : _receipt = receipt;
 
   @override
   State<CommentsWidget> createState() => _CommentsWidgetState();
 }
 
 class _CommentsWidgetState extends State<CommentsWidget> {
-  final ReceiptRepository receiptRepository = ReceiptRepository();
-  final TextEditingController _textController = TextEditingController();
+  late Future<List<CommentEntity>> _futureComments;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureComments =
+        widget._receiptRepository.findCommentsByReceipt(widget._receipt);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CommentEntity>>(
-      future: receiptRepository.findCommentsByReceipt(widget.receipt),
+    return FutureBuilder(
+      future: _futureComments,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) {
-          throw Exception('Error');
-        }
-
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState != ConnectionState.done) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        List<CommentModel> comments = snapshot.data;
-        final commentWidgets = comments.map((CommentModel model) {
-          return Column(
-            children: [
-              CommentsItemWidget(comment: model),
-              const SizedBox(height: 25),
-            ],
-          );
-        }).toList();
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        List<CommentEntity> comments = snapshot.data!;
+        final commentWidgets = comments
+            .map(
+              (entity) => Column(
+                children: [
+                  CommentsItemWidget(comment: entity),
+                  const SizedBox(height: 25),
+                ],
+              ),
+            )
+            .toList();
 
         return Container(
           decoration: BoxDecoration(
@@ -58,7 +68,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
             children: [
               ...commentWidgets,
               TextField(
-                controller: _textController,
+                controller: widget._textController,
                 minLines: 2,
                 maxLines: 5,
                 // keyboardType: TextInputType.multiline,
@@ -68,11 +78,10 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                   // labelText:
                   hintText: Labels.sendCommentHint,
                 ),
-                onSubmitted: (value) {},
               ),
               const SizedBox(height: 15),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
@@ -87,18 +96,13 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                   ),
                 ),
                 onPressed: () async {
-                  final user =
-                      await receiptRepository.getUserById(Constants.appUserId);
-                  final comment = CommentModel(
-                    id: 0,
-                    text: _textController.text,
-                    photo: '',
-                    createdAt: '',
-                    user: user,
-                    receipt: widget.receipt,
+                  await widget._saveCommentUseCase(
+                    text: widget._textController.text,
+                    receipt: widget._receipt,
                   );
-                  await receiptRepository.saveComment(comment);
-                  _textController.clear();
+                  widget._textController.clear();
+                  _futureComments = widget._receiptRepository
+                      .findCommentsByReceipt(widget._receipt);
                   setState(() {});
                 },
               )
@@ -111,7 +115,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
 
   @override
   void dispose() {
-    _textController.dispose();
+    widget._textController.dispose();
     super.dispose();
   }
 }

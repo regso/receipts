@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:receipts/features/receipt/data/dto/local_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_link_dto.dart';
@@ -38,9 +37,8 @@ class LocalReceiptDataSource {
     required this.usersBox,
   });
 
-  Future<List<LocalReceiptDto>> findReceipts() async {
-    return receiptsBox.values.toList();
-  }
+  Future<List<LocalReceiptDto>> findReceipts() async =>
+      receiptsBox.values.toList();
 
   Future<void> saveRemoteReceipts(List<RemoteReceiptDto> receipts) async {
     final Map<int, LocalReceiptDto> receiptsMap = {};
@@ -56,9 +54,8 @@ class LocalReceiptDataSource {
     await receiptsBox.putAll(receiptsMap);
   }
 
-  Future<List<LocalReceiptIngredientDto>> findReceiptIngredients() async {
-    return receiptIngredientsBox.values.toList();
-  }
+  Future<List<LocalReceiptIngredientDto>> findReceiptIngredients() async =>
+      receiptIngredientsBox.values.toList();
 
   Future<void> saveRemoteReceiptIngredients(
     List<RemoteReceiptIngredientDto> remoteReceiptIngredientDtoList,
@@ -76,9 +73,8 @@ class LocalReceiptDataSource {
     await receiptIngredientsBox.putAll(localReceiptIngredientsMap);
   }
 
-  Future<List<LocalIngredientDto>> findIngredients() async {
-    return ingredientsBox.values.toList();
-  }
+  Future<List<LocalIngredientDto>> findIngredients() async =>
+      ingredientsBox.values.toList();
 
   Future<void> saveRemoteIngredients(
     List<RemoteIngredientDto> ingredients,
@@ -95,9 +91,8 @@ class LocalReceiptDataSource {
     await ingredientsBox.putAll(localIngredientsMap);
   }
 
-  Future<List<LocalMeasureUnitDto>> findMeasureUnits() async {
-    return measureUnitsBox.values.toList();
-  }
+  Future<List<LocalMeasureUnitDto>> findMeasureUnits() async =>
+      measureUnitsBox.values.toList();
 
   Future<void> saveRemoteMeasureUnits(
     List<RemoteMeasureUnitDto> measureUnits,
@@ -115,9 +110,8 @@ class LocalReceiptDataSource {
     await measureUnitsBox.putAll(localMeasureUnitsMap);
   }
 
-  Future<List<LocalCookingStepDto>> findCookingSteps() async {
-    return cookingStepsBox.values.toList();
-  }
+  Future<List<LocalCookingStepDto>> findCookingSteps() async =>
+      cookingStepsBox.values.toList();
 
   Future<void> saveRemoteCookingSteps(
     List<RemoteCookingStepDto> cookingSteps,
@@ -134,9 +128,8 @@ class LocalReceiptDataSource {
     await cookingStepsBox.putAll(localCookingStepsMap);
   }
 
-  Future<List<LocalCookingStepLinkDto>> findCookingStepLinks() async {
-    return cookingStepLinksBox.values.toList();
-  }
+  Future<List<LocalCookingStepLinkDto>> findCookingStepLinks() async =>
+      cookingStepLinksBox.values.toList();
 
   Future<void> saveRemoteCookingStepLinks(
     List<RemoteCookingStepLinkDto> cookingStepLinks,
@@ -154,9 +147,8 @@ class LocalReceiptDataSource {
     await cookingStepLinksBox.putAll(localCookingStepLinksMap);
   }
 
-  Future<List<LocalCommentDto>> findComments() async {
-    return commentsBox.values.toList();
-  }
+  Future<List<LocalCommentDto>> findComments() async =>
+      commentsBox.values.toList();
 
   Future<void> saveRemoteComments(
     List<RemoteCommentDto> comments,
@@ -167,8 +159,7 @@ class LocalReceiptDataSource {
         id: dto.id,
         text: dto.text,
         photo: '',
-        createdAt: DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'")
-            .format(DateTime.now().toUtc()),
+        createdAt: dto.datetime,
         userId: dto.userIdDto.id,
         receiptId: dto.receiptIdDto.id,
       );
@@ -177,9 +168,7 @@ class LocalReceiptDataSource {
     await commentsBox.putAll(localCommentsMap);
   }
 
-  Future<List<LocalUserDto>> findUsers() async {
-    return usersBox.values.toList();
-  }
+  Future<List<LocalUserDto>> findUsers() async => usersBox.values.toList();
 
   Future<void> saveRemoteUsers(List<RemoteUserDto> remoteUserDtoList) async {
     final Map<int, LocalUserDto> localUsersDtoMap = {};

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/dio.dart';
 import 'package:receipts/config/init.dart';
 import 'package:receipts/features/receipt/data/data_sources/local_receipt_data_source.dart';
@@ -33,13 +35,9 @@ class ReceiptRepository {
     usersBox: usersBox,
   );
 
-  Future<List<ReceiptEntity>> findReceipts() async {
-    try {
-      return await _findRemoteReceipt();
-    } catch (_) {
-      return await _findLocalReceipt();
-    }
-  }
+  Future<List<ReceiptEntity>> findReceipts() => _findRemoteReceipt().catchError(
+        (_) => _findLocalReceipt(),
+      );
 
   Future<List<ReceiptModel>> _findRemoteReceipt() async {
     final remoteReceiptDtoList = await remoteReceiptDataSource.findReceipts();
@@ -57,13 +55,10 @@ class ReceiptRepository {
 
   Future<List<ReceiptIngredientEntity>> findReceiptIngredientsByReceipt(
     ReceiptEntity receipt,
-  ) async {
-    try {
-      return await _findRemoteReceiptIngredientsByReceipt(receipt);
-    } catch (_) {
-      return await _findLocalReceiptIngredientsByReceipt(receipt);
-    }
-  }
+  ) =>
+      _findRemoteReceiptIngredientsByReceipt(receipt).catchError(
+        (_) => _findLocalReceiptIngredientsByReceipt(receipt),
+      );
 
   Future<List<ReceiptIngredientModel>> _findRemoteReceiptIngredientsByReceipt(
     ReceiptEntity receipt,
@@ -105,7 +100,7 @@ class ReceiptRepository {
     }).toList();
   }
 
-  Future<List<ReceiptIngredientEntity>> _findLocalReceiptIngredientsByReceipt(
+  Future<List<ReceiptIngredientModel>> _findLocalReceiptIngredientsByReceipt(
     ReceiptEntity receipt,
   ) async {
     final ingredientDtoList = await localReceiptDataSource.findIngredients();
@@ -139,13 +134,10 @@ class ReceiptRepository {
 
   Future<List<CookingStepLinkEntity>> findCookingStepLinksByReceipt(
     ReceiptEntity receipt,
-  ) async {
-    try {
-      return await _findRemoteCookingStepLinksByReceipt(receipt);
-    } catch (_) {
-      return await _findLocalCookingStepLinksByReceipt(receipt);
-    }
-  }
+  ) =>
+      _findRemoteCookingStepLinksByReceipt(receipt).catchError(
+        (_) => _findLocalCookingStepLinksByReceipt(receipt),
+      );
 
   Future<List<CookingStepLinkModel>> _findRemoteCookingStepLinksByReceipt(
     ReceiptEntity receipt,
@@ -201,19 +193,28 @@ class ReceiptRepository {
     }).toList();
   }
 
-  Future<void> saveComment(CommentModel comment) async {
-    remoteReceiptDataSource.saveComment(comment);
+  Future<void> saveCommentByReceipt(String text, ReceiptEntity receipt) async {
+    final user = await _getUserById(
+      Constants.appUserId,
+    );
+    final comment = CommentModel(
+      id: 0,
+      text: text,
+      photo: '',
+      createdAt:  DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'")
+          .format(DateTime.now().toUtc()),
+      user: user,
+      receipt: receipt,
+    );
+    return remoteReceiptDataSource.saveComment(comment);
   }
 
   Future<List<CommentEntity>> findCommentsByReceipt(
     ReceiptEntity receipt,
-  ) async {
-    try {
-      return await _findRemoteCommentsByReceipt(receipt);
-    } catch (_) {
-      return await _findLocalCommentsByReceipt(receipt);
-    }
-  }
+  ) =>
+      _findRemoteCommentsByReceipt(receipt).catchError(
+        (_) => _findLocalCommentsByReceipt(receipt),
+      );
 
   Future<List<CommentModel>> _findRemoteCommentsByReceipt(
     ReceiptEntity receipt,
@@ -278,9 +279,7 @@ class ReceiptRepository {
         .toList();
   }
 
-  Future<UserEntity> getUserById(int id) async {
-    return UserModel.fromRemoteUserDto(
-      await remoteReceiptDataSource.getUserById(id),
-    );
-  }
+  Future<UserEntity> _getUserById(int id) async => UserModel.fromRemoteUserDto(
+        await remoteReceiptDataSource.getUserById(id),
+      );
 }

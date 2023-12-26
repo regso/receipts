@@ -4,9 +4,10 @@ import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class ReceiptHeaderWidget extends StatefulWidget {
-  final ReceiptEntity receipt;
+  final ReceiptEntity _receipt;
 
-  const ReceiptHeaderWidget({super.key, required this.receipt});
+  const ReceiptHeaderWidget({super.key, required ReceiptEntity receipt})
+      : _receipt = receipt;
 
   @override
   State<ReceiptHeaderWidget> createState() => _ReceiptHeaderWidgetState();
@@ -26,7 +27,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
           Row(
             children: [
               Expanded(
-                child: Text(widget.receipt.title,
+                child: Text(widget._receipt.title,
                     style: const TextStyle(fontSize: 24)),
               ),
               IconButton(
@@ -48,7 +49,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
               const Icon(Icons.access_time, size: 16),
               const SizedBox(width: 11),
               Text(
-                widget.receipt.getCookingTime(),
+                widget._receipt.getCookingTime(),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -63,12 +64,12 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
             height: 220.0,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: widget.receipt.photoUrl != ''
+              child: widget._receipt.photoUrl != ''
                   ? Image.network(
-                      widget.receipt.photoUrl,
+                      widget._receipt.photoUrl,
                       fit: BoxFit.cover,
                     )
-                  : Container(color: AppTheme.cardImageBackgroundColor),
+                  : ColoredBox(color: AppTheme.cardImageBackgroundColor),
             ),
           ),
         ],

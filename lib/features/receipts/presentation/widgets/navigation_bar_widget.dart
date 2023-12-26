@@ -3,18 +3,16 @@ import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
 
-class ReceiptBottomNavigationBar extends StatefulWidget {
-  const ReceiptBottomNavigationBar({
+class NavigationBarWidget extends StatefulWidget {
+  const NavigationBarWidget({
     super.key,
   });
 
   @override
-  State<ReceiptBottomNavigationBar> createState() =>
-      _ReceiptBottomNavigationBarState();
+  State<NavigationBarWidget> createState() => _NavigationBarWidgetState();
 }
 
-class _ReceiptBottomNavigationBarState
-    extends State<ReceiptBottomNavigationBar> {
+class _NavigationBarWidgetState extends State<NavigationBarWidget> {
   int _currentIndex = 0;
 
   final List<BottomNavigationBarItem> _items = [

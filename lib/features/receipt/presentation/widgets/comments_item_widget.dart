@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
-import 'package:receipts/features/receipt/data/models/comment_model.dart';
+import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
 
 class CommentsItemWidget extends StatelessWidget {
-  final CommentModel comment;
+  final CommentEntity _comment;
 
-  const CommentsItemWidget({super.key, required this.comment});
+  const CommentsItemWidget({super.key, required CommentEntity comment})
+      : _comment = comment;
 
   @override
   Widget build(BuildContext context) {
-    final datetime = DateTime.parse(comment.createdAt);
+    final datetime = DateTime.parse(_comment.createdAt);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -19,7 +20,7 @@ class CommentsItemWidget extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10, right: 18),
           child: CircleAvatar(
             backgroundColor: AppTheme.cardImageBackgroundColor,
-            child: comment.user.avatar != ''
+            child: _comment.user.avatar != ''
                 ? Image.asset(Constants.appIconAvatarPath)
                 : Container(),
           ),
@@ -32,7 +33,7 @@ class CommentsItemWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      comment.user.login,
+                      _comment.user.login,
                       style: TextStyle(
                         fontSize: 16,
                         color: AppTheme.receiptCommentUserNameColor,
@@ -49,7 +50,7 @@ class CommentsItemWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 4),
-              Text(comment.text, style: const TextStyle(fontSize: 16)),
+              Text(_comment.text, style: const TextStyle(fontSize: 16)),
             ],
           ),
         )

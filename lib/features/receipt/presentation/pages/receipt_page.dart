@@ -6,9 +6,10 @@ import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/receipt_widget.dart';
 
 class ReceiptPage extends StatelessWidget {
-  final ReceiptEntity receipt;
+  final ReceiptEntity _receipt;
 
-  const ReceiptPage({super.key, required this.receipt});
+  const ReceiptPage({super.key, required ReceiptEntity receipt})
+      : _receipt = receipt;
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +43,8 @@ class ReceiptPage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: ReceiptWidget(
-            receipt: receipt,
-          ),
+        child: ReceiptWidget(
+          receipt: _receipt,
         ),
       ),
     );

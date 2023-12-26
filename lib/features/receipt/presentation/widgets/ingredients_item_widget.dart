@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
 
 class IngredientsItemWidget extends StatelessWidget {
-  final ReceiptIngredientModel receiptIngredient;
+  final ReceiptIngredientEntity _receiptIngredient;
 
   const IngredientsItemWidget({
     super.key,
-    required this.receiptIngredient,
-  });
+    required ReceiptIngredientEntity receiptIngredient,
+  }) : _receiptIngredient = receiptIngredient;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class IngredientsItemWidget extends StatelessWidget {
           fit: FlexFit.tight,
           flex: 5,
           child: Text(
-            receiptIngredient.ingredient.title,
+            _receiptIngredient.ingredient.title,
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
@@ -36,8 +36,10 @@ class IngredientsItemWidget extends StatelessWidget {
           fit: FlexFit.tight,
           flex: 2,
           child: Text(
-            (receiptIngredient.count > 0 ? '${receiptIngredient.count} ' : '') +
-                receiptIngredient.ingredient.measureUnit.one,
+            (_receiptIngredient.count > 0
+                    ? '${_receiptIngredient.count} '
+                    : '') +
+                _receiptIngredient.ingredient.measureUnit.one,
             style: TextStyle(
               fontSize: 13,
               color: AppTheme.receiptDetailsIngredientsAmountColor,

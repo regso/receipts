@@ -7,25 +7,35 @@ import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/cooking_steps_item_widget.dart';
 
 class CookingStepsWidget extends StatefulWidget {
-  final ReceiptEntity receipt;
-  final ReceiptRepository receiptRepository = ReceiptRepository();
+  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final ReceiptEntity _receipt;
 
-  CookingStepsWidget({super.key, required this.receipt});
+  CookingStepsWidget({super.key, required ReceiptEntity receipt})
+      : _receipt = receipt;
 
   @override
   State<CookingStepsWidget> createState() => _CookingStepsWidgetState();
 }
 
 class _CookingStepsWidgetState extends State<CookingStepsWidget> {
+  late Future<List<CookingStepLinkEntity>> _futureCookingStepLinks;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureCookingStepLinks =
+        widget._receiptRepository.findCookingStepLinksByReceipt(
+          widget._receipt,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CookingStepLinkEntity>>(
-      future: widget.receiptRepository.findCookingStepLinksByReceipt(
-        widget.receipt,
-      ),
+    return FutureBuilder(
+      future: _futureCookingStepLinks,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          throw Exception('Error');
+          return Center(child: Text('Error: ${snapshot.error}'));
         }
 
         if (!snapshot.hasData) {
@@ -52,16 +62,16 @@ class _CookingStepsWidgetState extends State<CookingStepsWidget> {
               ),
               Align(
                 alignment: Alignment.center,
-                child: ElevatedButton(
+                child: OutlinedButton(
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
+                  style: OutlinedButton.styleFrom(
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                     minimumSize: const Size(232, 48),
                     backgroundColor:
-                        AppTheme.receiptDetailsButtonBackgroundColor,
+                    AppTheme.receiptDetailsButtonBackgroundColor,
                   ),
                   child: Text(
                     Labels.startCooking,
