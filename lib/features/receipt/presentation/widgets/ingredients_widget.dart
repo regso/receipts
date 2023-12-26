@@ -35,7 +35,7 @@ class _IngredientsWidgetState extends State<IngredientsWidget> {
       future: _futureIngredients,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
-          throw Exception('Error');
+          return Center(child: Text('Error: ${snapshot.error}'));
         }
 
         if (!snapshot.hasData) {
