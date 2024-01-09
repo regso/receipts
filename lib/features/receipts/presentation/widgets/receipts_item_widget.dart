@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
-import 'package:receipts/config/route_matcher.dart';
+import 'package:receipts/config/routes/receipt_page_route.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class ReceiptsItemWidget extends StatelessWidget {
@@ -11,9 +11,8 @@ class ReceiptsItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(
-            RouteMatcher.routeReceiptDetails,
-            arguments: receipt,
+          Navigator.of(context).push(
+            ReceiptPageRoute.createRoute(receipt: receipt),
           );
         },
         child: SizedBox(

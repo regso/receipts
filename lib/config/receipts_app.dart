@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:receipts/config/route_matcher.dart';
+import 'package:receipts/features/receipts/presentation/pages/receipts_page.dart';
 
 class ReceiptsApp extends StatelessWidget {
   const ReceiptsApp({super.key});
@@ -11,8 +11,7 @@ class ReceiptsApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      initialRoute: RouteMatcher.routeReceipts,
-      routes: RouteMatcher.getRoutesMap(),
+      home: const ReceiptsPage(),
     );
   }
 }

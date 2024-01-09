@@ -8,26 +8,25 @@ import 'package:receipts/features/receipt/domain/usecases/save_comment_use_case.
 import 'package:receipts/features/receipt/presentation/widgets/comments_item_widget.dart';
 
 class CommentsWidget extends StatefulWidget {
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
-  final TextEditingController _textController = TextEditingController();
-  final SaveCommentUseCase _saveCommentUseCase = SaveCommentUseCase();
   final ReceiptEntity _receipt;
+  final Future<List<CommentEntity>> _futureComments;
 
-  CommentsWidget({super.key, required receipt}) : _receipt = receipt;
+  const CommentsWidget({
+    super.key,
+    required ReceiptEntity receipt,
+    required Future<List<CommentEntity>> futureComments,
+  })  : _receipt = receipt,
+        _futureComments = futureComments;
 
   @override
   State<CommentsWidget> createState() => _CommentsWidgetState();
 }
 
 class _CommentsWidgetState extends State<CommentsWidget> {
-  late Future<List<CommentEntity>> _futureComments;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureComments =
-        widget._receiptRepository.findCommentsByReceipt(widget._receipt);
-  }
+  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final TextEditingController _textController = TextEditingController();
+  final SaveCommentUseCase _saveCommentUseCase = SaveCommentUseCase();
+  late Future<List<CommentEntity>> _futureComments = widget._futureComments;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +67,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
             children: [
               ...commentWidgets,
               TextField(
-                controller: widget._textController,
+                controller: _textController,
                 minLines: 2,
                 maxLines: 5,
                 // keyboardType: TextInputType.multiline,
@@ -96,13 +95,13 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                   ),
                 ),
                 onPressed: () async {
-                  await widget._saveCommentUseCase(
-                    text: widget._textController.text,
+                  await _saveCommentUseCase(
+                    text: _textController.text,
                     receipt: widget._receipt,
                   );
-                  widget._textController.clear();
-                  _futureComments = widget._receiptRepository
-                      .findCommentsByReceipt(widget._receipt);
+                  _textController.clear();
+                  _futureComments =
+                      _receiptRepository.findCommentsByReceipt(widget._receipt);
                   setState(() {});
                 },
               )
@@ -115,7 +114,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
 
   @override
   void dispose() {
-    widget._textController.dispose();
+    _textController.dispose();
     super.dispose();
   }
 }

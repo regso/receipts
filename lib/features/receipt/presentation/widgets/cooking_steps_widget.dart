@@ -1,33 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
-import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/cooking_steps_item_widget.dart';
 
-class CookingStepsWidget extends StatefulWidget {
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
-  final ReceiptEntity _receipt;
+class CookingStepsWidget extends StatelessWidget {
+  final Future<List<CookingStepLinkEntity>> _futureCookingStepLinks;
 
-  CookingStepsWidget({super.key, required ReceiptEntity receipt})
-      : _receipt = receipt;
-
-  @override
-  State<CookingStepsWidget> createState() => _CookingStepsWidgetState();
-}
-
-class _CookingStepsWidgetState extends State<CookingStepsWidget> {
-  late Future<List<CookingStepLinkEntity>> _futureCookingStepLinks;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureCookingStepLinks =
-        widget._receiptRepository.findCookingStepLinksByReceipt(
-      widget._receipt,
-    );
-  }
+  const CookingStepsWidget({
+    super.key,
+    required Future<List<CookingStepLinkEntity>> futureCookingStepLinks,
+  }) : _futureCookingStepLinks = futureCookingStepLinks;
 
   @override
   Widget build(BuildContext context) {
