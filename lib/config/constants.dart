@@ -9,6 +9,7 @@ class Constants {
   static String appIconPizzaActivePath = 'assets/images/pizza.png';
   static String appIconUserPath = 'assets/images/user_gray.png';
   static String appIconUserActivePath = 'assets/images/user.png';
+  static String appIconLikeButtonRive = 'assets/images/like_button.riv';
 
   static String hiveReceiptsBoxName = 'receipts_box_0';
   static String hiveIngredientsBoxName = 'ingredients_box_1';
