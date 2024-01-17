@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
@@ -27,6 +30,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
   final TextEditingController _textController = TextEditingController();
   final SaveCommentUseCase _saveCommentUseCase = SaveCommentUseCase();
   late Future<List<CommentEntity>> _futureComments = widget._futureComments;
+  Uint8List _photo = Uint8List.fromList([]);
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +70,37 @@ class _CommentsWidgetState extends State<CommentsWidget> {
           child: Column(
             children: [
               ...commentWidgets,
-              TextField(
-                controller: _textController,
-                minLines: 2,
-                maxLines: 5,
-                // keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  alignLabelWithHint: true,
-                  border: const OutlineInputBorder(),
-                  // labelText:
-                  hintText: Labels.sendCommentHint,
-                ),
+              Stack(
+                children: [
+                  TextField(
+                    controller: _textController,
+                    minLines: 2,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      border: const OutlineInputBorder(),
+                      hintText: Labels.sendCommentHint,
+                      contentPadding: const EdgeInsets.only(
+                        left: 12,
+                        top: 20,
+                        right: 40,
+                        bottom: 20,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 15,
+                    right: 10,
+                    child: GestureDetector(
+                      onTap: _onTapCommentIcon,
+                      child: const Icon(Icons.image, size: 30),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Container(
+                child: _photo.isEmpty ? Container() : Image.memory(_photo),
               ),
               const SizedBox(height: 15),
               OutlinedButton(
@@ -104,12 +128,21 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                       _receiptRepository.findCommentsByReceipt(widget._receipt);
                   setState(() {});
                 },
-              )
+              ),
             ],
           ),
         );
       },
     );
+  }
+
+  Future<void> _onTapCommentIcon() async {
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      _photo = await pickedFile.readAsBytes();
+      setState(() {});
+    }
   }
 
   @override
