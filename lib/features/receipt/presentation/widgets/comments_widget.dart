@@ -7,6 +7,7 @@ import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipt/domain/usecases/object_detect_use_case.dart';
 import 'package:receipts/features/receipt/domain/usecases/save_comment_use_case.dart';
 import 'package:receipts/features/receipt/presentation/widgets/comments_item_widget.dart';
 
@@ -29,6 +30,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
   final ReceiptRepository _receiptRepository = ReceiptRepository();
   final TextEditingController _textController = TextEditingController();
   final SaveCommentUseCase _saveCommentUseCase = SaveCommentUseCase();
+  final ObjectDetectUseCase _objectDetectUseCase = ObjectDetectUseCase();
   late Future<List<CommentEntity>> _futureComments = widget._futureComments;
   Uint8List _photo = Uint8List.fromList([]);
 
@@ -142,7 +144,9 @@ class _CommentsWidgetState extends State<CommentsWidget> {
     XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      _photo = await pickedFile.readAsBytes();
+      _photo = await _objectDetectUseCase(
+        photo: await pickedFile.readAsBytes(),
+      );
       setState(() {});
     }
   }

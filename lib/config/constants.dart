@@ -36,4 +36,7 @@ class Constants {
   static String httpUserAgentHeader =
       'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36';
   static String httpRefererHeader = 'https://foodapi.dzolotov.tech/';
+
+  static String tfliteModelPath = 'assets/tflite/ssd_mobilenet_v1.tflite';
+  static String tfliteLabelsPath = 'assets/tflite/labels.txt';
 }
