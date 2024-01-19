@@ -51,6 +51,10 @@ class CommentsItemWidget extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(_comment.text, style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 10),
+              _comment.photo.isNotEmpty
+                  ? Image.memory(_comment.photo)
+                  : Container(),
             ],
           ),
         )

@@ -1,9 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:intl/intl.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/dio.dart';
 import 'package:receipts/config/init.dart';
 import 'package:receipts/features/receipt/data/data_sources/local_receipt_data_source.dart';
 import 'package:receipts/features/receipt/data/data_sources/remote_receipt_data_source.dart';
+import 'package:receipts/features/receipt/data/dto/local_comment_photo_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_user_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
@@ -33,6 +36,7 @@ class ReceiptRepository {
     cookingStepLinksBox: cookingStepLinksBox,
     commentsBox: commentsBox,
     usersBox: usersBox,
+    commentPhotosBox: commentPhotosBox,
   );
 
   Future<List<ReceiptEntity>> findReceipts() => _findRemoteReceipt().catchError(
@@ -193,20 +197,32 @@ class ReceiptRepository {
     }).toList();
   }
 
-  Future<void> saveCommentByReceipt(String text, ReceiptEntity receipt) async {
+  Future<void> saveCommentByReceipt(
+    String text,
+    Uint8List photo,
+    ReceiptEntity receipt,
+  ) async {
     final user = await _getUserById(
       Constants.appUserId,
     );
     final comment = CommentModel(
       id: 0,
       text: text,
-      photo: '',
+      photo: Uint8List(0),
       createdAt:
           DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'").format(DateTime.now().toUtc()),
       user: user,
       receipt: receipt,
     );
-    return remoteReceiptDataSource.saveComment(comment);
+    int commentId = await remoteReceiptDataSource.saveComment(comment);
+    if (photo.isNotEmpty) {
+      await localReceiptDataSource.saveCommentPhoto(
+        LocalCommentPhotoDto(
+          commentId: commentId,
+          photo: photo,
+        ),
+      );
+    }
   }
 
   Future<List<CommentEntity>> findCommentsByReceipt(
@@ -230,10 +246,12 @@ class ReceiptRepository {
     return remoteCommentDtoList
         .where((dto) => dto.receiptIdDto.id == receipt.id)
         .map((dto) {
+      final commentPhoto =
+          localReceiptDataSource.getCommentPhotoByCommentId(dto.id);
       return CommentModel(
         id: dto.id,
         text: dto.text,
-        photo: '',
+        photo: commentPhoto != null ? commentPhoto.photo : Uint8List(0),
         createdAt: dto.datetime,
         user: UserModel.fromRemoteUserDto(
           remoteUsersDtoMap[dto.userIdDto.id]!,
@@ -266,17 +284,20 @@ class ReceiptRepository {
     final localCommentDtoList = await localReceiptDataSource.findComments();
     return localCommentDtoList
         .where((final dto) => dto.receiptId == receipt.id)
-        .map((dto) => CommentModel(
-              id: dto.id,
-              text: dto.text,
-              photo: '',
-              createdAt: dto.createdAt,
-              user: UserModel.fromLocalReceiptDto(
-                localUsersDtoMap[dto.userId]!,
-              ),
-              receipt: receipt,
-            ))
-        .toList();
+        .map((dto) {
+      final commentPhoto =
+          localReceiptDataSource.getCommentPhotoByCommentId(dto.id);
+      return CommentModel(
+        id: dto.id,
+        text: dto.text,
+        photo: commentPhoto != null ? commentPhoto.photo : Uint8List(0),
+        createdAt: dto.createdAt,
+        user: UserModel.fromLocalReceiptDto(
+          localUsersDtoMap[dto.userId]!,
+        ),
+        receipt: receipt,
+      );
+    }).toList();
   }
 
   Future<UserEntity> _getUserById(int id) async => UserModel.fromRemoteUserDto(

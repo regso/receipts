@@ -1,5 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:receipts/features/receipt/data/dto/local_comment_dto.dart';
+import 'package:receipts/features/receipt/data/dto/local_comment_photo_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_link_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_ingredient_dto.dart';
@@ -25,6 +26,7 @@ class LocalReceiptDataSource {
   final Box<LocalCookingStepLinkDto> cookingStepLinksBox;
   final Box<LocalCommentDto> commentsBox;
   final Box<LocalUserDto> usersBox;
+  final Box<LocalCommentPhotoDto> commentPhotosBox;
 
   LocalReceiptDataSource({
     required this.receiptsBox,
@@ -35,6 +37,7 @@ class LocalReceiptDataSource {
     required this.cookingStepLinksBox,
     required this.commentsBox,
     required this.usersBox,
+    required this.commentPhotosBox,
   });
 
   Future<List<LocalReceiptDto>> findReceipts() async =>
@@ -182,5 +185,13 @@ class LocalReceiptDataSource {
       );
     }
     await usersBox.putAll(localUsersDtoMap);
+  }
+
+  LocalCommentPhotoDto? getCommentPhotoByCommentId(int commentId) {
+    return commentPhotosBox.get(commentId);
+  }
+
+  Future<void> saveCommentPhoto(LocalCommentPhotoDto commentPhoto) async {
+    await commentPhotosBox.put(commentPhoto.commentId, commentPhoto);
   }
 }

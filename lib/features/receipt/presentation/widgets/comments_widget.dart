@@ -121,9 +121,11 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                 onPressed: () async {
                   await _saveCommentUseCase(
                     text: _textController.text,
+                    photo: _photo,
                     receipt: widget._receipt,
                   );
                   _textController.clear();
+                  _photo = Uint8List(0);
                   _futureComments =
                       _receiptRepository.findCommentsByReceipt(widget._receipt);
                   setState(() {});
