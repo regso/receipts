@@ -93,9 +93,9 @@ class ObjectDetectUseCase {
     log('Number of detections: $numberOfDetections');
 
     log('Classifying detected objects...');
-    final List<String> classication = [];
+    final List<String> classification = [];
     for (var i = 0; i < numberOfDetections; i++) {
-      classication.add(_labels![classes[i]]);
+      classification.add(_labels![classes[i]]);
     }
 
     log('Outlining objects...');
@@ -116,8 +116,8 @@ class ObjectDetectUseCase {
         // Label drawing
         img.drawString(
           imageInput,
-          '${classication[i]} ${scores[i]}',
-          font: img.arial14,
+          classification[i],
+          font: img.arial24,
           x: locations[i][1] + 1,
           y: locations[i][0] + 1,
           color: img.ColorRgb8(255, 0, 0),
