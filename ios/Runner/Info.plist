@@ -46,10 +46,10 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-    <string>Upload image from camera to receipt comment.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Upload video to receipt comment.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Upload image to receipt comment.</string>
+	<string>Upload image from camera to receipt comment.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Upload video to receipt comment.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Upload image to receipt comment.</string>
 </dict>
 </plist>
