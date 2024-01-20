@@ -1,10 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/user_entity.dart';
 
 class CommentEntity {
   final int id;
   final String text;
-  final String photo;
+  final Uint8List photo;
   final String createdAt;
   final UserEntity user;
   final ReceiptEntity receipt;

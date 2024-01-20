@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/data/dto/local_comment_dto.dart';
+import 'package:receipts/features/receipt/data/dto/local_comment_photo_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_cooking_step_link_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_ingredient_dto.dart';
@@ -17,6 +18,7 @@ late Box<LocalCookingStepDto> cookingStepsBox;
 late Box<LocalCookingStepLinkDto> cookingStepLinksBox;
 late Box<LocalCommentDto> commentsBox;
 late Box<LocalUserDto> usersBox;
+late Box<LocalCommentPhotoDto> commentPhotosBox;
 
 Future<void> initApp() async {
   await Hive.initFlutter();
@@ -28,6 +30,7 @@ Future<void> initApp() async {
   Hive.registerAdapter(LocalCookingStepLinkDtoAdapter());
   Hive.registerAdapter(LocalCommentDtoAdapter());
   Hive.registerAdapter(LocalUserDtoAdapter());
+  Hive.registerAdapter(LocalCommentPhotoDtoAdapter());
   receiptsBox = await Hive.openBox(Constants.hiveReceiptsBoxName);
   ingredientsBox = await Hive.openBox(Constants.hiveIngredientsBoxName);
   measureUnitsBox = await Hive.openBox(Constants.hiveMeasureUnitsBoxName);
@@ -40,4 +43,5 @@ Future<void> initApp() async {
   );
   commentsBox = await Hive.openBox(Constants.hiveCommentsBoxName);
   usersBox = await Hive.openBox(Constants.hiveUsersBoxName);
+  commentPhotosBox = await Hive.openBox(Constants.hiveCommentPhotosName);
 }

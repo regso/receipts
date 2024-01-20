@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
 
-class CookingStepsItemWidget extends StatefulWidget {
+class CookingStepsItemWidget extends StatelessWidget {
   final CookingStepLinkEntity _cookingStepLink;
 
   const CookingStepsItemWidget({
@@ -11,15 +11,8 @@ class CookingStepsItemWidget extends StatefulWidget {
   }) : _cookingStepLink = cookingStepLink;
 
   @override
-  State<CookingStepsItemWidget> createState() => _CookingStepsItemWidgetState();
-}
-
-class _CookingStepsItemWidgetState extends State<CookingStepsItemWidget> {
-  bool _checked = false;
-
-  @override
   Widget build(BuildContext context) {
-    String timeMinutes = widget._cookingStepLink.cookingStep.cookingTimeMinutes
+    String timeMinutes = _cookingStepLink.cookingStep.cookingTimeMinutes
         .toString()
         .padLeft(2, '0');
     return Container(
@@ -32,7 +25,7 @@ class _CookingStepsItemWidgetState extends State<CookingStepsItemWidget> {
           Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              widget._cookingStepLink.number.toString(),
+              _cookingStepLink.number.toString(),
               style: TextStyle(
                 fontSize: 40,
                 color: AppTheme.receiptDetailsCookingStepLeadingColor,
@@ -40,30 +33,22 @@ class _CookingStepsItemWidgetState extends State<CookingStepsItemWidget> {
             ),
           ),
           Expanded(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 17),
-            child: Text(
-              widget._cookingStepLink.cookingStep.title,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppTheme.receiptDetailsCookingStepTitleColor,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 17),
+              child: Text(
+                _cookingStepLink.cookingStep.title,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppTheme.receiptDetailsCookingStepTitleColor,
+                ),
               ),
             ),
-          )),
+          ),
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Checkbox(
-                  value: _checked,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _checked = value as bool;
-                    });
-                  },
-                  activeColor: AppTheme.receiptDetailsCookingStepCheckboxColor,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
+                const _CookingStepCheckBox(),
                 Text(
                   '$timeMinutes:00',
                   style: TextStyle(
@@ -78,5 +63,62 @@ class _CookingStepsItemWidgetState extends State<CookingStepsItemWidget> {
         ],
       ),
     );
+  }
+}
+
+class _CookingStepCheckBox extends StatefulWidget {
+  const _CookingStepCheckBox();
+
+  @override
+  State<_CookingStepCheckBox> createState() => _CookingStepCheckBoxState();
+}
+
+class _CookingStepCheckBoxState extends State<_CookingStepCheckBox>
+    with SingleTickerProviderStateMixin {
+  bool _checked = false;
+  late AnimationController animationController = AnimationController(
+    duration: const Duration(milliseconds: 100),
+    vsync: this,
+    lowerBound: 1,
+    upperBound: 1.5,
+    debugLabel: 'Debug',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        animationController.reverse();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<double>(
+      valueListenable: animationController,
+      child: Checkbox(
+        value: _checked,
+        onChanged: (bool? value) {
+          setState(() {
+            _checked = value as bool;
+            animationController.forward();
+          });
+        },
+        activeColor: AppTheme.receiptDetailsCookingStepCheckboxColor,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      builder: (context, value, child) => Transform.scale(
+        scale: value,
+        child: child,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    animationController.dispose();
   }
 }

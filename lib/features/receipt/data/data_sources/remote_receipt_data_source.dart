@@ -73,13 +73,14 @@ class RemoteReceiptDataSource {
         .toList();
   }
 
-  Future<void> saveComment(CommentModel comment) async {
+  Future<int> saveComment(CommentModel comment) async {
     final commentDto = RemoteCommentDto.fromModel(comment);
     final jsonData = commentDto.toJson();
     if (jsonData['id'] == 0) {
       jsonData['id'] = await _getCommentNextId();
     }
     await dio.post(Constants.apiPostCommentUrl, data: jsonData);
+    return jsonData['id'] as int;
   }
 
   Future<int> _getCommentNextId() async {

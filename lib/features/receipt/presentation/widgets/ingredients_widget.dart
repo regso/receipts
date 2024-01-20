@@ -1,33 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
 import 'package:receipts/features/receipt/presentation/widgets/ingredients_item_widget.dart';
 
-class IngredientsWidget extends StatefulWidget {
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
-  final ReceiptEntity _receipt;
+class IngredientsWidget extends StatelessWidget {
+  final Future<List<ReceiptIngredientEntity>> _futureIngredients;
 
-  IngredientsWidget({super.key, required ReceiptEntity receipt})
-      : _receipt = receipt;
-
-  @override
-  State<IngredientsWidget> createState() => _IngredientsWidgetState();
-}
-
-class _IngredientsWidgetState extends State<IngredientsWidget> {
-  late Future<List<ReceiptIngredientEntity>> _futureIngredients;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureIngredients =
-        widget._receiptRepository.findReceiptIngredientsByReceipt(
-      widget._receipt,
-    );
-  }
+  const IngredientsWidget({
+    super.key,
+    required ReceiptEntity receipt,
+    required Future<List<ReceiptIngredientEntity>> futureIngredients,
+  }) : _futureIngredients = futureIngredients;
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:rive/rive.dart';
 
 class ReceiptHeaderWidget extends StatefulWidget {
   final ReceiptEntity _receipt;
@@ -14,7 +15,7 @@ class ReceiptHeaderWidget extends StatefulWidget {
 }
 
 class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
-  bool _liked = false;
+  SMIBool? _liked;
 
   @override
   Widget build(BuildContext context) {
@@ -27,19 +28,21 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
           Row(
             children: [
               Expanded(
-                child: Text(widget._receipt.title,
-                    style: const TextStyle(fontSize: 24)),
+                child: Text(
+                  widget._receipt.title,
+                  style: const TextStyle(fontSize: 24),
+                ),
               ),
-              IconButton(
-                icon: _liked
-                    ? Image.asset(Constants.appIconLikedPath)
-                    : Image.asset(Constants.appIconUnLikedPath),
-                iconSize: 30,
-                onPressed: () {
-                  setState(() {
-                    _liked = !_liked;
-                  });
-                },
+              GestureDetector(
+                onTap: _onTapLikeIcon,
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: RiveAnimation.asset(
+                    Constants.appIconLikeButtonRive,
+                    onInit: _onInitLikeIcon,
+                  ),
+                ),
               ),
             ],
           ),
@@ -75,5 +78,19 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
         ],
       ),
     );
+  }
+
+  void _onTapLikeIcon() {
+    _liked!.value = !_liked!.value;
+  }
+
+  void _onInitLikeIcon(Artboard artboard) {
+    final controller = StateMachineController.fromArtboard(
+      artboard,
+      'stateMachine',
+    );
+    artboard.addController(controller!);
+    _liked = controller.findInput<bool>('checked') as SMIBool;
+    _liked!.value = false;
   }
 }

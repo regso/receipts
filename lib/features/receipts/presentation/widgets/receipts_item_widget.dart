@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/config/routes/receipt_page_route.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
-import 'package:receipts/features/receipt/presentation/pages/receipt_page.dart';
 
 class ReceiptsItemWidget extends StatelessWidget {
   final ReceiptEntity receipt;
@@ -11,13 +11,8 @@ class ReceiptsItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ReceiptPage(
-                receipt: receipt,
-              ),
-            ),
+          Navigator.of(context).push(
+            ReceiptPageRoute.createRoute(receipt: receipt),
           );
         },
         child: SizedBox(

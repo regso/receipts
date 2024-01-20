@@ -29,7 +29,7 @@ class RemoteCommentDto {
     return RemoteCommentDto(
       id: model.id,
       text: model.text,
-      photo: model.photo,
+      photo: '',
       datetime: model.createdAt,
       userIdDto: RemoteUserIdDto(id: model.user.id),
       receiptIdDto: RemoteReceiptIdDto(id: model.receipt.id),
