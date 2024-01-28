@@ -5,6 +5,7 @@ import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_link_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_favorite_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto.dart';
@@ -71,6 +72,21 @@ class RemoteReceiptDataSource {
     return decodedJsonList
         .map((data) => RemoteCommentDto.fromJson(data))
         .toList();
+  }
+
+  Future<List<RemoteFavoriteDto>> findFavorites() async {
+    // TODO:
+    return [];
+  }
+
+  Future<void> saveFavorite() async {
+    // TODO:
+    return;
+  }
+
+  Future<void> deleteFavorite() async {
+    // TODO:
+    return;
   }
 
   Future<int> saveComment(CommentModel comment) async {

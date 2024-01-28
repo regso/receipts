@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/features/receipts/presentation/bloc/receipts_bloc.dart';
+import 'package:receipts/features/receipts/presentation/bloc/receipts_event.dart';
 import 'package:receipts/features/receipts/presentation/widgets/navigation_bar_widget.dart';
 import 'package:receipts/features/receipts/presentation/widgets/receipts_widget.dart';
 
@@ -11,7 +14,14 @@ class ReceiptsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
       body: SafeArea(
-        child: ReceiptsWidget(),
+        child: BlocProvider<ReceiptsBloc>(
+          create: (BuildContext context) {
+            final bloc = ReceiptsBloc();
+            bloc.add(const LoadReceiptsEvent());
+            return bloc;
+          },
+          child:  const ReceiptsWidget(),
+        ),
       ),
       bottomNavigationBar: const NavigationBarWidget(),
     );

@@ -1,51 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipts/presentation/bloc/receipts_bloc.dart';
+import 'package:receipts/features/receipts/presentation/bloc/receipts_state.dart';
 import 'package:receipts/features/receipts/presentation/widgets/receipts_item_widget.dart';
 
-class ReceiptsWidget extends StatefulWidget {
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
-
-  ReceiptsWidget({super.key});
-
-  @override
-  State<ReceiptsWidget> createState() => _ReceiptsWidgetState();
-}
-
-class _ReceiptsWidgetState extends State<ReceiptsWidget> {
-  late Future<List<ReceiptEntity>> _futureReceipts;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureReceipts = widget._receiptRepository.findReceipts();
-  }
+class ReceiptsWidget extends StatelessWidget {
+  const ReceiptsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _futureReceipts,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+    return BlocBuilder<ReceiptsBloc, ReceiptsState>(
+      builder: (BuildContext context, ReceiptsState state) {
+        if (state is InitReceiptsState) {
+          return const Text('Initialized.');
         }
 
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
+        if (state is LoadingReceiptsState) {
+          return const CircularProgressIndicator();
         }
 
-        List<ReceiptEntity> receipts = snapshot.data!;
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Column(
-              children: receipts
-                  .map((ReceiptEntity model) =>
-                      ReceiptsItemWidget(receipt: model))
-                  .toList(),
+        if (state is LoadedReceiptsState) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Column(
+                children: state.receipts
+                    .map((ReceiptEntity model) => ReceiptsItemWidget(
+                          receipt: model,
+                          isFavorite: state.favoritesMap.containsKey(model.id),
+                        ))
+                    .toList(),
+              ),
             ),
-          ),
-        );
+          );
+        }
+
+        return const Text('Error');
       },
     );
   }

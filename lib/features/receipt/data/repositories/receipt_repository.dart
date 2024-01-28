@@ -19,6 +19,7 @@ import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt/data/models/user_model.dart';
 import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
+import 'package:receipts/features/receipt/domain/entities/favorite_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/user_entity.dart';
@@ -197,6 +198,14 @@ class ReceiptRepository {
     }).toList();
   }
 
+  Future<void> saveFavorite(FavoriteEntity favorite) async {
+    await remoteReceiptDataSource.saveFavorite();
+  }
+
+  Future<void> deleteFavorite(int favoriteId) async {
+    await remoteReceiptDataSource.deleteFavorite();
+  }
+
   Future<void> saveCommentByReceipt(
     String text,
     Uint8List photo,
@@ -223,6 +232,20 @@ class ReceiptRepository {
         ),
       );
     }
+  }
+
+  Future<List<FavoriteEntity>> findFavorites() =>
+      _findRemoteFavorites().catchError((_) => _findLocalFavorites());
+
+  Future<List<FavoriteEntity>> _findRemoteFavorites() async {
+    // TODO:
+    // final remoteCommentDtoList = await remoteReceiptDataSource.findFavorites();
+    return [];
+  }
+
+  Future<List<FavoriteEntity>> _findLocalFavorites() async {
+    // TODO:
+    return [];
   }
 
   Future<List<CommentEntity>> findCommentsByReceipt(

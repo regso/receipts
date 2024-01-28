@@ -43,5 +43,5 @@ Future<void> initApp() async {
   );
   commentsBox = await Hive.openBox(Constants.hiveCommentsBoxName);
   usersBox = await Hive.openBox(Constants.hiveUsersBoxName);
-  commentPhotosBox = await Hive.openBox(Constants.hiveCommentPhotosName);
+  commentPhotosBox = await Hive.openBox(Constants.hiveCommentPhotosBoxName);
 }

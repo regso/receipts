@@ -5,6 +5,7 @@ import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/bloc/receipt_bloc.dart';
+import 'package:receipts/features/receipt/presentation/bloc/receipt_event.dart';
 import 'package:receipts/features/receipt/presentation/widgets/receipt_widget.dart';
 
 @immutable
@@ -46,9 +47,12 @@ class ReceiptPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: BlocProvider<ReceiptBloc>(
-          create: (BuildContext context) => ReceiptBloc(),
-          child: ReceiptWidget(receipt: receipt)
-        ),
+            create: (BuildContext context) {
+              final bloc = ReceiptBloc();
+              bloc.add(LoadReceiptEvent(receipt: receipt));
+              return bloc;
+            },
+            child: ReceiptWidget(receipt: receipt)),
       ),
     );
   }

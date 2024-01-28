@@ -19,7 +19,8 @@ class Constants {
   static String hiveReceiptIngredientsBoxName = 'receipt_ingredients_box_5';
   static String hiveCookingStepLinksBoxName = 'cooking_step_links_box_6';
   static String hiveUsersBoxName = 'users_box_7';
-  static String hiveCommentPhotosName = 'comment_photos_box_8';
+  static String hiveCommentPhotosBoxName = 'comment_photos_box_8';
+  static String hiveFavoritesBoxName = 'favorites_box_9';
 
   static String apiBaseUrl = 'https://foodapi.dzolotov.tech';
   static String apiGetReceiptUrl = '/recipe';

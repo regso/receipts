@@ -1,15 +1,17 @@
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
-sealed class ReceiptEvent {}
+sealed class ReceiptEvent {
+  const ReceiptEvent();
+}
 
 class LoadReceiptEvent extends ReceiptEvent {
   final ReceiptEntity receipt;
 
-  LoadReceiptEvent({required this.receipt});
+  const LoadReceiptEvent({required this.receipt});
 }
 
 class ReloadReceiptCommentsEvent extends ReceiptEvent {
   final ReceiptEntity receipt;
 
-  ReloadReceiptCommentsEvent({required this.receipt});
+  const ReloadReceiptCommentsEvent({required this.receipt});
 }

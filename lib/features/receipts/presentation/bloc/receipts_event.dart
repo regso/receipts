@@ -1,3 +1,7 @@
-sealed class ReceiptsEvent {}
+sealed class ReceiptsEvent {
+  const ReceiptsEvent();
+}
 
-class LoadReceiptsEvent extends ReceiptsEvent {}
+class LoadReceiptsEvent extends ReceiptsEvent {
+  const LoadReceiptsEvent();
+}
