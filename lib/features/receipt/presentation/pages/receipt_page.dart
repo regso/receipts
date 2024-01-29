@@ -11,8 +11,13 @@ import 'package:receipts/features/receipt/presentation/widgets/receipt_widget.da
 @immutable
 class ReceiptPage extends StatelessWidget {
   final ReceiptEntity receipt;
+  final Map<int, int> userIdFavoriteIdMap;
 
-  const ReceiptPage({super.key, required this.receipt});
+  const ReceiptPage({
+    super.key,
+    required this.receipt,
+    required this.userIdFavoriteIdMap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +52,16 @@ class ReceiptPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: BlocProvider<ReceiptBloc>(
-            create: (BuildContext context) {
-              final bloc = ReceiptBloc();
-              bloc.add(LoadReceiptEvent(receipt: receipt));
-              return bloc;
-            },
-            child: ReceiptWidget(receipt: receipt)),
+          create: (BuildContext context) {
+            final bloc = ReceiptBloc();
+            bloc.add(LoadReceiptEvent(receipt: receipt));
+            return bloc;
+          },
+          child: ReceiptWidget(
+            receipt: receipt,
+            userIdFavoriteIdMap: userIdFavoriteIdMap,
+          ),
+        ),
       ),
     );
   }

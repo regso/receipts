@@ -8,15 +8,23 @@ import 'package:receipts/features/receipt/presentation/widgets/receipt_header_wi
 @immutable
 class ReceiptWidget extends StatelessWidget {
   final ReceiptEntity receipt;
+  final Map<int, int> userIdFavoriteIdMap;
 
-  const ReceiptWidget({super.key, required this.receipt});
+  const ReceiptWidget({
+    super.key,
+    required this.receipt,
+    required this.userIdFavoriteIdMap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          ReceiptHeaderWidget(receipt: receipt),
+          ReceiptHeaderWidget(
+            receipt: receipt,
+            userIdFavoriteIdMap: userIdFavoriteIdMap,
+          ),
           const SizedBox(height: 20),
           IngredientsWidget(receipt: receipt),
           const SizedBox(height: 20),

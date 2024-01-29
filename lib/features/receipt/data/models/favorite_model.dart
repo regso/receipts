@@ -4,5 +4,6 @@ class FavoriteModel extends FavoriteEntity {
   FavoriteModel({
     required super.id,
     required super.receiptId,
+    required super.userId,
   });
 }

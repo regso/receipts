@@ -21,7 +21,7 @@ class FavoriteIconWidget extends StatelessWidget {
       child: ClipPath(
         clipper: clipper,
         child: Container(
-          width: 60,
+          width: 55,
           height: 20,
           color: AppTheme.accentColor,
           child: Align(

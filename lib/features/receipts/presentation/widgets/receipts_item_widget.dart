@@ -6,19 +6,22 @@ import 'package:receipts/features/receipts/presentation/widgets/favorite_icon_wi
 
 class ReceiptsItemWidget extends StatelessWidget {
   final ReceiptEntity receipt;
-  final bool isFavorite;
+  final Map<int, int> userIdFavoriteIdMap;
 
   const ReceiptsItemWidget({
     super.key,
     required this.receipt,
-    required this.isFavorite,
+    required this.userIdFavoriteIdMap,
   });
 
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () {
           Navigator.of(context).push(
-            ReceiptPageRoute.createRoute(receipt: receipt),
+            ReceiptPageRoute.createRoute(
+              receipt: receipt,
+              userIdFavoriteIdMap: userIdFavoriteIdMap,
+            ),
           );
         },
         child: SizedBox(
@@ -102,11 +105,14 @@ class ReceiptsItemWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Positioned(
-                  right: 0,
-                  bottom: 25,
-                  child: FavoriteIconWidget(count: 2),
-                ),
+                if (userIdFavoriteIdMap.isNotEmpty)
+                  Positioned(
+                    right: 0,
+                    bottom: 25,
+                    child: FavoriteIconWidget(
+                      count: userIdFavoriteIdMap.length,
+                    ),
+                  ),
               ],
             ),
           ),

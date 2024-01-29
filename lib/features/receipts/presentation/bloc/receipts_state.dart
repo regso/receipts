@@ -14,9 +14,12 @@ class LoadingReceiptsState extends ReceiptsState {
 
 class LoadedReceiptsState extends ReceiptsState {
   final List<ReceiptEntity> receipts;
-  final Map<int, bool> favoritesMap;
+  final Map<int, Map<int, int>> favoritesMap;
 
-  const LoadedReceiptsState({required this.receipts, required this.favoritesMap});
+  const LoadedReceiptsState({
+    required this.receipts,
+    required this.favoritesMap,
+  });
 }
 
 class ErrorReceiptsState extends ReceiptsState {

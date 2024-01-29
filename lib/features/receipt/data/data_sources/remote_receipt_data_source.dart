@@ -75,8 +75,11 @@ class RemoteReceiptDataSource {
   }
 
   Future<List<RemoteFavoriteDto>> findFavorites() async {
-    // TODO:
-    return [];
+    final response = await dio.get(Constants.apiGetFavoriteUrl);
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
+        .map((data) => RemoteFavoriteDto.fromJson(data))
+        .toList();
   }
 
   Future<void> saveFavorite() async {

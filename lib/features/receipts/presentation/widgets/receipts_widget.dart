@@ -28,7 +28,10 @@ class ReceiptsWidget extends StatelessWidget {
                 children: state.receipts
                     .map((ReceiptEntity model) => ReceiptsItemWidget(
                           receipt: model,
-                          isFavorite: state.favoritesMap.containsKey(model.id),
+                          userIdFavoriteIdMap:
+                              state.favoritesMap.containsKey(model.id)
+                                  ? state.favoritesMap[model.id]!
+                                  : {},
                         ))
                     .toList(),
               ),

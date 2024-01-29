@@ -12,6 +12,7 @@ import 'package:receipts/features/receipt/data/dto/remote_user_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_link_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
+import 'package:receipts/features/receipt/data/models/favorite_model.dart';
 import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/measure_unit_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
@@ -25,6 +26,7 @@ import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_ent
 import 'package:receipts/features/receipt/domain/entities/user_entity.dart';
 
 class ReceiptRepository {
+  // TODO: DI
   RemoteReceiptDataSource remoteReceiptDataSource = RemoteReceiptDataSource(
     dio: dio,
   );
@@ -38,6 +40,7 @@ class ReceiptRepository {
     commentsBox: commentsBox,
     usersBox: usersBox,
     commentPhotosBox: commentPhotosBox,
+    favoritesBox: favoritesBox,
   );
 
   Future<List<ReceiptEntity>> findReceipts() => _findRemoteReceipt().catchError(
@@ -238,14 +241,29 @@ class ReceiptRepository {
       _findRemoteFavorites().catchError((_) => _findLocalFavorites());
 
   Future<List<FavoriteEntity>> _findRemoteFavorites() async {
-    // TODO:
-    // final remoteCommentDtoList = await remoteReceiptDataSource.findFavorites();
-    return [];
+    final remoteFavoriteDtoList = await remoteReceiptDataSource.findFavorites();
+    return remoteFavoriteDtoList
+        .map(
+          (dto) => FavoriteModel(
+            id: dto.id,
+            receiptId: dto.receiptIdDto.id,
+            userId: dto.userIdDto.id,
+          ),
+        )
+        .toList();
   }
 
   Future<List<FavoriteEntity>> _findLocalFavorites() async {
-    // TODO:
-    return [];
+    final localFavoriteDtoList = await localReceiptDataSource.findFavorites();
+    return localFavoriteDtoList
+        .map(
+          (dto) => FavoriteModel(
+            id: dto.id,
+            receiptId: dto.id,
+            userId: dto.userId,
+          ),
+        )
+        .toList();
   }
 
   Future<List<CommentEntity>> findCommentsByReceipt(

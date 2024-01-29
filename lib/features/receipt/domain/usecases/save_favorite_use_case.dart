@@ -1,15 +1,15 @@
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
-import 'package:receipts/features/receipt/domain/entities/favorite_entity.dart';
+// import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 
 class SaveFavoriteUseCase {
   // TODO: DI
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  // final ReceiptRepository _receiptRepository = ReceiptRepository();
 
   Future<void> call({
     required int receiptId,
   }) async {
-    _receiptRepository.saveFavorite(
-      FavoriteEntity(id: 0, receiptId: receiptId),
-    );
+    // TODO
+    // _receiptRepository.saveFavorite(
+    //   FavoriteEntity(id: 0, receiptId: receiptId),
+    // );
   }
 }

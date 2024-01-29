@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipts/presentation/widgets/favorite_icon_widget.dart';
 import 'package:rive/rive.dart';
 
 class ReceiptHeaderWidget extends StatefulWidget {
-  final ReceiptEntity _receipt;
+  final ReceiptEntity receipt;
+  final Map<int, int> userIdFavoriteIdMap;
 
-  const ReceiptHeaderWidget({super.key, required ReceiptEntity receipt})
-      : _receipt = receipt;
+  const ReceiptHeaderWidget({
+    super.key,
+    required this.receipt,
+    required this.userIdFavoriteIdMap,
+  });
 
   @override
   State<ReceiptHeaderWidget> createState() => _ReceiptHeaderWidgetState();
@@ -29,7 +34,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
             children: [
               Expanded(
                 child: Text(
-                  widget._receipt.title,
+                  widget.receipt.title,
                   style: const TextStyle(fontSize: 24),
                 ),
               ),
@@ -52,7 +57,7 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
               const Icon(Icons.access_time, size: 16),
               const SizedBox(width: 11),
               Text(
-                widget._receipt.getCookingTime(),
+                widget.receipt.getCookingTime(),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -62,18 +67,30 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
             ],
           ),
           const SizedBox(height: 15),
-          SizedBox(
-            width: double.infinity,
-            height: 220.0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: widget._receipt.photoUrl != ''
-                  ? Image.network(
-                      widget._receipt.photoUrl,
-                      fit: BoxFit.cover,
-                    )
-                  : ColoredBox(color: AppTheme.cardImageBackgroundColor),
-            ),
+          Stack(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 220.0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: widget.receipt.photoUrl != ''
+                      ? Image.network(
+                          widget.receipt.photoUrl,
+                          fit: BoxFit.cover,
+                        )
+                      : ColoredBox(color: AppTheme.cardImageBackgroundColor),
+                ),
+              ),
+              if (widget.userIdFavoriteIdMap.isNotEmpty)
+                Positioned(
+                  right: 0,
+                  bottom: 15,
+                  child: FavoriteIconWidget(
+                    count: widget.userIdFavoriteIdMap.length,
+                  ),
+                ),
+            ],
           ),
         ],
       ),
@@ -91,6 +108,6 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
     );
     artboard.addController(controller!);
     _liked = controller.findInput<bool>('checked') as SMIBool;
-    _liked!.value = false;
+    _liked!.value = widget.userIdFavoriteIdMap.containsKey(4);
   }
 }
