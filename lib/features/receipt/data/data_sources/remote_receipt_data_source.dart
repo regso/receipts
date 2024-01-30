@@ -82,12 +82,17 @@ class RemoteReceiptDataSource {
         .toList();
   }
 
-  Future<void> saveFavorite() async {
-    // TODO:
+  Future<void> saveFavorite(int receiptId) async {
+    final favoriteDto = RemoteFavoriteDto(
+      id: 0,
+      receiptIdDto: RemoteReceiptIdDto(id: receiptId),
+      userIdDto: RemoteUserIdDto(id: Constants.appUserId),
+    );
+    final jsonData = favoriteDto.toJson().remove('id');
     return;
   }
 
-  Future<void> deleteFavorite() async {
+  Future<void> deleteFavorite(int favoriteId) async {
     // TODO:
     return;
   }
