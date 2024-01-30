@@ -14,7 +14,8 @@ class CheckHeaderEvent extends HeaderEvent {
 }
 
 class UncheckHeaderEvent extends HeaderEvent {
+  final int receiptId;
   final int favoriteId;
 
-  UncheckHeaderEvent({required this.favoriteId});
+  UncheckHeaderEvent({required this.receiptId, required this.favoriteId});
 }

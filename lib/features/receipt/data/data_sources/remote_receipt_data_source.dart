@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' hide log;
 
 import 'package:dio/dio.dart';
 import 'package:receipts/config/constants.dart';
@@ -88,13 +88,12 @@ class RemoteReceiptDataSource {
       receiptIdDto: RemoteReceiptIdDto(id: receiptId),
       userIdDto: RemoteUserIdDto(id: Constants.appUserId),
     );
-    final jsonData = favoriteDto.toJson().remove('id');
-    return;
+    final jsonData = favoriteDto.toJson()..remove('id');
+    await dio.post(Constants.apiGetFavoriteUrl, data: jsonData);
   }
 
   Future<void> deleteFavorite(int favoriteId) async {
-    // TODO:
-    return;
+    await dio.delete('${Constants.apiGetFavoriteUrl}/$favoriteId');
   }
 
   Future<int> saveComment(CommentModel comment) async {

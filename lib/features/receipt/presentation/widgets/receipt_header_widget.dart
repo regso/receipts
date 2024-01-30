@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
-import 'package:receipts/features/receipt/domain/usecases/delete_favorite_use_case.dart';
-import 'package:receipts/features/receipt/domain/usecases/save_favorite_use_case.dart';
 import 'package:receipts/features/receipt/presentation/bloc/header_bloc.dart';
 import 'package:receipts/features/receipt/presentation/bloc/header_event.dart';
 import 'package:receipts/features/receipt/presentation/bloc/header_state.dart';
@@ -24,8 +22,6 @@ class ReceiptHeaderWidget extends StatefulWidget {
 }
 
 class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
-  final SaveFavoriteUseCase saveFavoriteUseCase = SaveFavoriteUseCase();
-  final DeleteFavoriteUseCase deleteFavoriteUseCase = DeleteFavoriteUseCase();
   SMIBool? _liked;
 
   @override
@@ -62,7 +58,10 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
                       if (state is CheckedHeaderState) {
                         _liked!.value = false;
                         headerBloc.add(
-                          UncheckHeaderEvent(favoriteId: state.favoriteId),
+                          UncheckHeaderEvent(
+                            receiptId: widget.receipt.id,
+                            favoriteId: state.favoriteId,
+                          ),
                         );
                       } else if (state is UncheckedHeaderState) {
                         _liked!.value = true;
