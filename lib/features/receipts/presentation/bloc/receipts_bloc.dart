@@ -7,7 +7,8 @@ import 'package:receipts/features/receipts/presentation/bloc/receipts_state.dart
 class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
   // TODO: DI
   final FindReceiptsUseCase findReceiptsUseCase = FindReceiptsUseCase();
-  final GetFavoritesMapUseCase getFavoritesMapUseCase = GetFavoritesMapUseCase();
+  final GetFavoritesMapUseCase getFavoritesMapUseCase =
+      GetFavoritesMapUseCase();
 
   ReceiptsBloc() : super(const InitReceiptsState()) {
     on<LoadReceiptsEvent>(_load);

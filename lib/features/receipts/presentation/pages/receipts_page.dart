@@ -20,7 +20,7 @@ class ReceiptsPage extends StatelessWidget {
             bloc.add(const LoadReceiptsEvent());
             return bloc;
           },
-          child:  const ReceiptsWidget(),
+          child: const ReceiptsWidget(),
         ),
       ),
       bottomNavigationBar: const NavigationBarWidget(),
