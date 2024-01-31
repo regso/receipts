@@ -242,6 +242,7 @@ class ReceiptRepository {
 
   Future<List<FavoriteEntity>> _findRemoteFavorites() async {
     final remoteFavoriteDtoList = await remoteReceiptDataSource.findFavorites();
+    await localReceiptDataSource.saveRemoteFavorites(remoteFavoriteDtoList);
     return remoteFavoriteDtoList
         .map(
           (dto) => FavoriteModel(
@@ -259,7 +260,7 @@ class ReceiptRepository {
         .map(
           (dto) => FavoriteModel(
             id: dto.id,
-            receiptId: dto.id,
+            receiptId: dto.receiptId,
             userId: dto.userId,
           ),
         )

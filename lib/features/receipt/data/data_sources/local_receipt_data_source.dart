@@ -12,6 +12,7 @@ import 'package:receipts/features/receipt/data/dto/local_user_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_link_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_favorite_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_dto.dart';
@@ -155,6 +156,19 @@ class LocalReceiptDataSource {
 
   Future<List<LocalFavoriteDto>> findFavorites() async =>
       favoritesBox.values.toList();
+
+  Future<void> saveRemoteFavorites(List<RemoteFavoriteDto> favorites) async {
+    final Map<int, LocalFavoriteDto> localFavoritesMap = {};
+    for (final dto in favorites) {
+      localFavoritesMap[dto.id] = LocalFavoriteDto(
+        id: dto.id,
+        receiptId: dto.receiptIdDto.id,
+        userId: dto.userIdDto.id,
+      );
+    }
+    await favoritesBox.clear();
+    await favoritesBox.putAll(localFavoritesMap);
+  }
 
   Future<List<LocalCommentDto>> findComments() async =>
       commentsBox.values.toList();
