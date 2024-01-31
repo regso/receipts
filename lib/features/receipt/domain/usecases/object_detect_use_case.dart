@@ -6,6 +6,7 @@ import 'package:receipts/config/constants.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as img;
 
+// TODO: external dependencies
 class ObjectDetectUseCase {
   Interpreter? _interpreter;
   List<String>? _labels;

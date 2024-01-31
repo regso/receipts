@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static Color backgroundColor = const Color(0xFFECECEC);
   static Color subTextColor = const Color(0xFF797676);
+  static Color inverseTextColor = const Color(0xFFFFFFFF);
+  static Color accentColor = const Color(0xFF2ECC71);
+  static Color shadowColor = Colors.black.withOpacity(0.25);
 
   static Color cardBackgroundColor = Colors.white;
   static Color cardShadowColor = const Color(0x19929292);

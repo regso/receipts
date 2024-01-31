@@ -1,10 +1,11 @@
-import 'dart:math';
+import 'dart:math' hide log;
 
 import 'package:dio/dio.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/features/receipt/data/dto/remote_comment_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_cooking_step_link_dto.dart';
+import 'package:receipts/features/receipt/data/dto/remote_favorite_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_measure_unit_dto.dart';
 import 'package:receipts/features/receipt/data/dto/remote_receipt_ingredient_dto.dart';
@@ -71,6 +72,28 @@ class RemoteReceiptDataSource {
     return decodedJsonList
         .map((data) => RemoteCommentDto.fromJson(data))
         .toList();
+  }
+
+  Future<List<RemoteFavoriteDto>> findFavorites() async {
+    final response = await dio.get(Constants.apiGetFavoriteUrl);
+    final decodedJsonList = response.data as List<dynamic>;
+    return decodedJsonList
+        .map((data) => RemoteFavoriteDto.fromJson(data))
+        .toList();
+  }
+
+  Future<void> saveFavorite(int receiptId) async {
+    final favoriteDto = RemoteFavoriteDto(
+      id: 0,
+      receiptIdDto: RemoteReceiptIdDto(id: receiptId),
+      userIdDto: RemoteUserIdDto(id: Constants.appUserId),
+    );
+    final jsonData = favoriteDto.toJson()..remove('id');
+    await dio.post(Constants.apiGetFavoriteUrl, data: jsonData);
+  }
+
+  Future<void> deleteFavorite(int favoriteId) async {
+    await dio.delete('${Constants.apiGetFavoriteUrl}/$favoriteId');
   }
 
   Future<int> saveComment(CommentModel comment) async {

@@ -1,40 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
-import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
-import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
-import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
+import 'package:receipts/features/receipt/presentation/bloc/receipt_bloc.dart';
+import 'package:receipts/features/receipt/presentation/bloc/receipt_event.dart';
 import 'package:receipts/features/receipt/presentation/widgets/receipt_widget.dart';
 
-class ReceiptPage extends StatefulWidget {
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
-  final ReceiptEntity _receipt;
+@immutable
+class ReceiptPage extends StatelessWidget {
+  final ReceiptEntity receipt;
+  final Map<int, int> userIdFavoriteIdMap;
 
-  ReceiptPage({super.key, required ReceiptEntity receipt}) : _receipt = receipt;
-
-  @override
-  State<ReceiptPage> createState() => _ReceiptPageState();
-}
-
-class _ReceiptPageState extends State<ReceiptPage> {
-  late Future<List<ReceiptIngredientEntity>> _futureIngredients;
-  late Future<List<CookingStepLinkEntity>> _futureCookingStepLinks;
-  late Future<List<CommentEntity>> _futureComments;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureIngredients = widget._receiptRepository
-        .findReceiptIngredientsByReceipt(widget._receipt);
-    _futureCookingStepLinks = widget._receiptRepository
-        .findCookingStepLinksByReceipt(widget._receipt);
-    _futureComments = widget._receiptRepository.findCommentsByReceipt(
-      widget._receipt,
-    );
-  }
+  const ReceiptPage({
+    super.key,
+    required this.receipt,
+    required this.userIdFavoriteIdMap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +51,16 @@ class _ReceiptPageState extends State<ReceiptPage> {
         ),
       ),
       body: SafeArea(
-        child: ReceiptWidget(
-          receipt: widget._receipt,
-          futureIngredients: _futureIngredients,
-          futureCookingStepLinks: _futureCookingStepLinks,
-          futureComments: _futureComments,
+        child: BlocProvider<ReceiptBloc>(
+          create: (BuildContext context) {
+            final bloc = ReceiptBloc();
+            bloc.add(LoadReceiptEvent(receipt: receipt));
+            return bloc;
+          },
+          child: ReceiptWidget(
+            receipt: receipt,
+            userIdFavoriteIdMap: userIdFavoriteIdMap,
+          ),
         ),
       ),
     );

@@ -1,16 +1,13 @@
-import 'dart:typed_data';
-
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
 
-class SaveCommentUseCase {
+class FindReceiptIngredientsUseCase {
   // TODO: DI
   final ReceiptRepository _receiptRepository = ReceiptRepository();
 
-  Future<void> call({
-    required String text,
-    required Uint8List photo,
+  Future<List<ReceiptIngredientEntity>> call({
     required ReceiptEntity receipt,
   }) =>
-      _receiptRepository.saveCommentByReceipt(text, photo, receipt);
+      _receiptRepository.findReceiptIngredientsByReceipt(receipt);
 }

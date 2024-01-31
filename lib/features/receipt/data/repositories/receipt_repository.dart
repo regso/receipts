@@ -12,6 +12,7 @@ import 'package:receipts/features/receipt/data/dto/remote_user_dto.dart';
 import 'package:receipts/features/receipt/data/models/comment_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_link_model.dart';
 import 'package:receipts/features/receipt/data/models/cooking_step_model.dart';
+import 'package:receipts/features/receipt/data/models/favorite_model.dart';
 import 'package:receipts/features/receipt/data/models/ingredient_model.dart';
 import 'package:receipts/features/receipt/data/models/measure_unit_model.dart';
 import 'package:receipts/features/receipt/data/models/receipt_ingredient_model.dart';
@@ -19,11 +20,13 @@ import 'package:receipts/features/receipt/data/models/receipt_model.dart';
 import 'package:receipts/features/receipt/data/models/user_model.dart';
 import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
+import 'package:receipts/features/receipt/domain/entities/favorite_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/user_entity.dart';
 
 class ReceiptRepository {
+  // TODO: DI
   RemoteReceiptDataSource remoteReceiptDataSource = RemoteReceiptDataSource(
     dio: dio,
   );
@@ -37,6 +40,7 @@ class ReceiptRepository {
     commentsBox: commentsBox,
     usersBox: usersBox,
     commentPhotosBox: commentPhotosBox,
+    favoritesBox: favoritesBox,
   );
 
   Future<List<ReceiptEntity>> findReceipts() => _findRemoteReceipt().catchError(
@@ -197,6 +201,12 @@ class ReceiptRepository {
     }).toList();
   }
 
+  Future<void> saveFavorite(int receiptId) =>
+      remoteReceiptDataSource.saveFavorite(receiptId);
+
+  Future<void> deleteFavorite(int favoriteId) =>
+      remoteReceiptDataSource.deleteFavorite(favoriteId);
+
   Future<void> saveCommentByReceipt(
     String text,
     Uint8List photo,
@@ -223,6 +233,36 @@ class ReceiptRepository {
         ),
       );
     }
+  }
+
+  Future<List<FavoriteEntity>> findFavorites() =>
+      _findRemoteFavorites().catchError((_) => _findLocalFavorites());
+
+  Future<List<FavoriteEntity>> _findRemoteFavorites() async {
+    final remoteFavoriteDtoList = await remoteReceiptDataSource.findFavorites();
+    await localReceiptDataSource.saveRemoteFavorites(remoteFavoriteDtoList);
+    return remoteFavoriteDtoList
+        .map(
+          (dto) => FavoriteModel(
+            id: dto.id,
+            receiptId: dto.receiptIdDto.id,
+            userId: dto.userIdDto.id,
+          ),
+        )
+        .toList();
+  }
+
+  Future<List<FavoriteEntity>> _findLocalFavorites() async {
+    final localFavoriteDtoList = await localReceiptDataSource.findFavorites();
+    return localFavoriteDtoList
+        .map(
+          (dto) => FavoriteModel(
+            id: dto.id,
+            receiptId: dto.receiptId,
+            userId: dto.userId,
+          ),
+        )
+        .toList();
   }
 
   Future<List<CommentEntity>> findCommentsByReceipt(
