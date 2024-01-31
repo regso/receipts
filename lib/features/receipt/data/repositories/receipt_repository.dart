@@ -201,13 +201,11 @@ class ReceiptRepository {
     }).toList();
   }
 
-  Future<void> saveFavorite(int receiptId) async {
-    await remoteReceiptDataSource.saveFavorite(receiptId);
-  }
+  Future<void> saveFavorite(int receiptId) =>
+      remoteReceiptDataSource.saveFavorite(receiptId);
 
-  Future<void> deleteFavorite(int favoriteId) async {
-    await remoteReceiptDataSource.deleteFavorite(favoriteId);
-  }
+  Future<void> deleteFavorite(int favoriteId) =>
+      remoteReceiptDataSource.deleteFavorite(favoriteId);
 
   Future<void> saveCommentByReceipt(
     String text,

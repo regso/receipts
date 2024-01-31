@@ -12,10 +12,7 @@ import 'package:rive/rive.dart';
 class ReceiptHeaderWidget extends StatefulWidget {
   final ReceiptEntity receipt;
 
-  const ReceiptHeaderWidget({
-    super.key,
-    required this.receipt,
-  });
+  const ReceiptHeaderWidget({super.key, required this.receipt});
 
   @override
   State<ReceiptHeaderWidget> createState() => _ReceiptHeaderWidgetState();
@@ -56,7 +53,6 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
                   GestureDetector(
                     onTap: () {
                       if (state is CheckedHeaderState) {
-                        _liked!.value = false;
                         headerBloc.add(
                           UncheckHeaderEvent(
                             receiptId: widget.receipt.id,
@@ -64,7 +60,6 @@ class _ReceiptHeaderWidgetState extends State<ReceiptHeaderWidget> {
                           ),
                         );
                       } else if (state is UncheckedHeaderState) {
-                        _liked!.value = true;
                         headerBloc.add(
                           CheckHeaderEvent(receiptId: widget.receipt.id),
                         );
