@@ -8,20 +8,18 @@ class AppRouteParser extends RouteInformationParser<AppRoutingState> {
     RouteInformation routeInformation,
   ) async {
     if (routeInformation.uri.path ==
-            AppPage.pageUriMap[AppPageEnum.authSignUp] ||
+            AppPage.pageUriMap[AppPageSlug.authSignUp] ||
         routeInformation.uri.path == '/') {
-      return AppRoutingState(
-        pages: [AppPage.createPageBySlug(pageSlug: AppPageEnum.authSignUp)],
-      );
+      return AppRoutingState(pageSlug: AppPageSlug.authSignUp);
     }
-    if (routeInformation.uri.path == AppPage.pageUriMap[AppPageEnum.receipts]) {
-      return AppRoutingState(
-        pages: [AppPage.createPageBySlug(pageSlug: AppPageEnum.receipts)],
-      );
+    if (routeInformation.uri.path == AppPage.pageUriMap[AppPageSlug.receipts]) {
+      return AppRoutingState(pageSlug: AppPageSlug.receipts);
     }
-    return AppRoutingState(
-      pages: [AppPage.createPageBySlug(pageSlug: AppPageEnum.errorNotFound)],
-    );
+    if (routeInformation.uri.path ==
+        AppPage.pageUriMap[AppPageSlug.receiptDetails]) {
+      return AppRoutingState(pageSlug: AppPageSlug.receiptDetails);
+    }
+    return AppRoutingState(pageSlug: AppPageSlug.errorNotFound);
 
     // log(routeInformation.uri.path);
     // final segments = routeInformation.uri.pathSegments;
@@ -38,10 +36,16 @@ class AppRouteParser extends RouteInformationParser<AppRoutingState> {
 
   @override
   RouteInformation? restoreRouteInformation(AppRoutingState configuration) {
-    if (configuration.pages.length == 1) {
-      return RouteInformation(uri: Uri.parse('/auth/sign-up'));
-    }
-    return RouteInformation(uri: Uri.parse('/recipes'));
+    // if (configuration.pages.isNotEmpty) {
+    //   return RouteInformation(uri: Uri.parse(configuration.pages.last.name!));
+    // }
+    return RouteInformation(
+        uri: Uri.parse(AppPage.pageUriMap[configuration.pageSlug]!));
+
+    // if (configuration.pages.length == 1) {
+    //   return RouteInformation(uri: Uri.parse('/auth/sign-up'));
+    // }
+    //
     // if (configuration.pages.length == 1) {
     //   return RouteInformation(uri: Uri.parse('/one'));
     // }

@@ -12,30 +12,41 @@
 import 'package:flutter/material.dart';
 import 'package:receipts/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:receipts/features/error/presentation/pages/not_found_page.dart';
+import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipt/presentation/pages/receipt_page.dart';
 import 'package:receipts/features/receipts/presentation/pages/receipts_page.dart';
 
-enum AppPageEnum { authSignUp, receipts, errorNotFound } //, receiptsItem }
+enum AppPageSlug { authSignUp, receipts, receiptDetails, errorNotFound }
 
 class AppPage {
   static const pageUriMap = {
-    AppPageEnum.authSignUp: '/auth/sign-up',
-    AppPageEnum.receipts: '/recipes',
-    // AppPageEnum.receiptsItem: 'recipes/{id}',
-    AppPageEnum.errorNotFound: '/error/not-found',
+    AppPageSlug.authSignUp: '/auth/sign-up',
+    AppPageSlug.receipts: '/recipes',
+    AppPageSlug.receiptDetails: '/recipes/{id}',
+    AppPageSlug.errorNotFound: '/error/not-found',
   };
 
   static Page createPageBySlug({
-    required AppPageEnum pageSlug,
+    required AppPageSlug pageSlug,
     Map<String, dynamic> args = const {},
   }) {
-    // TODO: add args
     late Widget pageWidget;
     switch (pageSlug) {
-      case AppPageEnum.authSignUp:
+      case AppPageSlug.authSignUp:
         pageWidget = const SignUpPage();
-      case AppPageEnum.receipts:
+      case AppPageSlug.receipts:
         pageWidget = const ReceiptsPage();
-      case AppPageEnum.errorNotFound:
+      case AppPageSlug.receiptDetails:
+        pageWidget = const ReceiptPage(
+          receipt: ReceiptEntity(
+            id: 1,
+            title: 'one',
+            cookingTimeMinutes: 10,
+            photoUrl: '',
+          ),
+          userIdFavoriteIdMap: {},
+        );
+      case AppPageSlug.errorNotFound:
         pageWidget = const NotFoundPage();
     }
     return MaterialPage(

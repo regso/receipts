@@ -1,20 +1,21 @@
-import 'package:flutter/material.dart';
+import 'package:receipts/config/routes/app_page.dart';
 
 class AppRoutingState {
-  // final String uri;
-  List<Page> pages;
+  final AppPageSlug pageSlug;
+  final Map<String, dynamic>? args;
   final int? userId;
 
-  AppRoutingState({required this.pages, this.userId});
+  AppRoutingState({required this.pageSlug, this.args, this.userId});
+}
 
-  // factory AppRoutingState.fromPageSlug({
-  //   required AppPageSlug pageSlug,
-  //   Map<String, dynamic> pageArgs = const {},
-  // }) {
-  //   String uri = pageUriMap[pageSlug]!;
-  //   TODO: set args
-    // return AppRoutingState._(uri: uri);
-  // }
+// factory AppRoutingState.fromPageSlug({
+//   required AppPageSlug pageSlug,
+//   Map<String, dynamic> pageArgs = const {},
+// }) {
+//   String uri = pageUriMap[pageSlug]!;
+//   TODO: set args
+// return AppRoutingState._(uri: uri);
+// }
 
 // List<Page> getPageStack() {
 //   return [];
@@ -42,4 +43,3 @@ class AppRoutingState {
       stack: [],
     );
   }*/
-}

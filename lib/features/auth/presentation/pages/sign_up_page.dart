@@ -11,11 +11,11 @@ class SignUpPage extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: [
-          const Text('Sign Up'),
+          const Text('Receipts'),
           OutlinedButton(
             onPressed: () {
               (Router.of(context).routerDelegate as AppRouterDelegate)
-                  .push(pageSlug: AppPageEnum.receipts);
+                  .open(pageSlug: AppPageSlug.receipts);
             },
             child: const Text('Go'),
           ),

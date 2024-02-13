@@ -5,55 +5,20 @@ import 'package:receipts/config/routes/app_routing_state.dart';
 class AppRouterDelegate extends RouterDelegate<AppRoutingState>
     with PopNavigatorRouterDelegateMixin, ChangeNotifier {
   final GlobalKey<NavigatorState>? key = GlobalKey<NavigatorState>();
-  AppRoutingState? _state;
-
-  void push({
-    required AppPageEnum pageSlug,
-    Map<String, dynamic> args = const {},
-  }) {
-    _state!.pages = [
-      ..._state!.pages,
-      AppPage.createPageBySlug(pageSlug: pageSlug, args: args),
-    ];
-    notifyListeners();
-  }
-
-  // @override
-  // Future<void> setInitialRoutePath(AppRoutingState configuration) {
-  //   TODO: implement setInitialRoutePath
-  //   return super.setInitialRoutePath(configuration);
-  // }
-
-  // Page createPageByUri() {
-  //
-  // }
-
-  // void gotoReceiptList() {
-  //   _state = AppRoutingState.receiptsPage();
-  //   notifyListeners();
-  // }
+  AppRoutingState _state = AppRoutingState(pageSlug: AppPageSlug.authSignUp);
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: key,
-      pages: _state!.pages,
-      // [
-      // if (routingState.isSignUpPage())
-      //   const MaterialPage(child: SignUpPage()),
-      // if (routingState.isReceiptsPage())
-      //   const MaterialPage(child: SignUpPage()),
-      // if (routingState.isReceiptsPage())
-      //   const MaterialPage(child: ReceiptsPage()),
-      // ],
+      pages: [
+        if (_state.pageSlug == AppPageSlug.receiptDetails)
+          AppPage.createPageBySlug(pageSlug: AppPageSlug.receipts),
+        AppPage.createPageBySlug(pageSlug: _state.pageSlug),
+      ],
       onPopPage: (route, result) {
-        if (_state!.pages.isNotEmpty) {
-          _state!.pages.removeLast();
-          notifyListeners();
-        }
         return route.didPop(result);
       },
-      // initialRoute: AppPage.pageUriMap[AppPageEnum.authSignUp]!,
     );
   }
 
@@ -67,9 +32,14 @@ class AppRouterDelegate extends RouterDelegate<AppRoutingState>
 
   @override
   AppRoutingState? get currentConfiguration {
-    _state ??= AppRoutingState(
-      pages: [AppPage.createPageBySlug(pageSlug: AppPageEnum.authSignUp)],
-    );
     return _state;
+  }
+
+  void open({
+    required AppPageSlug pageSlug,
+    Map<String, dynamic> args = const {},
+  }) {
+    _state = AppRoutingState(pageSlug: pageSlug, args: args);
+    notifyListeners();
   }
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipts/config/app_theme.dart';
-// import 'package:receipts/config/routes/receipt_page_route.dart';
+import 'package:receipts/config/routes/app_page.dart';
+import 'package:receipts/config/routes/app_router_delegate.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
-// import 'package:receipts/features/receipts/presentation/bloc/receipts_bloc.dart';
-// import 'package:receipts/features/receipts/presentation/bloc/receipts_event.dart';
 import 'package:receipts/features/receipts/presentation/widgets/favorite_icon_widget.dart';
 
 class ReceiptsItemWidget extends StatelessWidget {
@@ -19,20 +17,10 @@ class ReceiptsItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final receiptsBloc = BlocProvider.of<ReceiptsBloc>(context);
     return GestureDetector(
       onTap: () {
-        // TODO: need router
-        // Navigator.of(context)
-        //     .push(
-        //   ReceiptPageRoute.createRoute(
-        //     receipt: receipt,
-        //     userIdFavoriteIdMap: userIdFavoriteIdMap,
-        //   ),
-        // )
-        //     .whenComplete(() {
-        //   receiptsBloc.add(const LoadReceiptsEvent());
-        // });
+        (Router.of(context).routerDelegate as AppRouterDelegate)
+            .open(pageSlug: AppPageSlug.receiptDetails);
       },
       child: SizedBox(
         height: 160,
