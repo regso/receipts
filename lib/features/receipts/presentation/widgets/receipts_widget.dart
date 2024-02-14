@@ -17,7 +17,7 @@ class ReceiptsWidget extends StatelessWidget {
         }
 
         if (state is LoadingReceiptsState) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (state is LoadedReceiptsState) {
@@ -39,7 +39,7 @@ class ReceiptsWidget extends StatelessWidget {
           );
         }
 
-        return const Text('Error');
+        return const Text('Error.');
       },
     );
   }

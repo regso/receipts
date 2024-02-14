@@ -19,8 +19,10 @@ class ReceiptsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        (Router.of(context).routerDelegate as AppRouterDelegate)
-            .open(pageSlug: AppPageSlug.receiptDetails);
+        (Router.of(context).routerDelegate as AppRouterDelegate).open(
+          pageSlug: AppPageSlug.receiptDetails,
+          args: {'receiptId': receipt.id},
+        );
       },
       child: SizedBox(
         height: 160,

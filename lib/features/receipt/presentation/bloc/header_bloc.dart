@@ -21,12 +21,21 @@ class HeaderBloc extends Bloc<HeaderEvent, HeaderState> {
 
   Future<void> _load(LoadHeaderEvent event, Emitter<HeaderState> emit) async {
     try {
-      if (event.favoriteId != null) {
-        emit(
-          CheckedHeaderState(count: event.count, favoriteId: event.favoriteId!),
-        );
+      int favoritesCount = 0;
+      int? favoriteId;
+
+      final favoritesMap = await getFavoritesMapUseCase();
+      if (favoritesMap.containsKey(event.receiptId)) {
+        favoritesCount = favoritesMap[event.receiptId]!.length;
+        if (favoritesMap[event.receiptId]!.containsKey(Constants.appUserId)) {
+          favoriteId = favoritesMap[event.receiptId]![Constants.appUserId]!;
+        }
+      }
+
+      if (favoriteId != null) {
+        emit(CheckedHeaderState(count: favoritesCount, favoriteId: favoriteId));
       } else {
-        emit(UncheckedHeaderState(count: event.count));
+        emit(UncheckedHeaderState(count: favoritesCount));
       }
     } catch (_) {
       emit(ErrorHeaderState());

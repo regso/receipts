@@ -18,6 +18,12 @@ class RemoteReceiptDataSource {
 
   RemoteReceiptDataSource({required this.dio});
 
+  Future<RemoteReceiptDto> findReceipt(int id) async {
+    final response = await dio.get('${Constants.apiGetReceiptUrl}/$id');
+    final decodedJson = response.data as Map<String, dynamic>;
+    return RemoteReceiptDto.fromJson(decodedJson);
+  }
+
   Future<List<RemoteReceiptDto>> findReceipts() async {
     final response = await dio.get(Constants.apiGetReceiptUrl);
     final decodedJsonList = response.data as List<dynamic>;

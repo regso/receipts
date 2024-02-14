@@ -1,3 +1,5 @@
+// TODO: delete
+/*
 import 'package:flutter/material.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/presentation/pages/receipt_page.dart';
@@ -34,3 +36,4 @@ class ReceiptPageRoute {
     );
   }
 }
+*/

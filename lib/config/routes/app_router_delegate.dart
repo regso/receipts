@@ -11,11 +11,15 @@ class AppRouterDelegate extends RouterDelegate<AppRoutingState>
   Widget build(BuildContext context) {
     return Navigator(
       key: key,
-      pages: [
-        if (_state.pageSlug == AppPageSlug.receiptDetails)
-          AppPage.createPageBySlug(pageSlug: AppPageSlug.receipts),
-        AppPage.createPageBySlug(pageSlug: _state.pageSlug),
-      ],
+      pages: (_state.pageSlug == AppPageSlug.receiptDetails)
+          ? [
+              AppPage.createPageBySlug(pageSlug: AppPageSlug.receipts),
+              AppPage.createPageBySlug(
+                pageSlug: _state.pageSlug,
+                args: {'receiptId': _state.args!['receiptId']!},
+              ),
+            ]
+          : [AppPage.createPageBySlug(pageSlug: _state.pageSlug)],
       onPopPage: (route, result) {
         return route.didPop(result);
       },

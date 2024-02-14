@@ -43,11 +43,27 @@ class ReceiptRepository {
     favoritesBox: favoritesBox,
   );
 
-  Future<List<ReceiptEntity>> findReceipts() => _findRemoteReceipt().catchError(
-        (_) => _findLocalReceipt(),
+  Future<ReceiptEntity> findReceipt(int id) =>
+      _findRemoteReceipt(id).catchError(
+        (_) => _findLocalReceipt(id),
       );
 
-  Future<List<ReceiptModel>> _findRemoteReceipt() async {
+  Future<ReceiptModel> _findRemoteReceipt(int id) async {
+    final remoteReceiptDto = await remoteReceiptDataSource.findReceipt(id);
+    return ReceiptModel.fromRemoteReceiptDto(remoteReceiptDto);
+  }
+
+  Future<ReceiptModel> _findLocalReceipt(int id) async {
+    final dto = await localReceiptDataSource.findReceipt(id);
+    return ReceiptModel.fromLocalReceiptDto(dto);
+  }
+
+  Future<List<ReceiptEntity>> findReceipts() =>
+      _findRemoteReceipts().catchError(
+        (_) => _findLocalReceipts(),
+      );
+
+  Future<List<ReceiptModel>> _findRemoteReceipts() async {
     final remoteReceiptDtoList = await remoteReceiptDataSource.findReceipts();
     await localReceiptDataSource.saveRemoteReceipts(remoteReceiptDtoList);
     return remoteReceiptDtoList
@@ -55,7 +71,7 @@ class ReceiptRepository {
         .toList();
   }
 
-  Future<List<ReceiptModel>> _findLocalReceipt() async {
+  Future<List<ReceiptModel>> _findLocalReceipts() async {
     return (await localReceiptDataSource.findReceipts())
         .map((dto) => ReceiptModel.fromLocalReceiptDto(dto))
         .toList();

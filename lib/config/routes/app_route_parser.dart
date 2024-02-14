@@ -7,6 +7,7 @@ class AppRouteParser extends RouteInformationParser<AppRoutingState> {
   Future<AppRoutingState> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
+    // TODO: finalize all slugs
     if (routeInformation.uri.path ==
             AppPage.pageUriMap[AppPageSlug.authSignUp] ||
         routeInformation.uri.path == '/') {
