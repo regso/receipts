@@ -44,8 +44,7 @@ class LocalReceiptDataSource {
     required this.favoritesBox,
   });
 
-  Future<LocalReceiptDto> findReceipt(int id) async =>
-      receiptsBox.get(id)!;
+  Future<LocalReceiptDto> findReceipt(int id) async => receiptsBox.get(id)!;
 
   Future<List<LocalReceiptDto>> findReceipts() async =>
       receiptsBox.values.toList();
