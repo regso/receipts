@@ -8,10 +8,16 @@ class AppRouteParser extends RouteInformationParser<AppRoutingState> {
     RouteInformation routeInformation,
   ) async {
     // TODO: finalize all slugs
+    if (routeInformation.uri.path == '/') {
+      return AppRoutingState(pageSlug: AppPage.defaultPageSlug);
+    }
     if (routeInformation.uri.path ==
-            AppPage.pageUriMap[AppPageSlug.authSignUp] ||
-        routeInformation.uri.path == '/') {
+        AppPage.pageUriMap[AppPageSlug.authSignUp]) {
       return AppRoutingState(pageSlug: AppPageSlug.authSignUp);
+    }
+    if (routeInformation.uri.path ==
+        AppPage.pageUriMap[AppPageSlug.authSignIn]) {
+      return AppRoutingState(pageSlug: AppPageSlug.authSignIn);
     }
     if (routeInformation.uri.path == AppPage.pageUriMap[AppPageSlug.receipts]) {
       return AppRoutingState(pageSlug: AppPageSlug.receipts);
@@ -22,6 +28,7 @@ class AppRouteParser extends RouteInformationParser<AppRoutingState> {
     }
     return AppRoutingState(pageSlug: AppPageSlug.errorNotFound);
 
+    // TODO: delete
     // log(routeInformation.uri.path);
     // final segments = routeInformation.uri.pathSegments;
     // if (segments.isEmpty) {
@@ -37,12 +44,13 @@ class AppRouteParser extends RouteInformationParser<AppRoutingState> {
 
   @override
   RouteInformation? restoreRouteInformation(AppRoutingState configuration) {
-    // if (configuration.pages.isNotEmpty) {
-    //   return RouteInformation(uri: Uri.parse(configuration.pages.last.name!));
-    // }
     return RouteInformation(
         uri: Uri.parse(AppPage.pageUriMap[configuration.pageSlug]!));
 
+    // TODO: delete
+    // if (configuration.pages.isNotEmpty) {
+    //   return RouteInformation(uri: Uri.parse(configuration.pages.last.name!));
+    // }
     // if (configuration.pages.length == 1) {
     //   return RouteInformation(uri: Uri.parse('/auth/sign-up'));
     // }

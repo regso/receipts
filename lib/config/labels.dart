@@ -13,4 +13,9 @@ class Labels {
   static String startCooking = 'Начать готовить';
   static String sendCommentHint = 'оставить комментарий';
   static String sendCommentButton = 'Отправить';
+
+  static String authSignInRegistration = 'Зарегистририроваться';
+  static String authSignInSubmit = 'Войти';
+  static String authSignInLogin = 'Логин';
+  static String authSignInPassword = 'Пароль';
 }

@@ -8,6 +8,7 @@ class AppRoutingState {
   AppRoutingState({required this.pageSlug, this.args, this.userId});
 }
 
+// TODO: delete
 // factory AppRoutingState.fromPageSlug({
 //   required AppPageSlug pageSlug,
 //   Map<String, dynamic> pageArgs = const {},

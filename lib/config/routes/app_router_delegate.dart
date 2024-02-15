@@ -5,7 +5,7 @@ import 'package:receipts/config/routes/app_routing_state.dart';
 class AppRouterDelegate extends RouterDelegate<AppRoutingState>
     with PopNavigatorRouterDelegateMixin, ChangeNotifier {
   final GlobalKey<NavigatorState>? key = GlobalKey<NavigatorState>();
-  AppRoutingState _state = AppRoutingState(pageSlug: AppPageSlug.authSignUp);
+  AppRoutingState _state = AppRoutingState(pageSlug: AppPage.defaultPageSlug);
 
   @override
   Widget build(BuildContext context) {

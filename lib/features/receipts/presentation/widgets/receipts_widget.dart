@@ -13,7 +13,7 @@ class ReceiptsWidget extends StatelessWidget {
     return BlocBuilder<ReceiptsBloc, ReceiptsState>(
       builder: (BuildContext context, ReceiptsState state) {
         if (state is InitReceiptsState) {
-          return const Text('Initialized.');
+          return Container();
         }
 
         if (state is LoadingReceiptsState) {
