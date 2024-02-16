@@ -14,7 +14,7 @@ class Labels {
   static String sendCommentHint = 'оставить комментарий';
   static String sendCommentButton = 'Отправить';
 
-  static String authSignInRegistration = 'Зарегистририроваться';
+  static String authSignInRegistration = 'Зарегистрироваться';
   static String authSignInSubmit = 'Войти';
   static String authSignInLogin = 'Логин';
   static String authSignInPassword = 'Пароль';

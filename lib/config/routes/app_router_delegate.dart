@@ -4,8 +4,12 @@ import 'package:receipts/config/routes/app_routing_state.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppRoutingState>
     with PopNavigatorRouterDelegateMixin, ChangeNotifier {
+  final AppPageSlug defaultPageSlug;
   final GlobalKey<NavigatorState>? key = GlobalKey<NavigatorState>();
-  AppRoutingState _state = AppRoutingState(pageSlug: AppPage.defaultPageSlug);
+  AppRoutingState _state;
+
+  AppRouterDelegate({required this.defaultPageSlug})
+      : _state = AppRoutingState(pageSlug: defaultPageSlug);
 
   @override
   Widget build(BuildContext context) {

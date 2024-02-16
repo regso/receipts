@@ -18,8 +18,6 @@ enum AppPageSlug {
 }
 
 class AppPage {
-  static const defaultPageSlug = AppPageSlug.authSignIn;
-
   static const pageUriMap = {
     AppPageSlug.authSignUp: '/auth/sign-up',
     AppPageSlug.authSignIn: '/auth/sign-in',

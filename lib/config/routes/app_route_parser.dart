@@ -3,13 +3,17 @@ import 'package:receipts/config/routes/app_page.dart';
 import 'package:receipts/config/routes/app_routing_state.dart';
 
 class AppRouteParser extends RouteInformationParser<AppRoutingState> {
+  final AppPageSlug defaultPageSlug;
+
+  AppRouteParser({required this.defaultPageSlug});
+
   @override
   Future<AppRoutingState> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
     // TODO: finalize all slugs
     if (routeInformation.uri.path == '/') {
-      return AppRoutingState(pageSlug: AppPage.defaultPageSlug);
+      return AppRoutingState(pageSlug: defaultPageSlug);
     }
     if (routeInformation.uri.path ==
         AppPage.pageUriMap[AppPageSlug.authSignUp]) {
