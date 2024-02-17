@@ -29,7 +29,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
   final _authorizedPageSlugs = [
     AppPageSlug.receipts,
     AppPageSlug.fridge,
-    AppPageSlug.userFavorites,
+    AppPageSlug.favorites,
     AppPageSlug.userProfile,
   ];
 

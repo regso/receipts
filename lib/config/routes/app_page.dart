@@ -4,8 +4,8 @@ import 'package:receipts/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:receipts/features/error/presentation/pages/not_found_page.dart';
 import 'package:receipts/features/fridge/presentation/pages/fridge_page.dart';
 import 'package:receipts/features/receipt/presentation/pages/receipt_page.dart';
+import 'package:receipts/features/receipts/presentation/pages/favorites_page.dart';
 import 'package:receipts/features/receipts/presentation/pages/receipts_page.dart';
-import 'package:receipts/features/user/presentation/pages/user_favorites_page.dart';
 import 'package:receipts/features/user/presentation/pages/user_profile_page.dart';
 
 enum AppPageSlug {
@@ -13,9 +13,9 @@ enum AppPageSlug {
   authSignIn,
   receipts,
   receiptDetails,
-  userProfile,
-  userFavorites,
+  favorites,
   fridge,
+  userProfile,
   errorNotFound,
 }
 
@@ -25,9 +25,9 @@ class AppPage {
     AppPageSlug.authSignIn: '/auth/sign-in',
     AppPageSlug.receipts: '/recipes',
     AppPageSlug.receiptDetails: '/recipes/{id}',
-    AppPageSlug.userProfile: '/user/profile',
-    AppPageSlug.userFavorites: '/user/favorites',
+    AppPageSlug.favorites: '/favorites',
     AppPageSlug.fridge: '/fridge',
+    AppPageSlug.userProfile: '/user/profile',
     AppPageSlug.errorNotFound: '/error/not-found',
   };
 
@@ -45,12 +45,12 @@ class AppPage {
         pageWidget = const ReceiptsPage();
       case AppPageSlug.receiptDetails:
         pageWidget = ReceiptPage(receiptId: args['receiptId']!);
-      case AppPageSlug.userProfile:
-        pageWidget = const UserProfilePage();
-      case AppPageSlug.userFavorites:
-        pageWidget = const UserFavoritesPage();
+      case AppPageSlug.favorites:
+        pageWidget = const FavoritesPage();
       case AppPageSlug.fridge:
         pageWidget = const FridgePage();
+      case AppPageSlug.userProfile:
+        pageWidget = const UserProfilePage();
       case AppPageSlug.errorNotFound:
         pageWidget = const NotFoundPage();
     }
