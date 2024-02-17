@@ -4,13 +4,10 @@ import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/routes/app_page.dart';
 import 'package:receipts/features/app/presentation/bloc/app_bloc.dart';
 import 'package:receipts/features/app/presentation/bloc/app_state.dart';
-import 'package:receipts/features/receipts/presentation/bloc/receipts_bloc.dart';
-import 'package:receipts/features/receipts/presentation/bloc/receipts_event.dart';
 import 'package:receipts/features/app/presentation/widgets/navigation_bar_widget.dart';
-import 'package:receipts/features/receipts/presentation/widgets/receipts_widget.dart';
 
-class ReceiptsPage extends StatelessWidget {
-  const ReceiptsPage({super.key});
+class UserFavoritesPage extends StatelessWidget {
+  const UserFavoritesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +15,11 @@ class ReceiptsPage extends StatelessWidget {
       builder: (BuildContext context, AppState state) {
         return Scaffold(
           backgroundColor: AppTheme.backgroundColor,
-          body: SafeArea(
-            child: BlocProvider<ReceiptsBloc>(
-              create: (BuildContext context) {
-                final bloc = ReceiptsBloc();
-                bloc.add(const LoadReceiptsEvent());
-                return bloc;
-              },
-              child: const ReceiptsWidget(),
-            ),
+          body: const SafeArea(
+            child: Center(child: Text('Favorites')),
           ),
           bottomNavigationBar: NavigationBarWidget(
-            currentPageSlug: AppPageSlug.receipts,
+            currentPageSlug: AppPageSlug.userFavorites,
             appState: state,
           ),
         );

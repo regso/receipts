@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:receipts/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:receipts/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:receipts/features/error/presentation/pages/not_found_page.dart';
+import 'package:receipts/features/fridge/presentation/pages/fridge_page.dart';
 import 'package:receipts/features/receipt/presentation/pages/receipt_page.dart';
 import 'package:receipts/features/receipts/presentation/pages/receipts_page.dart';
-import 'package:receipts/features/user/presentation/pages/user_favorites.dart';
-import 'package:receipts/features/user/presentation/pages/user_profile.dart';
+import 'package:receipts/features/user/presentation/pages/user_favorites_page.dart';
+import 'package:receipts/features/user/presentation/pages/user_profile_page.dart';
 
 enum AppPageSlug {
   authSignUp,
@@ -14,6 +15,7 @@ enum AppPageSlug {
   receiptDetails,
   userProfile,
   userFavorites,
+  fridge,
   errorNotFound,
 }
 
@@ -25,6 +27,7 @@ class AppPage {
     AppPageSlug.receiptDetails: '/recipes/{id}',
     AppPageSlug.userProfile: '/user/profile',
     AppPageSlug.userFavorites: '/user/favorites',
+    AppPageSlug.fridge: '/fridge',
     AppPageSlug.errorNotFound: '/error/not-found',
   };
 
@@ -43,9 +46,11 @@ class AppPage {
       case AppPageSlug.receiptDetails:
         pageWidget = ReceiptPage(receiptId: args['receiptId']!);
       case AppPageSlug.userProfile:
-        pageWidget = const UserProfile();
+        pageWidget = const UserProfilePage();
       case AppPageSlug.userFavorites:
-        pageWidget = const UserFavorites();
+        pageWidget = const UserFavoritesPage();
+      case AppPageSlug.fridge:
+        pageWidget = const FridgePage();
       case AppPageSlug.errorNotFound:
         pageWidget = const NotFoundPage();
     }
