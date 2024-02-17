@@ -4,8 +4,8 @@ sealed class AppState {
   const AppState();
 }
 
-class InitAppState extends AppState {
-  const InitAppState();
+class InitializingAppState extends AppState {
+  const InitializingAppState();
 }
 
 class AuthorizedUserAppState extends AppState {
@@ -24,6 +24,6 @@ class UnAuthorizedUserAppState extends AppState {
   const UnAuthorizedUserAppState();
 }
 
-class ErrorAppState extends AppState {
-  const ErrorAppState();
+class ErrorInitAppState extends AppState {
+  const ErrorInitAppState();
 }

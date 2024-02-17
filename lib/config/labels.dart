@@ -21,4 +21,5 @@ class Labels {
   static String authSignInSubmit = 'Войти';
   static String authSignInLogin = 'Логин';
   static String authSignInPassword = 'Пароль';
+  static String authSignInErrorAuth = 'Ошибка входа в систему!';
 }

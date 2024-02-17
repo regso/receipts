@@ -9,7 +9,7 @@ void main() async {
   await initApp();
   runApp(BlocProvider<AppBloc>(
     create: (BuildContext context) {
-      return AppBloc()..add(const AuthorizeAppEvent());
+      return AppBloc()..add(const LoadAuthorizationAppEvent());
     },
     child: const ReceiptsApp(),
   ));

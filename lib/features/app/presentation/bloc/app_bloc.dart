@@ -4,19 +4,27 @@ import 'package:receipts/features/app/presentation/bloc/app_event.dart';
 import 'package:receipts/features/app/presentation/bloc/app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc() : super(const InitAppState()) {
+  AppBloc() : super(const InitializingAppState()) {
+    on<LoadAuthorizationAppEvent>(_loadAuthorization);
     on<AuthorizeAppEvent>(_authorize);
   }
 
+  void _loadAuthorization(
+    LoadAuthorizationAppEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    emit(const UnAuthorizedUserAppState());
+  }
+
   void _authorize(AuthorizeAppEvent event, Emitter<AppState> emit) async {
-    emit(const InitAppState());
-    // TODO: complete
-    await Future.delayed(const Duration(seconds: 1));
-    emit(const AuthorizedUserAppState(
-      defaultPageSlug: AppPageSlug.receipts,
-      userId: 1,
-      token: 'abc123',
-    ));
-    // emit(const UnAuthorizedUserAppState());
+    if (event.userId != null && event.token != null) {
+      emit(AuthorizedUserAppState(
+        defaultPageSlug: AppPageSlug.receipts,
+        userId: event.userId!,
+        token: event.token!,
+      ));
+    } else {
+      emit(const UnAuthorizedUserAppState());
+    }
   }
 }

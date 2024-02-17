@@ -4,11 +4,13 @@ import 'package:receipts/config/app_theme.dart';
 class TextInputWidget extends StatelessWidget {
   final String hint;
   final IconData iconData;
+  final String? Function(String?)? validator;
 
   const TextInputWidget({
     super.key,
     required this.hint,
     required this.iconData,
+    required this.validator,
   });
 
   @override
@@ -29,6 +31,7 @@ class TextInputWidget extends StatelessWidget {
         ),
         prefixIcon: Icon(iconData, color: AppTheme.lightTextColor),
       ),
+      validator: validator,
     );
   }
 }

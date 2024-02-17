@@ -27,9 +27,13 @@ import 'package:receipts/features/receipt/domain/entities/user_entity.dart';
 
 class ReceiptRepository {
   // TODO: DI
+  // TODO: substitute userId
+  final int? userId = 1;
+
   RemoteReceiptDataSource remoteReceiptDataSource = RemoteReceiptDataSource(
     dio: dio,
   );
+
   LocalReceiptDataSource localReceiptDataSource = LocalReceiptDataSource(
     receiptsBox: receiptsBox,
     receiptIngredientsBox: receiptIngredientsBox,
@@ -42,6 +46,9 @@ class ReceiptRepository {
     commentPhotosBox: commentPhotosBox,
     favoritesBox: favoritesBox,
   );
+
+  Future<int?> authenticate(String login, String password) =>
+      remoteReceiptDataSource.authenticate(login, password);
 
   Future<ReceiptEntity> findReceipt(int id) =>
       _findRemoteReceipt(id).catchError(

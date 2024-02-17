@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipts/config/app_theme.dart';
@@ -16,9 +14,7 @@ class ReceiptsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (BuildContext context, AppState state) {
-        log('# build app');
-
-        if (state is InitAppState) {
+        if (state is InitializingAppState) {
           return Container(
             color: AppTheme.accentColor,
             child: const Center(
@@ -27,7 +23,7 @@ class ReceiptsApp extends StatelessWidget {
           );
         }
 
-        if (state is ErrorAppState) {
+        if (state is ErrorInitAppState) {
           return const Center(
             child: Directionality(
               textDirection: TextDirection.ltr,
@@ -36,20 +32,16 @@ class ReceiptsApp extends StatelessWidget {
           );
         }
 
-        final defaultPageSlug = (state is AuthorizedUserAppState)
-            ? state.defaultPageSlug
-            : AppPageSlug.authSignIn;
-
         return MaterialApp.router(
           title: 'Receipts App',
           theme: ThemeData(
             useMaterial3: true,
           ),
           routerDelegate: AppRouterDelegate(
-            defaultPageSlug: defaultPageSlug,
+            defaultPageSlug: AppPageSlug.receipts,
           ),
           routeInformationParser: AppRouteParser(
-            defaultPageSlug: defaultPageSlug,
+            defaultPageSlug: AppPageSlug.receipts,
           ),
         );
       },
