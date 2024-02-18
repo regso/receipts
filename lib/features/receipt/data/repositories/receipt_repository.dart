@@ -2,8 +2,6 @@ import 'dart:typed_data';
 
 import 'package:intl/intl.dart';
 import 'package:receipts/config/constants.dart';
-import 'package:receipts/config/dio.dart';
-import 'package:receipts/config/init.dart';
 import 'package:receipts/features/receipt/data/data_sources/local_receipt_data_source.dart';
 import 'package:receipts/features/receipt/data/data_sources/remote_receipt_data_source.dart';
 import 'package:receipts/features/receipt/data/dto/local_comment_photo_dto.dart';
@@ -26,26 +24,15 @@ import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_ent
 import 'package:receipts/features/receipt/domain/entities/user_entity.dart';
 
 class ReceiptRepository {
-  // TODO: DI
-  // TODO: substitute userId
-  final int? userId = 1;
+  final int? userId;
+  final RemoteReceiptDataSource remoteReceiptDataSource;
+  final LocalReceiptDataSource localReceiptDataSource;
 
-  RemoteReceiptDataSource remoteReceiptDataSource = RemoteReceiptDataSource(
-    dio: dio,
-  );
-
-  LocalReceiptDataSource localReceiptDataSource = LocalReceiptDataSource(
-    receiptsBox: receiptsBox,
-    receiptIngredientsBox: receiptIngredientsBox,
-    ingredientsBox: ingredientsBox,
-    measureUnitsBox: measureUnitsBox,
-    cookingStepsBox: cookingStepsBox,
-    cookingStepLinksBox: cookingStepLinksBox,
-    commentsBox: commentsBox,
-    usersBox: usersBox,
-    commentPhotosBox: commentPhotosBox,
-    favoritesBox: favoritesBox,
-  );
+  ReceiptRepository({
+    required this.userId,
+    required this.remoteReceiptDataSource,
+    required this.localReceiptDataSource,
+  });
 
   Future<int?> authenticate(String login, String password) =>
       remoteReceiptDataSource.authenticate(login, password);

@@ -2,8 +2,8 @@ sealed class AppEvent {
   const AppEvent();
 }
 
-class LoadAuthorizationAppEvent extends AppEvent {
-  const LoadAuthorizationAppEvent();
+class LoadAppEvent extends AppEvent {
+  const LoadAppEvent();
 }
 
 class AuthorizeAppEvent extends AppEvent {

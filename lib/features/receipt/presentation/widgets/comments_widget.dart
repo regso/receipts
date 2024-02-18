@@ -12,6 +12,7 @@ import 'package:receipts/features/receipt/presentation/bloc/receipt_bloc.dart';
 import 'package:receipts/features/receipt/presentation/bloc/receipt_event.dart';
 import 'package:receipts/features/receipt/presentation/bloc/receipt_state.dart';
 import 'package:receipts/features/receipt/presentation/widgets/comments_item_widget.dart';
+import 'package:receipts/main.dart';
 
 class CommentsWidget extends StatefulWidget {
   final ReceiptEntity receipt;
@@ -24,8 +25,6 @@ class CommentsWidget extends StatefulWidget {
 
 class _CommentsWidgetState extends State<CommentsWidget> {
   final TextEditingController _textController = TextEditingController();
-  final SaveCommentUseCase _saveCommentUseCase = SaveCommentUseCase();
-  final ObjectDetectUseCase _objectDetectUseCase = ObjectDetectUseCase();
   Uint8List _photo = Uint8List.fromList([]);
 
   @override
@@ -115,7 +114,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                     ),
                   ),
                   onPressed: () async {
-                    await _saveCommentUseCase(
+                    await sl<SaveCommentUseCase>()(
                       text: _textController.text,
                       photo: _photo,
                       receipt: widget.receipt,
@@ -142,7 +141,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
     XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      _photo = await _objectDetectUseCase(
+      _photo = await sl<ObjectDetectUseCase>()(
         photo: await pickedFile.readAsBytes(),
       );
       setState(() {});

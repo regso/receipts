@@ -5,14 +5,9 @@ import 'package:receipts/features/receipt/domain/usecases/get_favorites_map_use_
 import 'package:receipts/features/receipt/domain/usecases/save_favorite_use_case.dart';
 import 'package:receipts/features/receipt/presentation/bloc/header_event.dart';
 import 'package:receipts/features/receipt/presentation/bloc/header_state.dart';
+import 'package:receipts/main.dart';
 
 class HeaderBloc extends Bloc<HeaderEvent, HeaderState> {
-  // TODO: DI
-  final SaveFavoriteUseCase saveFavoriteUseCase = SaveFavoriteUseCase();
-  final DeleteFavoriteUseCase deleteFavoriteUseCase = DeleteFavoriteUseCase();
-  final GetFavoritesMapUseCase getFavoritesMapUseCase =
-      GetFavoritesMapUseCase();
-
   HeaderBloc() : super(InitHeaderState()) {
     on<LoadHeaderEvent>(_load);
     on<CheckHeaderEvent>(_check);
@@ -24,7 +19,7 @@ class HeaderBloc extends Bloc<HeaderEvent, HeaderState> {
       int favoritesCount = 0;
       int? favoriteId;
 
-      final favoritesMap = await getFavoritesMapUseCase();
+      final favoritesMap = await sl<GetFavoritesMapUseCase>()();
       if (favoritesMap.containsKey(event.receiptId)) {
         favoritesCount = favoritesMap[event.receiptId]!.length;
         if (favoritesMap[event.receiptId]!.containsKey(Constants.appUserId)) {
@@ -44,8 +39,8 @@ class HeaderBloc extends Bloc<HeaderEvent, HeaderState> {
 
   Future<void> _check(CheckHeaderEvent event, Emitter<HeaderState> emit) async {
     try {
-      await saveFavoriteUseCase(receiptId: event.receiptId);
-      final favoritesMap = await getFavoritesMapUseCase();
+      await sl<SaveFavoriteUseCase>()(receiptId: event.receiptId);
+      final favoritesMap = await sl<GetFavoritesMapUseCase>()();
       if (favoritesMap.containsKey(event.receiptId) &&
           favoritesMap[event.receiptId]!.containsKey(Constants.appUserId)) {
         emit(CheckedHeaderState(
@@ -63,8 +58,8 @@ class HeaderBloc extends Bloc<HeaderEvent, HeaderState> {
     Emitter<HeaderState> emit,
   ) async {
     try {
-      await deleteFavoriteUseCase(favoriteId: event.favoriteId);
-      final favoritesMap = await getFavoritesMapUseCase();
+      await sl<DeleteFavoriteUseCase>()(favoriteId: event.favoriteId);
+      final favoritesMap = await sl<GetFavoritesMapUseCase>()();
       if (favoritesMap.containsKey(event.receiptId)) {
         emit(
           UncheckedHeaderState(count: favoritesMap[event.receiptId]!.length),

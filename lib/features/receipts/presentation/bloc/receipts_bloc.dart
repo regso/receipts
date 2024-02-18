@@ -4,13 +4,9 @@ import 'package:receipts/features/receipt/domain/usecases/find_receipts_use_case
 import 'package:receipts/features/receipt/domain/usecases/get_favorites_map_use_case.dart';
 import 'package:receipts/features/receipts/presentation/bloc/receipts_event.dart';
 import 'package:receipts/features/receipts/presentation/bloc/receipts_state.dart';
+import 'package:receipts/main.dart';
 
 class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
-  // TODO: DI
-  final FindReceiptsUseCase findReceiptsUseCase = FindReceiptsUseCase();
-  final GetFavoritesMapUseCase getFavoritesMapUseCase =
-      GetFavoritesMapUseCase();
-
   ReceiptsBloc() : super(const InitReceiptsState()) {
     on<LoadReceiptsEvent>(_load);
   }
@@ -18,8 +14,8 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
   void _load(LoadReceiptsEvent event, Emitter<ReceiptsState> emit) async {
     try {
       emit(const LoadingReceiptsState());
-      final receipts = await findReceiptsUseCase();
-      final favoritesMap = await getFavoritesMapUseCase();
+      final receipts = await sl<FindReceiptsUseCase>()();
+      final favoritesMap = await sl<GetFavoritesMapUseCase>()();
       if (event.isFavorites && event.userId is int) {
         List<int> userFavoritesReceiptIds = [];
         favoritesMap.forEach((

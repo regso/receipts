@@ -4,13 +4,14 @@ import 'package:receipts/features/receipt/data/repositories/receipt_repository.d
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class SaveCommentUseCase {
-  // TODO: DI
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final ReceiptRepository receiptRepository;
+
+  SaveCommentUseCase({required this.receiptRepository});
 
   Future<void> call({
     required String text,
     required Uint8List photo,
     required ReceiptEntity receipt,
   }) =>
-      _receiptRepository.saveCommentByReceipt(text, photo, receipt);
+      receiptRepository.saveCommentByReceipt(text, photo, receipt);
 }

@@ -7,6 +7,7 @@ import 'package:receipts/features/app/presentation/bloc/app_event.dart';
 import 'package:receipts/features/app/presentation/bloc/app_state.dart';
 import 'package:receipts/features/auth/domain/usecases/authenticate_use_case.dart';
 import 'package:receipts/features/auth/presentation/widgets/text_input_widget.dart';
+import 'package:receipts/main.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -17,7 +18,6 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final _key = GlobalKey<FormState>();
-  final _authenticateUseCase = AuthenticateUseCase();
   String? _login;
   String? _password;
 
@@ -79,7 +79,7 @@ class _SignInFormState extends State<SignInForm> {
                   return;
                 }
 
-                _authenticateUseCase(
+                sl<AuthenticateUseCase>()(
                   login: _login ?? '',
                   password: _password ?? '',
                 ).then((int? userId) {

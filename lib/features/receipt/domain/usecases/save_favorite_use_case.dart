@@ -1,9 +1,10 @@
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 
 class SaveFavoriteUseCase {
-  // TODO: DI
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final ReceiptRepository receiptRepository;
+
+  SaveFavoriteUseCase({required this.receiptRepository});
 
   Future<void> call({required int receiptId}) =>
-      _receiptRepository.saveFavorite(receiptId);
+      receiptRepository.saveFavorite(receiptId);
 }

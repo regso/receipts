@@ -1,9 +1,10 @@
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 
 class AuthenticateUseCase {
-  // TODO: DI
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final ReceiptRepository receiptRepository;
+
+  AuthenticateUseCase({required this.receiptRepository});
 
   Future<int?> call({required String login, required String password}) =>
-      _receiptRepository.authenticate(login, password);
+      receiptRepository.authenticate(login, password);
 }
