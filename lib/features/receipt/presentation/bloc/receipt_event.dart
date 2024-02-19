@@ -5,9 +5,9 @@ sealed class ReceiptEvent {
 }
 
 class LoadReceiptEvent extends ReceiptEvent {
-  final ReceiptEntity receipt;
+  final int receiptId;
 
-  const LoadReceiptEvent({required this.receipt});
+  const LoadReceiptEvent({required this.receiptId});
 }
 
 class ReloadReceiptCommentsEvent extends ReceiptEvent {

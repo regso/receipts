@@ -2,8 +2,9 @@ import 'package:receipts/features/receipt/data/repositories/receipt_repository.d
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class FindReceiptsUseCase {
-  // TODO: DI
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final ReceiptRepository receiptRepository;
 
-  Future<List<ReceiptEntity>> call() => _receiptRepository.findReceipts();
+  FindReceiptsUseCase({required this.receiptRepository});
+
+  Future<List<ReceiptEntity>> call() => receiptRepository.findReceipts();
 }

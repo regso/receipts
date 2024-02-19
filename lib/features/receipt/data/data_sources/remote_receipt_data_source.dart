@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math' hide log;
 
 import 'package:dio/dio.dart';
@@ -17,6 +18,30 @@ class RemoteReceiptDataSource {
   final Dio dio;
 
   RemoteReceiptDataSource({required this.dio});
+
+  Future<int?> authenticate(String login, String password) async {
+    try {
+      final response = await dio.put(
+        Constants.apiPutUserUrl,
+        data: jsonEncode({"login": login, "password": password}),
+      );
+      final decodedJson = response.data as Map<String, dynamic>;
+      if (decodedJson.containsKey('token')) {
+        // TODO: API returns only a malformed token,
+        //  so we substitute  a fixed value userId = 1.
+        return 1;
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<RemoteReceiptDto> findReceipt(int id) async {
+    final response = await dio.get('${Constants.apiGetReceiptUrl}/$id');
+    final decodedJson = response.data as Map<String, dynamic>;
+    return RemoteReceiptDto.fromJson(decodedJson);
+  }
 
   Future<List<RemoteReceiptDto>> findReceipts() async {
     final response = await dio.get(Constants.apiGetReceiptUrl);

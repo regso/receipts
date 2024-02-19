@@ -3,11 +3,12 @@ import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 
 class FindCommentsUseCase {
-  // TODO: DI
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final ReceiptRepository receiptRepository;
+
+  FindCommentsUseCase({required this.receiptRepository});
 
   Future<List<CommentEntity>> call({
     required ReceiptEntity receipt,
   }) =>
-      _receiptRepository.findCommentsByReceipt(receipt);
+      receiptRepository.findCommentsByReceipt(receipt);
 }

@@ -3,5 +3,8 @@ sealed class ReceiptsEvent {
 }
 
 class LoadReceiptsEvent extends ReceiptsEvent {
-  const LoadReceiptsEvent();
+  final bool isFavorites;
+  final int? userId;
+
+  const LoadReceiptsEvent({this.isFavorites = false, this.userId});
 }

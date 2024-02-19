@@ -13,4 +13,13 @@ class Labels {
   static String startCooking = 'Начать готовить';
   static String sendCommentHint = 'оставить комментарий';
   static String sendCommentButton = 'Отправить';
+  static String navFridge = 'Холодильник';
+  static String navFavorites = 'Избранное';
+  static String navProfile = 'Профиль';
+
+  static String authSignInRegistration = 'Зарегистрироваться';
+  static String authSignInSubmit = 'Войти';
+  static String authSignInLogin = 'Логин';
+  static String authSignInPassword = 'Пароль';
+  static String authSignInErrorAuth = 'Ошибка входа в систему!';
 }

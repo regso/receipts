@@ -32,6 +32,7 @@ class Constants {
   static String apiGetCommentUrl = '/comment';
   static String apiPostCommentUrl = '/comment';
   static String apiGetUserUrl = '/user/';
+  static String apiPutUserUrl = '/user';
   static String apiGetFavoriteUrl = '/favorite';
 
   static String httpAcceptLanguageHeader = 'en-US,en;q=0.9,ru;q=0.8';

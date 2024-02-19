@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:receipts/config/init.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:receipts/config/receipts_app.dart';
+import 'package:receipts/features/app/presentation/bloc/app_bloc.dart';
+import 'package:receipts/features/app/presentation/bloc/app_event.dart';
+
+final sl = GetIt.instance;
 
 void main() async {
-  await initApp();
-  runApp(const ReceiptsApp());
+  runApp(BlocProvider<AppBloc>(
+    create: (BuildContext context) {
+      return AppBloc()..add(const LoadAppEvent());
+    },
+    child: const ReceiptsApp(),
+  ));
 }

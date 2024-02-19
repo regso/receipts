@@ -1,10 +1,11 @@
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 
 class DeleteFavoriteUseCase {
-  // TODO: DI
-  final ReceiptRepository _receiptRepository = ReceiptRepository();
+  final ReceiptRepository receiptRepository;
+
+  DeleteFavoriteUseCase({required this.receiptRepository});
 
   Future<void> call({required int favoriteId}) async {
-    await _receiptRepository.deleteFavorite(favoriteId);
+    await receiptRepository.deleteFavorite(favoriteId);
   }
 }

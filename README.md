@@ -1,18 +1,29 @@
-# receipts
+# Recipes App
 
-A new Flutter project.
+Recipes.
 
-`dart run build_runner build --delete-conflicting-outputs`
+## Codegen
 
-## Getting Started
+```
+dart run build_runner build --delete-conflicting-outputs
+```
 
-This project is a starting point for a Flutter application.
+## Auth
 
-A few resources to get you started if this is your first Flutter project:
+| URI                     | Auth |
+|-------------------------|------|
+| /auth/sign-up           | -    |
+| /auth/sign-in           | -    |
+| /recipes                | -+   |
+| /recipes?filter=1       | -+   | 
+| /recipes/{id}           | -+   |
+| /user/profile           | +    |
+| /user/sign-out          | +    |
+| /user/favorite-receipts | +    |
+| /error/not-found        | -+   |
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Design
+[Proto](https://www.figma.com/proto/alUTMeT3w9XlbNf3orwyFA/Otus-Food-App)
+
+[File](https://www.figma.com/file/alUTMeT3w9XlbNf3orwyFA/Otus-Food-App)

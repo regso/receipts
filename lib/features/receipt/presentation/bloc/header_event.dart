@@ -1,10 +1,9 @@
 sealed class HeaderEvent {}
 
 class LoadHeaderEvent extends HeaderEvent {
-  final int count;
-  final int? favoriteId;
+  final int receiptId;
 
-  LoadHeaderEvent({required this.count, required this.favoriteId});
+  LoadHeaderEvent({required this.receiptId});
 }
 
 class CheckHeaderEvent extends HeaderEvent {
