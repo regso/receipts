@@ -11,7 +11,7 @@ class AppRouteParser extends RouteInformationParser<AppRoutingState> {
   Future<AppRoutingState> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    // TODO: finalize all slugs
+    final segments = routeInformation.uri.pathSegments;
     if (routeInformation.uri.path == '/') {
       return AppRoutingState(pageSlug: defaultPageSlug);
     }
@@ -27,44 +27,22 @@ class AppRouteParser extends RouteInformationParser<AppRoutingState> {
       return AppRoutingState(pageSlug: AppPageSlug.receipts);
     }
     if (routeInformation.uri.path ==
-        AppPage.pageUriMap[AppPageSlug.receiptDetails]) {
-      return AppRoutingState(pageSlug: AppPageSlug.receiptDetails);
+            AppPage.pageUriMap[AppPageSlug.receiptDetails] &&
+        segments.length > 1 &&
+        int.tryParse(segments[1]) != null) {
+      return AppRoutingState(
+        pageSlug: AppPageSlug.receiptDetails,
+        args: {'receiptId': int.parse(segments[1])},
+      );
     }
-    return AppRoutingState(pageSlug: AppPageSlug.errorNotFound);
 
-    // TODO: delete
-    // log(routeInformation.uri.path);
-    // final segments = routeInformation.uri.pathSegments;
-    // if (segments.isEmpty) {
-    //   return AppRoutingState(pages: []);
-    // }
-    // if (segments[0] == 'auth') {
-    //   return AppRoutingState(pages: []);
-    // }
-    // if (segments[0] == 'receipts') {
-    //   return AppRoutingState(pages: []);
-    // }
+    return AppRoutingState(pageSlug: AppPageSlug.errorNotFound);
   }
 
   @override
   RouteInformation? restoreRouteInformation(AppRoutingState configuration) {
     return RouteInformation(
-        uri: Uri.parse(AppPage.pageUriMap[configuration.pageSlug]!));
-
-    // TODO: delete
-    // if (configuration.pages.isNotEmpty) {
-    //   return RouteInformation(uri: Uri.parse(configuration.pages.last.name!));
-    // }
-    // if (configuration.pages.length == 1) {
-    //   return RouteInformation(uri: Uri.parse('/auth/sign-up'));
-    // }
-    //
-    // if (configuration.pages.length == 1) {
-    //   return RouteInformation(uri: Uri.parse('/one'));
-    // }
-    // if (configuration.pages.length == 2) {
-    //   return RouteInformation(uri: Uri.parse('/two'));
-    // }
-    // return RouteInformation(uri: Uri.parse('/one'));
+      uri: Uri.parse(AppPage.pageUriMap[configuration.pageSlug]!),
+    );
   }
 }

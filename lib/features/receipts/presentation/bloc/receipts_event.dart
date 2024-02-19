@@ -8,4 +8,3 @@ class LoadReceiptsEvent extends ReceiptsEvent {
 
   const LoadReceiptsEvent({this.isFavorites = false, this.userId});
 }
-
