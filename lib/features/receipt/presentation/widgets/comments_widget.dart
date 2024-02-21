@@ -1,10 +1,11 @@
-import 'dart:typed_data';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
+import 'package:receipts/features/receipt/data/dto/object_detect_message_dto.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/domain/usecases/object_detect_use_case.dart';
 import 'package:receipts/features/receipt/domain/usecases/save_comment_use_case.dart';
@@ -141,9 +142,22 @@ class _CommentsWidgetState extends State<CommentsWidget> {
     XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      _photo = await sl<ObjectDetectUseCase>()(
+      ObjectDetectMessageDto messageDto = ObjectDetectMessageDto(
         photo: await pickedFile.readAsBytes(),
       );
+      await messageDto.loadFromAssets(
+        modelPath: Constants.tfliteModelPath,
+        labelsPath: Constants.tfliteLabelsPath,
+      );
+
+      _photo = await compute((ObjectDetectMessageDto message) async {
+        ObjectDetectUseCase objectDetect = ObjectDetectUseCase(
+          modelBytes: message.model,
+          labelsBytes: message.labels,
+        );
+        return await objectDetect(photo: message.photo);
+      }, messageDto);
+
       setState(() {});
     }
   }
