@@ -1,15 +1,19 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:receipts/config/constants.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as img;
 
 // TODO: external dependencies
 class ObjectDetectUseCase {
+  final Uint8List modelBytes;
+  final Uint8List labelsBytes;
   Interpreter? _interpreter;
   List<String>? _labels;
+
+  ObjectDetectUseCase({required this.modelBytes, required this.labelsBytes});
 
   Future<Uint8List> call({required Uint8List photo}) async {
     await _loadModel();
@@ -32,15 +36,15 @@ class ObjectDetectUseCase {
     }
 
     log('Loading interpreter...');
-    _interpreter = await Interpreter.fromAsset(
-      Constants.tfliteModelPath,
+    _interpreter = Interpreter.fromBuffer(
+      modelBytes,
       options: interpreterOptions,
     );
   }
 
   Future<void> _loadLabels() async {
     log('Loading labels...');
-    final labelsRaw = await rootBundle.loadString(Constants.tfliteLabelsPath);
+    final labelsRaw = utf8.decode(labelsBytes);
     _labels = labelsRaw.split('\n');
   }
 

@@ -26,7 +26,6 @@ import 'package:receipts/features/receipt/domain/usecases/find_receipt_ingredien
 import 'package:receipts/features/receipt/domain/usecases/find_receipt_use_case.dart';
 import 'package:receipts/features/receipt/domain/usecases/find_receipts_use_case.dart';
 import 'package:receipts/features/receipt/domain/usecases/get_favorites_map_use_case.dart';
-import 'package:receipts/features/receipt/domain/usecases/object_detect_use_case.dart';
 import 'package:receipts/features/receipt/domain/usecases/save_comment_use_case.dart';
 import 'package:receipts/features/receipt/domain/usecases/save_favorite_use_case.dart';
 import 'package:receipts/main.dart';
@@ -149,9 +148,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     sl.registerLazySingleton(
       () => GetFavoritesMapUseCase(receiptRepository: sl()),
-    );
-    sl.registerLazySingleton(
-      () => ObjectDetectUseCase(),
     );
     sl.registerLazySingleton(
       () => SaveCommentUseCase(receiptRepository: sl()),
