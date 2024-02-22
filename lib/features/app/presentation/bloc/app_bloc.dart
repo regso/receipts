@@ -19,6 +19,7 @@ import 'package:receipts/features/receipt/data/dto/local_receipt_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_receipt_ingredient_dto.dart';
 import 'package:receipts/features/receipt/data/dto/local_user_dto.dart';
 import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
+import 'package:receipts/features/receipt/domain/repositories/abstract_receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/usecases/delete_favorite_use_case.dart';
 import 'package:receipts/features/receipt/domain/usecases/find_comments_use_case.dart';
 import 'package:receipts/features/receipt/domain/usecases/find_cooking_step_links_use_case.dart';
@@ -40,12 +41,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     LoadAppEvent event,
     Emitter<AppState> emit,
   ) async {
-    await _init(userId: null);
+    await _init();
     emit(const UnAuthorizedUserAppState());
   }
 
   void _authorize(AuthorizeAppEvent event, Emitter<AppState> emit) async {
-    await _init(userId: event.userId);
+    await _initByUserId(userId: event.userId);
     if (event.userId != null && event.token != null) {
       emit(AuthorizedUserAppState(
         defaultPageSlug: AppPageSlug.receipts,
@@ -57,9 +58,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  Future<void> _init({int? userId}) async {
-    // TODO: refactor method with abstract classes.
-
+  Future<void> _init() async {
     // Hive.
     await Hive.initFlutter();
     Hive.registerAdapter(LocalReceiptDtoAdapter());
@@ -116,9 +115,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
 
     // Repositories.
-    sl.registerLazySingleton(
+    sl.registerLazySingleton<AbstractReceiptRepository>(
       () => ReceiptRepository(
-        userId: userId,
+        userId: null,
         remoteReceiptDataSource: sl(),
         localReceiptDataSource: sl(),
       ),
@@ -154,6 +153,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     sl.registerLazySingleton(
       () => SaveFavoriteUseCase(receiptRepository: sl()),
+    );
+  }
+
+  Future<void> _initByUserId({int? userId}) async {
+    await sl.unregister(instance: sl<AbstractReceiptRepository>());
+    sl.registerLazySingleton<AbstractReceiptRepository>(
+      () => ReceiptRepository(
+        userId: userId,
+        remoteReceiptDataSource: sl(),
+        localReceiptDataSource: sl(),
+      ),
     );
   }
 }

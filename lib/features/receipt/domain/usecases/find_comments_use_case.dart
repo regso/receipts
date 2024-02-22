@@ -1,9 +1,9 @@
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/comment_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipt/domain/repositories/abstract_receipt_repository.dart';
 
 class FindCommentsUseCase {
-  final ReceiptRepository receiptRepository;
+  final AbstractReceiptRepository receiptRepository;
 
   FindCommentsUseCase({required this.receiptRepository});
 
