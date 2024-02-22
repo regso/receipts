@@ -7,42 +7,41 @@ import 'package:receipts/features/receipt/domain/repositories/abstract_receipt_r
 import 'package:receipts/features/receipt/domain/usecases/get_receipt_calories_use_case.dart';
 import 'package:test/test.dart';
 
-class MockReceiptRepository extends Mock implements AbstractReceiptRepository {
-  @override
-  Future<List<ReceiptIngredientEntity>> findReceiptIngredientsByReceipt(
-    ReceiptEntity receipt,
-  ) async {
-    final measureUnit = MeasureUnitEntity(id: 100, one: '', few: '', many: '');
-    final ingredient = IngredientEntity(
-      id: 10,
-      title: 'Ingredient 10',
-      caloriesForUnit: 10,
-      measureUnit: measureUnit,
-    );
-    return [
-      ReceiptIngredientEntity(
-        id: 3,
-        count: 3,
-        ingredient: ingredient,
-        receipt: receipt,
+class MockReceiptRepository extends Mock implements AbstractReceiptRepository {}
+
+const receipt = ReceiptEntity(
+  id: 1,
+  title: 'Receipt',
+  cookingTimeMinutes: 10,
+  photoUrl: '',
+);
+
+final receiptIngredients = [
+    ReceiptIngredientEntity(
+      id: 3,
+      count: 3,
+      ingredient: IngredientEntity(
+        id: 10,
+        title: 'Ingredient 10',
+        caloriesForUnit: 10,
+        measureUnit: MeasureUnitEntity(id: 100, one: '', few: '', many: ''),
       ),
-    ];
-  }
-}
+      receipt: receipt,
+    ),
+  ];
+
+const sumCalories = 30;
 
 void main() async {
   final receiptRepository = MockReceiptRepository();
+  when(() => receiptRepository.findReceiptIngredientsByReceipt(receipt))
+      .thenAnswer((_) async => receiptIngredients);
+
   final getReceiptCalories =
       GetReceiptCaloriesUseCase(receiptRepository: receiptRepository);
-  const receipt = ReceiptEntity(
-    id: 1,
-    title: 'Receipt',
-    cookingTimeMinutes: 10,
-    photoUrl: '',
-  );
   final calories = await getReceiptCalories(receipt: receipt);
 
   test('Test ReceiptCaloriesUseCase logic.', () {
-    expect(30, calories);
+    expect(sumCalories, calories);
   });
 }
