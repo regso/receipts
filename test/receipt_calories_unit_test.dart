@@ -17,31 +17,33 @@ const receipt = ReceiptEntity(
 );
 
 final receiptIngredients = [
-    ReceiptIngredientEntity(
-      id: 3,
-      count: 3,
-      ingredient: IngredientEntity(
-        id: 10,
-        title: 'Ingredient 10',
-        caloriesForUnit: 10,
-        measureUnit: MeasureUnitEntity(id: 100, one: '', few: '', many: ''),
-      ),
-      receipt: receipt,
+  ReceiptIngredientEntity(
+    id: 3,
+    count: 3,
+    ingredient: IngredientEntity(
+      id: 10,
+      title: 'Ingredient 10',
+      caloriesForUnit: 10,
+      measureUnit: MeasureUnitEntity(id: 100, one: '', few: '', many: ''),
     ),
-  ];
+    receipt: receipt,
+  ),
+];
 
 const sumCalories = 30;
 
 void main() async {
-  final receiptRepository = MockReceiptRepository();
-  when(() => receiptRepository.findReceiptIngredientsByReceipt(receipt))
-      .thenAnswer((_) async => receiptIngredients);
+  test('Check ReceiptCaloriesUseCase logic.', () async {
+    final receiptRepository = MockReceiptRepository();
+    when(() => receiptRepository.findReceiptIngredientsByReceipt(receipt))
+        .thenAnswer((_) async => receiptIngredients);
 
-  final getReceiptCalories =
-      GetReceiptCaloriesUseCase(receiptRepository: receiptRepository);
-  final calories = await getReceiptCalories(receipt: receipt);
+    final getReceiptCalories =
+        GetReceiptCaloriesUseCase(receiptRepository: receiptRepository);
+    final calories = await getReceiptCalories.call(receipt: receipt);
 
-  test('Test ReceiptCaloriesUseCase logic.', () {
+    verify(() => receiptRepository.findReceiptIngredientsByReceipt(receipt))
+        .called(1);
     expect(sumCalories, calories);
   });
 }
