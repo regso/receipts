@@ -14,7 +14,7 @@ import 'package:receipts/features/receipt/presentation/widgets/receipt_header_wi
 class MockReceiptRepository extends Mock implements AbstractReceiptRepository {}
 
 void main() {
-  testWidgets('Test favorites switch.', (widgetTester) async {
+  testWidgets('Toggle favorites check.', (widgetTester) async {
     const receipt = ReceiptEntity(
       id: 3,
       title: 'title',
