@@ -1,9 +1,9 @@
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/cooking_step_link_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipt/domain/repositories/abstract_receipt_repository.dart';
 
 class FindCookingStepLinksUseCase {
-  final ReceiptRepository receiptRepository;
+  final AbstractReceiptRepository receiptRepository;
 
   FindCookingStepLinksUseCase({required this.receiptRepository});
 

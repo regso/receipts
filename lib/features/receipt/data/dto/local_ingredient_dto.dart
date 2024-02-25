@@ -10,11 +10,14 @@ class LocalIngredientDto {
   @HiveField(1)
   final String title;
   @HiveField(2)
+  final double caloriesForUnit;
+  @HiveField(3)
   final int measureUnitId;
 
   LocalIngredientDto({
     required this.id,
     required this.title,
+    required this.caloriesForUnit,
     required this.measureUnitId,
   });
 
@@ -22,6 +25,7 @@ class LocalIngredientDto {
     return LocalIngredientDto(
       id: model.id,
       title: model.title,
+      caloriesForUnit: model.caloriesForUnit,
       measureUnitId: model.measureUnit.id,
     );
   }

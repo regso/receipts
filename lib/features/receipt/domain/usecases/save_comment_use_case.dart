@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
+import 'package:receipts/features/receipt/domain/repositories/abstract_receipt_repository.dart';
 
 class SaveCommentUseCase {
-  final ReceiptRepository receiptRepository;
+  final AbstractReceiptRepository receiptRepository;
 
   SaveCommentUseCase({required this.receiptRepository});
 

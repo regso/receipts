@@ -4,6 +4,7 @@ class IngredientModel extends IngredientEntity {
   IngredientModel({
     required super.id,
     required super.title,
+    required super.caloriesForUnit,
     required super.measureUnit,
   });
 }

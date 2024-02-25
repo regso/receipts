@@ -22,8 +22,9 @@ import 'package:receipts/features/receipt/domain/entities/favorite_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/receipt_ingredient_entity.dart';
 import 'package:receipts/features/receipt/domain/entities/user_entity.dart';
+import 'package:receipts/features/receipt/domain/repositories/abstract_receipt_repository.dart';
 
-class ReceiptRepository {
+class ReceiptRepository implements AbstractReceiptRepository {
   final int? userId;
   final RemoteReceiptDataSource remoteReceiptDataSource;
   final LocalReceiptDataSource localReceiptDataSource;
@@ -34,9 +35,11 @@ class ReceiptRepository {
     required this.localReceiptDataSource,
   });
 
+  @override
   Future<int?> authenticate(String login, String password) =>
       remoteReceiptDataSource.authenticate(login, password);
 
+  @override
   Future<ReceiptEntity> findReceipt(int id) =>
       _findRemoteReceipt(id).catchError(
         (_) => _findLocalReceipt(id),
@@ -52,6 +55,7 @@ class ReceiptRepository {
     return ReceiptModel.fromLocalReceiptDto(dto);
   }
 
+  @override
   Future<List<ReceiptEntity>> findReceipts() =>
       _findRemoteReceipts().catchError(
         (_) => _findLocalReceipts(),
@@ -71,6 +75,7 @@ class ReceiptRepository {
         .toList();
   }
 
+  @override
   Future<List<ReceiptIngredientEntity>> findReceiptIngredientsByReceipt(
     ReceiptEntity receipt,
   ) =>
@@ -107,6 +112,7 @@ class ReceiptRepository {
       final ingredient = IngredientModel(
         id: ingredientDto.id,
         title: ingredientDto.name,
+        caloriesForUnit: ingredientDto.caloriesForUnit,
         measureUnit: measureUnit,
       );
       return ReceiptIngredientModel(
@@ -139,6 +145,7 @@ class ReceiptRepository {
       final ingredient = IngredientModel(
         id: ingredientDto.id,
         title: ingredientDto.title,
+        caloriesForUnit: ingredientDto.caloriesForUnit,
         measureUnit: measureUnit,
       );
       return ReceiptIngredientModel(
@@ -150,6 +157,7 @@ class ReceiptRepository {
     }).toList();
   }
 
+  @override
   Future<List<CookingStepLinkEntity>> findCookingStepLinksByReceipt(
     ReceiptEntity receipt,
   ) =>
@@ -211,12 +219,15 @@ class ReceiptRepository {
     }).toList();
   }
 
+  @override
   Future<void> saveFavorite(int receiptId) =>
       remoteReceiptDataSource.saveFavorite(receiptId);
 
+  @override
   Future<void> deleteFavorite(int favoriteId) =>
       remoteReceiptDataSource.deleteFavorite(favoriteId);
 
+  @override
   Future<void> saveCommentByReceipt(
     String text,
     Uint8List photo,
@@ -245,6 +256,7 @@ class ReceiptRepository {
     }
   }
 
+  @override
   Future<List<FavoriteEntity>> findFavorites() =>
       _findRemoteFavorites().catchError((_) => _findLocalFavorites());
 
@@ -275,6 +287,7 @@ class ReceiptRepository {
         .toList();
   }
 
+  @override
   Future<List<CommentEntity>> findCommentsByReceipt(
     ReceiptEntity receipt,
   ) =>

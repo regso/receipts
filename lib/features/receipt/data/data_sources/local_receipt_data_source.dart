@@ -93,6 +93,7 @@ class LocalReceiptDataSource {
       localIngredientsMap[dto.id] = LocalIngredientDto(
         id: dto.id,
         title: dto.name,
+        caloriesForUnit: dto.caloriesForUnit,
         measureUnitId: dto.measureUnitIdModel.id,
       );
     }

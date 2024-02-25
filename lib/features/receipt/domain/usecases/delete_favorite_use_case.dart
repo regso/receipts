@@ -1,7 +1,7 @@
-import 'package:receipts/features/receipt/data/repositories/receipt_repository.dart';
+import 'package:receipts/features/receipt/domain/repositories/abstract_receipt_repository.dart';
 
 class DeleteFavoriteUseCase {
-  final ReceiptRepository receiptRepository;
+  final AbstractReceiptRepository receiptRepository;
 
   DeleteFavoriteUseCase({required this.receiptRepository});
 

@@ -19,19 +19,22 @@ class LocalIngredientDtoAdapter extends TypeAdapter<LocalIngredientDto> {
     return LocalIngredientDto(
       id: fields[0] as int,
       title: fields[1] as String,
-      measureUnitId: fields[2] as int,
+      caloriesForUnit: fields[2] as double,
+      measureUnitId: fields[3] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, LocalIngredientDto obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)
+      ..write(obj.caloriesForUnit)
+      ..writeByte(3)
       ..write(obj.measureUnitId);
   }
 
