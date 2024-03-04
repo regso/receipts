@@ -50,7 +50,7 @@ class AppPage {
       case AppPageSlug.fridge:
         pageWidget = const FridgePage();
       case AppPageSlug.userProfile:
-        pageWidget = const UserProfilePage();
+        pageWidget = UserProfilePage();
       case AppPageSlug.errorNotFound:
         pageWidget = const NotFoundPage();
     }
