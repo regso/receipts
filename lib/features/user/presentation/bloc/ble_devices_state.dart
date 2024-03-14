@@ -1,6 +1,6 @@
 import 'package:flutter_blue/flutter_blue.dart';
 
-sealed class BleDevicesState{
+sealed class BleDevicesState {
   const BleDevicesState();
 }
 
