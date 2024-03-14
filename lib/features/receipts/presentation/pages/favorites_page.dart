@@ -35,9 +35,8 @@ class FavoritesPage extends StatelessWidget {
               child: const ReceiptsWidget(),
             ),
           ),
-          bottomNavigationBar: NavigationBarWidget(
+          bottomNavigationBar: const NavigationBarWidget(
             currentPageSlug: AppPageSlug.favorites,
-            appState: state,
           ),
         );
       },

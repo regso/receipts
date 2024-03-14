@@ -18,9 +18,8 @@ class FridgePage extends StatelessWidget {
           body: const SafeArea(
             child: Center(child: Text('Fridge')),
           ),
-          bottomNavigationBar: NavigationBarWidget(
+          bottomNavigationBar: const NavigationBarWidget(
             currentPageSlug: AppPageSlug.fridge,
-            appState: state,
           ),
         );
       },

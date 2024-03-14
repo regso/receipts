@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipts/config/app_theme.dart';
+import 'package:receipts/config/routes/app_page.dart';
+import 'package:receipts/features/app/presentation/widgets/navigation_bar_widget.dart';
 import 'package:receipts/features/user/presentation/bloc/ble_devices_bloc.dart';
 import 'package:receipts/features/user/presentation/bloc/ble_devices_event.dart';
 import 'package:receipts/features/user/presentation/bloc/ble_devices_state.dart';
@@ -43,11 +45,9 @@ class BleDevicesWidget extends StatelessWidget {
           },
         ),
       ),
-      // TODO:
-      /*bottomNavigationBar: NavigationBarWidget(
-            currentPageSlug: AppPageSlug.userProfile,
-            appState: state,
-          ),*/
+      bottomNavigationBar: const NavigationBarWidget(
+        currentPageSlug: AppPageSlug.userProfile,
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.refresh),
         onPressed: () =>

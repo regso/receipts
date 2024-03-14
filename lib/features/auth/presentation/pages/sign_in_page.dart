@@ -45,9 +45,8 @@ class SignInPage extends StatelessWidget {
               ),
             ),
           ),
-          bottomNavigationBar: NavigationBarWidget(
+          bottomNavigationBar: const NavigationBarWidget(
             currentPageSlug: AppPageSlug.authSignIn,
-            appState: state,
           ),
         );
       },

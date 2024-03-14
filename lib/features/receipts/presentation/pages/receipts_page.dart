@@ -28,9 +28,8 @@ class ReceiptsPage extends StatelessWidget {
               child: const ReceiptsWidget(),
             ),
           ),
-          bottomNavigationBar: NavigationBarWidget(
+          bottomNavigationBar: const NavigationBarWidget(
             currentPageSlug: AppPageSlug.receipts,
-            appState: state,
           ),
         );
       },
