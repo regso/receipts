@@ -6,10 +6,17 @@ import 'package:get_it/get_it.dart';
 import 'package:receipts/config/receipts_app.dart';
 import 'package:receipts/features/app/presentation/bloc/app_bloc.dart';
 import 'package:receipts/features/app/presentation/bloc/app_event.dart';
+import 'package:receipts/features/ble/data/ble_api.g.dart';
 
 final sl = GetIt.instance;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  BleApi bleApi = BleApi();
+  final List<BleDevice?> bleDevices = await bleApi.getDevices();
+  print(bleDevices[0]!.name);
+
   HttpOverrides.global = TempHttpOverrides();
   runApp(BlocProvider<AppBloc>(
     create: (BuildContext context) {
