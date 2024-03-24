@@ -51,7 +51,7 @@ class _BleApiCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 128: 
+      case 128:
         return BleDevice.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -70,8 +70,10 @@ class BleApi {
   static const MessageCodec<Object?> pigeonChannelCodec = _BleApiCodec();
 
   Future<String> getHostLanguage() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.pigeon_receipts_package.BleApi.getHostLanguage';
-    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+    const String __pigeon_channelName =
+        'dev.flutter.pigeon.pigeon_receipts_package.BleApi.getHostLanguage';
+    final BasicMessageChannel<Object?> __pigeon_channel =
+        BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
@@ -97,8 +99,10 @@ class BleApi {
   }
 
   Future<List<BleDevice?>> getDevices() async {
-    const String __pigeon_channelName = 'dev.flutter.pigeon.pigeon_receipts_package.BleApi.getDevices';
-    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+    const String __pigeon_channelName =
+        'dev.flutter.pigeon.pigeon_receipts_package.BleApi.getDevices';
+    final BasicMessageChannel<Object?> __pigeon_channel =
+        BasicMessageChannel<Object?>(
       __pigeon_channelName,
       pigeonChannelCodec,
       binaryMessenger: __pigeon_binaryMessenger,
