@@ -16,20 +16,25 @@ class ReceiptsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (BuildContext context, AppState state) {
-        return Scaffold(
-          backgroundColor: AppTheme.backgroundColor,
-          body: SafeArea(
-            child: BlocProvider<ReceiptsBloc>(
-              create: (BuildContext context) {
-                final bloc = ReceiptsBloc();
-                bloc.add(const LoadReceiptsEvent());
-                return bloc;
-              },
-              child: const ReceiptsWidget(),
+        return SafeArea(
+          top: false,
+          left: false,
+          right: false,
+          child: Scaffold(
+            backgroundColor: AppTheme.backgroundColor,
+            body: SafeArea(
+              child: BlocProvider<ReceiptsBloc>(
+                create: (BuildContext context) {
+                  final bloc = ReceiptsBloc();
+                  bloc.add(const LoadReceiptsEvent());
+                  return bloc;
+                },
+                child: const ReceiptsWidget(),
+              ),
             ),
-          ),
-          bottomNavigationBar: const NavigationBarWidget(
-            currentPageSlug: AppPageSlug.receipts,
+            bottomNavigationBar: const NavigationBarWidget(
+              currentPageSlug: AppPageSlug.receipts,
+            ),
           ),
         );
       },

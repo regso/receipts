@@ -12,46 +12,51 @@ class BleDevicesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.backgroundColor,
-      body: SafeArea(
-        child: BlocBuilder<BleDevicesBloc, BleDevicesState>(
-          builder: (BuildContext context, BleDevicesState state) {
-            if (state is LoadingBleDevicesState) {
-              const Center(child: CircularProgressIndicator());
-            }
+    return SafeArea(
+      top: false,
+      left: false,
+      right: false,
+      child: Scaffold(
+        backgroundColor: AppTheme.backgroundColor,
+        body: SafeArea(
+          child: BlocBuilder<BleDevicesBloc, BleDevicesState>(
+            builder: (BuildContext context, BleDevicesState state) {
+              if (state is LoadingBleDevicesState) {
+                const Center(child: CircularProgressIndicator());
+              }
 
-            if (state is LoadedBleDevicesState) {
-              return ListView.builder(
-                itemCount: state.scanResults.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      state.scanResults[index].device.type.toString(),
-                    ),
-                    subtitle: Text(
-                      state.scanResults[index].device.id.toString(),
-                    ),
-                  );
-                },
-              );
-            }
+              if (state is LoadedBleDevicesState) {
+                return ListView.builder(
+                  itemCount: state.scanResults.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(
+                        state.scanResults[index].device.type.toString(),
+                      ),
+                      subtitle: Text(
+                        state.scanResults[index].device.id.toString(),
+                      ),
+                    );
+                  },
+                );
+              }
 
-            if (state is ErrorBleDevicesState) {
-              return const Center(child: Text('Error load BLE devices.'));
-            }
+              if (state is ErrorBleDevicesState) {
+                return const Center(child: Text('Error load BLE devices.'));
+              }
 
-            return Container();
-          },
+              return Container();
+            },
+          ),
         ),
-      ),
-      bottomNavigationBar: const NavigationBarWidget(
-        currentPageSlug: AppPageSlug.userProfile,
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.refresh),
-        onPressed: () =>
-            context.read<BleDevicesBloc>().add(const LoadBleDevicesEvent()),
+        bottomNavigationBar: const NavigationBarWidget(
+          currentPageSlug: AppPageSlug.userProfile,
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.refresh),
+          onPressed: () =>
+              context.read<BleDevicesBloc>().add(const LoadBleDevicesEvent()),
+        ),
       ),
     );
   }

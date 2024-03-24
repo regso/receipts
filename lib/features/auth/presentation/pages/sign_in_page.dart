@@ -14,25 +14,30 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (BuildContext context, AppState state) {
-        return Scaffold(
-          backgroundColor: AppTheme.accentColor,
-          body: const SafeArea(
-            child: SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: 100),
-                    SizedBox(
-                      width: 232,
-                      child: SignInForm(),
-                    ),
-                  ],
+        return SafeArea(
+          top: false,
+          left: false,
+          right: false,
+          child: Scaffold(
+            backgroundColor: AppTheme.accentColor,
+            body: const SafeArea(
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 100),
+                      SizedBox(
+                        width: 232,
+                        child: SignInForm(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          bottomNavigationBar: const NavigationBarWidget(
-            currentPageSlug: AppPageSlug.authSignIn,
+            bottomNavigationBar: const NavigationBarWidget(
+              currentPageSlug: AppPageSlug.authSignIn,
+            ),
           ),
         );
       },
