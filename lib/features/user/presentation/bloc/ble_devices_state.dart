@@ -1,4 +1,4 @@
-import 'package:flutter_blue/flutter_blue.dart';
+import 'package:receipts/features/ble/data/ble_api.g.dart';
 
 sealed class BleDevicesState {
   const BleDevicesState();
@@ -13,10 +13,10 @@ class LoadingBleDevicesState extends BleDevicesState {
 }
 
 class LoadedBleDevicesState extends BleDevicesState {
-  final List<ScanResult> scanResults;
+  final List<BleDevice> devices;
 
   const LoadedBleDevicesState({
-    required this.scanResults,
+    required this.devices,
   });
 }
 

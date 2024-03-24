@@ -27,14 +27,12 @@ class BleDevicesWidget extends StatelessWidget {
 
               if (state is LoadedBleDevicesState) {
                 return ListView.builder(
-                  itemCount: state.scanResults.length,
+                  itemCount: state.devices.length,
                   itemBuilder: (context, index) {
                     return ListTile(
+                      leading: const Icon(Icons.bluetooth),
                       title: Text(
-                        state.scanResults[index].device.type.toString(),
-                      ),
-                      subtitle: Text(
-                        state.scanResults[index].device.id.toString(),
+                        state.devices[index].name,
                       ),
                     );
                   },
