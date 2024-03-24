@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receipts/config/app_theme.dart';
 import 'package:receipts/config/constants.dart';
 import 'package:receipts/config/labels.dart';
 import 'package:receipts/config/routes/app_page.dart';
 import 'package:receipts/config/routes/app_router_delegate.dart';
+import 'package:receipts/features/app/presentation/bloc/app_bloc.dart';
 import 'package:receipts/features/app/presentation/bloc/app_state.dart';
 
 class NavigationBarWidget extends StatefulWidget {
   final AppPageSlug currentPageSlug;
-  final AppState appState;
 
   const NavigationBarWidget({
     super.key,
     required this.currentPageSlug,
-    required this.appState,
   });
 
   @override
@@ -67,7 +67,8 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final pageSlugs = (widget.appState is AuthorizedUserAppState)
+    final appBloc = context.read<AppBloc>();
+    final pageSlugs = (appBloc.state is AuthorizedUserAppState)
         ? _authorizedPageSlugs
         : _unAuthorizedPageSlugs;
     return Container(
@@ -84,7 +85,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
       ),
       child: BottomNavigationBar(
         elevation: 0,
-        items: (widget.appState is AuthorizedUserAppState)
+        items: (appBloc.state is AuthorizedUserAppState)
             ? _authorizedItems
             : _unAuthorizedItems,
         currentIndex: pageSlugs.indexOf(widget.currentPageSlug),

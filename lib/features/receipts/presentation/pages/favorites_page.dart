@@ -16,28 +16,32 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (BuildContext context, AppState state) {
-        return Scaffold(
-          backgroundColor: AppTheme.backgroundColor,
-          body: SafeArea(
-            child: BlocProvider<ReceiptsBloc>(
-              create: (BuildContext context) {
-                final bloc = ReceiptsBloc();
-                if (state is AuthorizedUserAppState) {
-                  bloc.add(LoadReceiptsEvent(
-                    isFavorites: true,
-                    userId: state.userId,
-                  ));
-                } else {
-                  bloc.add(const LoadReceiptsEvent());
-                }
-                return bloc;
-              },
-              child: const ReceiptsWidget(),
+        return SafeArea(
+          top: false,
+          left: false,
+          right: false,
+          child: Scaffold(
+            backgroundColor: AppTheme.backgroundColor,
+            body: SafeArea(
+              child: BlocProvider<ReceiptsBloc>(
+                create: (BuildContext context) {
+                  final bloc = ReceiptsBloc();
+                  if (state is AuthorizedUserAppState) {
+                    bloc.add(LoadReceiptsEvent(
+                      isFavorites: true,
+                      userId: state.userId,
+                    ));
+                  } else {
+                    bloc.add(const LoadReceiptsEvent());
+                  }
+                  return bloc;
+                },
+                child: const ReceiptsWidget(),
+              ),
             ),
-          ),
-          bottomNavigationBar: NavigationBarWidget(
-            currentPageSlug: AppPageSlug.favorites,
-            appState: state,
+            bottomNavigationBar: const NavigationBarWidget(
+              currentPageSlug: AppPageSlug.favorites,
+            ),
           ),
         );
       },

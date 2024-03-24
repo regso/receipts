@@ -13,14 +13,18 @@ class FridgePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (BuildContext context, AppState state) {
-        return Scaffold(
-          backgroundColor: AppTheme.backgroundColor,
-          body: const SafeArea(
-            child: Center(child: Text('Fridge')),
-          ),
-          bottomNavigationBar: NavigationBarWidget(
-            currentPageSlug: AppPageSlug.fridge,
-            appState: state,
+        return SafeArea(
+          top: false,
+          left: false,
+          right: false,
+          child: Scaffold(
+            backgroundColor: AppTheme.backgroundColor,
+            body: const SafeArea(
+              child: Center(child: Text('Fridge')),
+            ),
+            bottomNavigationBar: const NavigationBarWidget(
+              currentPageSlug: AppPageSlug.fridge,
+            ),
           ),
         );
       },

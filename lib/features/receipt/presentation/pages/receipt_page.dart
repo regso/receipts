@@ -18,43 +18,48 @@ class ReceiptPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.receiptDetailsBackgroundColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: AppTheme.receiptDetailsAppBarShadowColor,
-                spreadRadius: 0,
-                blurRadius: 8,
-                offset: const Offset(0, 0),
-              ),
-            ],
-          ),
-          child: AppBar(
-            title: Text(Labels.receipt),
-            centerTitle: true,
-            elevation: 0,
-            backgroundColor: AppTheme.receiptDetailsBackgroundColor,
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Image.asset(Constants.appIconHornPath),
-              ),
-            ],
+    return SafeArea(
+      top: false,
+      left: false,
+      right: false,
+      child: Scaffold(
+        backgroundColor: AppTheme.receiptDetailsBackgroundColor,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: AppTheme.receiptDetailsAppBarShadowColor,
+                  spreadRadius: 0,
+                  blurRadius: 8,
+                  offset: const Offset(0, 0),
+                ),
+              ],
+            ),
+            child: AppBar(
+              title: Text(Labels.receipt),
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: AppTheme.receiptDetailsBackgroundColor,
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Image.asset(Constants.appIconHornPath),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: SafeArea(
-        child: BlocProvider<ReceiptBloc>(
-          create: (BuildContext context) {
-            final bloc = ReceiptBloc();
-            bloc.add(LoadReceiptEvent(receiptId: receiptId));
-            return bloc;
-          },
-          child: const ReceiptWidget(),
+        body: SafeArea(
+          child: BlocProvider<ReceiptBloc>(
+            create: (BuildContext context) {
+              final bloc = ReceiptBloc();
+              bloc.add(LoadReceiptEvent(receiptId: receiptId));
+              return bloc;
+            },
+            child: const ReceiptWidget(),
+          ),
         ),
       ),
     );
